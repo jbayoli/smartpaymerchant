@@ -1,0 +1,67 @@
+package cd.shuri.smaprtpay.merchant.screens.accounts
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import cd.shuri.smaprtpay.merchant.SmartPayApp
+import cd.shuri.smaprtpay.merchant.network.AccountsResponse
+import cd.shuri.smaprtpay.merchant.network.SmartPayApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import timber.log.Timber
+
+class AccountsViewModel: ViewModel() {
+
+    private val _paymentMethods =  MutableLiveData<List<AccountsResponse>>()
+    val paymentMethods : LiveData<List<AccountsResponse>> get() = _paymentMethods
+
+    private val _showDialogLoader = MutableLiveData<Boolean>()
+    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
+
+    private var viewModelJob = Job()
+
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    private val userCode = SmartPayApp.preferences.getString("user_code", "")
+    private val userToken = SmartPayApp.preferences.getString("token", "")
+    private val auth = "Bearer $userToken"
+
+
+    init {
+        _paymentMethods.value = ArrayList()
+        getPaymentMethods()
+    }
+
+    fun showDialogLoaderDone() {
+        _showDialogLoader.value = null
+    }
+
+    private fun getPaymentMethods() {
+        viewModelScope.launch {
+            try {
+                _showDialogLoader.value = true
+                val result = SmartPayApi.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
+                _showDialogLoader.value = false
+                if (result.isNotEmpty()) {
+                    _paymentMethods.value = result
+                    for (element in result) {
+                        Timber.d("code: ${element.code}")
+                    }
+                } else {
+                    _paymentMethods.value = ArrayList()
+                }
+            } catch (e: Exception) {
+                Timber.e("$e")
+                _showDialogLoader.value = false
+                _paymentMethods.value = ArrayList()
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+}

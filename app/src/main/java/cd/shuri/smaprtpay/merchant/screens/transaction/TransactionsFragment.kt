@@ -1,0 +1,51 @@
+package cd.shuri.smaprtpay.merchant.screens.transaction
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+
+import cd.shuri.smaprtpay.merchant.databinding.FragmentTransactionsBinding
+import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+
+/**
+ * A simple [Fragment] subclass.
+ */
+class TransactionsFragment : Fragment() {
+
+    private lateinit var binding: FragmentTransactionsBinding
+
+    private val viewModel by viewModels<TransactionsViewModel>()
+
+    private val dialog = LoaderDialog()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentTransactionsBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        binding.allTransactionsRecyclerView.adapter = TransactionListAdapter()
+
+        observers()
+        return binding.root
+    }
+
+    private fun observers() {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                if (it) {
+                    dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
+                }  else {
+                    dialog.dismiss()
+                }
+                viewModel.showDialogLoaderDone()
+            }
+        })
+    }
+
+}

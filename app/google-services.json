@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "1027081850042",
+    "firebase_url": "https://smartpay-c3eeb.firebaseio.com",
+    "project_id": "smartpay-c3eeb",
+    "storage_bucket": "smartpay-c3eeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027081850042:android:fe846198b8d612fdf3c683",
+        "android_client_info": {
+          "package_name": "cd.infoset.smaprtpay.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027081850042-avnahrfktbkh9tkas9137jnmnq49mmbr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cd.infoset.smaprtpay.client",
+            "certificate_hash": "b093da6baab2d29de305a95d0ac5e8ff70bdbe14"
+          }
+        },
+        {
+          "client_id": "1027081850042-ejda39krg5amr49g78h2evmpndnsi2a1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgazb1_raA8BB_vhJNa8HfW07MJ8B-4xA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027081850042-ejda39krg5amr49g78h2evmpndnsi2a1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027081850042:android:248e4ab42b5f0545f3c683",
+        "android_client_info": {
+          "package_name": "cd.infoset.smartpay.merchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027081850042-ejda39krg5amr49g78h2evmpndnsi2a1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgazb1_raA8BB_vhJNa8HfW07MJ8B-4xA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027081850042-ejda39krg5amr49g78h2evmpndnsi2a1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027081850042:android:d927908e7226f62cf3c683",
+        "android_client_info": {
+          "package_name": "cd.infoset.smartpaymarchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027081850042-ejda39krg5amr49g78h2evmpndnsi2a1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgazb1_raA8BB_vhJNa8HfW07MJ8B-4xA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027081850042-ejda39krg5amr49g78h2evmpndnsi2a1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

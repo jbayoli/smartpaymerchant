@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5e92f3</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#1565c0</color>
+    <color name="appBarColor"> #ffffff</color>
+    <color name="textColorPrimary">#000000</color>
+    <color name="textInputOutlineColor">#003c8f</color>
+    <color name="homeBackgroundColor">#EDEFF1</color>
+    <color name="buttonBack">#003c8f</color>
+    <color name="validateColor">#009688</color>
+    <color name="failColor">#E41708</color>
+    <color name="warningColor">#FF5722</color>
+</resources>
