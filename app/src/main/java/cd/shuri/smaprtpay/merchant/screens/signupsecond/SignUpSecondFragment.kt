@@ -114,31 +114,7 @@ class SignUpSecondFragment : Fragment() {
             if (it) {
                 binding.sectorTil.error = null
             } else {
-                binding.sectorTil.error = "Sélétection un secteur"
-            }
-        })
-
-        viewModel.isRccmEmpty.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                binding.rccmTil.error = "Ce champ est obligatoire"
-            } else {
-                binding.rccmTil.error = null
-            }
-        })
-
-        viewModel.isNifEmpty.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                binding.nifTil.error = "Ce champ est obligatoire"
-            } else {
-                binding.nifTil.error = null
-            }
-        })
-
-        viewModel.isOwnerEmpty.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                binding.ownerIdTil.error = "Ce champ est obligatoire"
-            } else {
-                binding.ownerIdTil.error = null
+                binding.sectorTil.error = "Sélectionner un secteur"
             }
         })
 
@@ -180,8 +156,19 @@ class SignUpSecondFragment : Fragment() {
 
         viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                findNavController().navigate(SignUpSecondFragmentDirections.actionSignUpSecondFragmentToHomeFragment())
+                findNavController().navigate(SignUpSecondFragmentDirections.actionSignUpSecondFragmentToAddFirstPaymentAccountFragment())
                 viewModel.navigateToHomeDone()
+            }
+        })
+
+        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard",
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.showToastErrorDone2()
             }
         })
 

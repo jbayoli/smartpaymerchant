@@ -40,6 +40,6 @@ class SplashScreenViewModel: ViewModel() {
         //Countdown time interval
         private const val ONE_SECOND = 1000L
         //Total time for the game
-        private const val COUNTDOWN_TIME = 5000L
+        private const val COUNTDOWN_TIME = 3000L
     }
 }

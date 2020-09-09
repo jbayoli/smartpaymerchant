@@ -7,10 +7,7 @@ import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.RegisterRequest
 import cd.shuri.smaprtpay.merchant.network.SectorsResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 
 class SignUpSecondViewModel: ViewModel() {
@@ -19,15 +16,6 @@ class SignUpSecondViewModel: ViewModel() {
 
     private val _isSectorSelected= MutableLiveData<Boolean>()
     val isSectorSelected : LiveData<Boolean> get() = _isSectorSelected
-
-    private val _isRccmEmpty= MutableLiveData<Boolean>()
-    val isRccmEmpty : LiveData<Boolean> get() = _isRccmEmpty
-
-    private val _isNifEmpty= MutableLiveData<Boolean>()
-    val isNifEmpty : LiveData<Boolean> get() = _isNifEmpty
-
-    private val _isOwnerEmpty= MutableLiveData<Boolean>()
-    val isOwnerEmpty : LiveData<Boolean> get() = _isOwnerEmpty
 
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
@@ -46,6 +34,9 @@ class SignUpSecondViewModel: ViewModel() {
 
     private val _sectors = MutableLiveData<List<SectorsResponse>>()
     val sectors :LiveData<List<SectorsResponse>> get() = _sectors
+
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
 
     private var viewModelJob = Job()
 
@@ -87,27 +78,6 @@ class SignUpSecondViewModel: ViewModel() {
             _isSectorSelected.value = true
         }
 
-        if (request.rccm.isEmpty()) {
-            _isRccmEmpty.value = true
-            valid = false
-        } else {
-            _isRccmEmpty.value = false
-        }
-
-        if (request.nif.isEmpty()) {
-            _isNifEmpty.value = true
-            valid = false
-        } else {
-            _isNifEmpty.value = false
-        }
-
-        if (request.owner.isEmpty()) {
-            _isOwnerEmpty.value = true
-            valid = false
-        } else {
-            _isOwnerEmpty.value = false
-        }
-
         return valid
     }
 
@@ -126,6 +96,7 @@ class SignUpSecondViewModel: ViewModel() {
             } catch (e: Exception) {
                 _showDialogLoader.value = false
                 _sectors.value = ArrayList()
+                _showTToastForError.value = true
                 Timber.d("$e")
             }
         }
@@ -135,10 +106,12 @@ class SignUpSecondViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.registerAsync(auth ,request).await()
+                Timber.d("$request")
+                val result = SmartPayApi.smartPayApiService.registerAsync(request).await()
                 _showDialogLoader.value = false
                 Timber.d("message: ${result.message} status: ${result.status}")
                 if (result.status == "0") {
+                    registrationDone()
                     _messageRegister.value = result.message
                     _showToastSuccess.value = true
                     _navigateToHome.value = true
@@ -149,6 +122,7 @@ class SignUpSecondViewModel: ViewModel() {
             } catch (e: Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false
+                _showTToastForError.value = true
             }
         }
     }
@@ -156,6 +130,23 @@ class SignUpSecondViewModel: ViewModel() {
     fun navigateToHomeDone() {
         _navigateToHome.value = null
     }
+
+    private suspend fun registrationDone() {
+        withContext(Dispatchers.Main) {
+            try {
+                val preferencesEditor = SmartPayApp.preferences.edit()
+                preferencesEditor.remove("isRegistrationDone")
+                preferencesEditor.apply()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun showToastErrorDone2() {
+        _showTToastForError.value = null
+    }
+
 
     override fun onCleared() {
         super.onCleared()

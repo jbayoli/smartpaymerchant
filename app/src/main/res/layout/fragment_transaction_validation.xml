@@ -47,7 +47,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:bindTransactionsToValidateRecyclerView="@{viewModel.transactions}"/>
+                        app:bindTransactionsToValidateRecyclerView="@{viewModel.transactions}"
+                        tools:listitem="@layout/transactions_to_validate_items"
+                        tools:itemCount="3"/>
 
                 </LinearLayout>
 

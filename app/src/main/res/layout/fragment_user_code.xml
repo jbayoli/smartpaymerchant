@@ -1,0 +1,64 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="cd.shuri.smaprtpay.merchant.screens.forgottenpin.ui.UserCodeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp">
+
+        <TextView
+            android:id="@+id/pin_message_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/roboto"
+            android:text="Remplir le champ suivant pour réinitialiser votre PIN"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_code_til"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/roboto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pin_message_tv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_code_tet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:hint="Entrer votre code utilisateur*"
+                android:inputType="textPersonName" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_button"
+            style="@style/AppTheme.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Suivant"
+            app:layout_constraintEnd_toEndOf="@+id/user_code_til"
+            app:layout_constraintStart_toStartOf="@+id/user_code_til"
+            app:layout_constraintTop_toBottomOf="@+id/user_code_til" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

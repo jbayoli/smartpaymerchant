@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cd.shuri.smaprtpay.merchant.screens.editProfile.EditProfileFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/saving_message_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                android:text="Veuillez remplir le formulaire suivant pour modifier vos informations"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/identity_mail_tv"
+                style="@style/TextAppearance.AppTheme.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Identité"
+                app:layout_constraintStart_toStartOf="@+id/saving_message_tv"
+                app:layout_constraintTop_toBottomOf="@+id/saving_message_tv" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/first_name_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/identity_mail_tv">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/first_name_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Entrer votre prénom*"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/last_name_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/first_name_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/last_name_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Entrer votre nom*"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/token_country_code"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/last_name_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/token_country_code_tet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:text="+243" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/token_phone_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/country_code_til_one"
+                app:layout_constraintTop_toBottomOf="@+id/last_name_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/token_phone_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="N° réinitialisation PIN*"
+                    android:inputType="phone"
+                    android:maxLength="9" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/contact_tv"
+                style="@style/TextAppearance.AppTheme.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Contact"
+                app:layout_constraintStart_toStartOf="@+id/saving_message_tv"
+                app:layout_constraintTop_toBottomOf="@+id/token_phone_til" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mail_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contact_tv">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mail_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Entrer votre adresse mail"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/country_code_til_one"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mail_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/country_code_tet_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:text="+243" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_number_one_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/country_code_til_one"
+                app:layout_constraintTop_toBottomOf="@+id/mail_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number_one_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="N° de contact 1*"
+                    android:inputType="phone"
+                    android:maxLength="9" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/country_code_til_two"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phone_number_one_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/country_code_tet_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                    android:text="+243" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_number_two_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/country_code_til_two"
+                app:layout_constraintTop_toBottomOf="@+id/phone_number_one_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number_two_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="N° de contact 2"
+                    android:inputType="phone"
+                    android:maxLength="9" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/address_tv"
+                style="@style/TextAppearance.AppTheme.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Adresse"
+                app:layout_constraintStart_toStartOf="@+id/saving_message_tv"
+                app:layout_constraintTop_toBottomOf="@+id/phone_number_two_til" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/address_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/address_tv">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/address_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Entrer votre adresse*"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/company_identity"
+                style="@style/TextAppearance.AppTheme.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Informations sur l'entreprise"
+                app:layout_constraintStart_toStartOf="@+id/saving_message_tv"
+                app:layout_constraintTop_toBottomOf="@+id/address_til" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/company_identity">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Nom de l'activité*"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sector_til"
+                style="@style/AppTheme.TextInputLayout.ExposedDropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_til">
+
+                <AutoCompleteTextView
+                    android:id="@+id/sector_auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Domaine d'activité*"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/rccm_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sector_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/rccm_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="RCCM"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nif_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rccm_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nif_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:hint="NIF"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/owner_id_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nif_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/owner_id_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ID NAT"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/edit_button"
+                style="@style/AppTheme.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="Modifier"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/owner_id_til"
+                app:layout_constraintStart_toStartOf="@+id/owner_id_til"
+                app:layout_constraintTop_toBottomOf="@+id/owner_id_til" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

@@ -36,8 +36,8 @@ class AddAccountViewModel: ViewModel() {
     private val _isCardNumberEmpty = MutableLiveData<Boolean>()
     val isCardNumberEmpty: LiveData<Boolean> get() = _isCardNumberEmpty
 
-    private val _isExpirationEmpty = MutableLiveData<Boolean>()
-    val isExpirationEmpty: LiveData<Boolean> get() = _isExpirationEmpty
+    private val _isExpirationValid = MutableLiveData<Boolean>()
+    val isExpirationValid: LiveData<Boolean> get() = _isExpirationValid
 
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
@@ -56,6 +56,9 @@ class AddAccountViewModel: ViewModel() {
 
     private val _navigateToHome = MutableLiveData<Boolean>()
     val navigateToHome : LiveData<Boolean> get() = _navigateToHome
+
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
 
     private var viewModelJob = Job()
 
@@ -124,11 +127,11 @@ class AddAccountViewModel: ViewModel() {
             _isCardNumberEmpty.value = false
         }
 
-        if (request.expiration!!.isEmpty()) {
-            _isExpirationEmpty.value = true
+        if (request.expiration?.length!! < 4) {
+            _isExpirationValid.value = false
             valid = false
         } else {
-            _isExpirationEmpty.value = false
+            _isExpirationValid.value = true
         }
 
         return valid
@@ -149,6 +152,7 @@ class AddAccountViewModel: ViewModel() {
             } catch (e : Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false
+                _showTToastForError.value = true
             }
         }
     }
@@ -171,12 +175,17 @@ class AddAccountViewModel: ViewModel() {
             } catch (e: Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false
+                _showTToastForError.value = true
             }
         }
     }
 
     fun navigateToHomeDone(){
         _navigateToHome.value = null
+    }
+
+    fun showToastErrorDone2() {
+        _showTToastForError.value = null
     }
 
     fun setAccountType(accountTypeSelected: Int) {

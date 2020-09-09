@@ -13,8 +13,8 @@ android {
         applicationId "cd.infoset.smartpay.merchant"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.3"
+        versionCode 13
+        versionName "2.0.2 Beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,12 +35,9 @@ android {
         jvmTarget = "1.8"
     }
 
-    dataBinding {
-        enabled = true
-    }
-
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
 
 }
@@ -48,13 +45,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //Fragment
-    implementation 'androidx.fragment:fragment:1.2.4'
+    implementation 'androidx.fragment:fragment:1.2.5'
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
@@ -64,7 +61,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     //Material design
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0'
 
     // ViewModel and LiveData
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -75,7 +72,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
 
     // Firebase
-    implementation 'com.google.firebase:firebase-messaging:20.2.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
@@ -86,6 +83,10 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$version_moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$version_moshi"
+
+    // QRCode
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
+    implementation 'com.google.zxing:core:3.3.3'
 
     //test
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

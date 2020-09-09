@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
-        android:background="@color/homeBackgroundColor"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +23,8 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Veuillez remplir le formulaire suivant pour ouvrir votre compte marchand à notre service Smartpay"
+                android:fontFamily="@font/roboto"
+                android:text="Veuillez remplir le formulaire suivant pour ouvrir votre compte marchand"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
+                android:fontFamily="@font/roboto"
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,9 +58,11 @@
                     android:id="@+id/merchant_code_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Code marchand"
+                    android:hint="Code marchand de votre choix*"
+                    android:fontFamily="@font/roboto"
                     android:maxLength="8"
-                    android:inputType="textPersonName" />
+                    android:textAllCaps="true"
+                    android:inputType="textCapCharacters" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,6 +74,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/merchant_code_til">
@@ -79,8 +83,33 @@
                     android:id="@+id/user_name_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Entrez votre nom d'utilisateur"
+                    android:hint="Code utilisateur de votre choix*"
+                    android:fontFamily="@font/roboto"
                     android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bpm_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:helperText="Ex: AA01"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_name_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bpm_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Code associé"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,17 +121,20 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:passwordToggleEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_name_til">
+                app:layout_constraintTop_toBottomOf="@+id/bpm_til">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Entrez votre mot de passe"
-                    android:inputType="textPassword" />
+                    android:hint="Entrer votre PIN FlexPay*"
+                    android:maxLength="6"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="numberPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,6 +147,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 app:passwordToggleEnabled="true"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/password_til">
@@ -123,23 +156,23 @@
                     android:id="@+id/password_confirm_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Confirmez votre mot de passe"
-                    android:inputType="textPassword" />
+                    android:hint="Confirmer votre PIN FlexPay*"
+                    android:maxLength="6"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="numberPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/validate_button"
                 style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:text="S'inscrire"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/password_confirm_til"
-                app:layout_constraintVertical_bias="0.8" />
+                app:layout_constraintEnd_toEndOf="@+id/password_confirm_til"
+                app:layout_constraintStart_toStartOf="@+id/password_confirm_til"
+                app:layout_constraintTop_toBottomOf="@+id/password_confirm_til" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

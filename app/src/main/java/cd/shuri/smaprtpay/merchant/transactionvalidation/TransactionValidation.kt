@@ -1,18 +1,18 @@
 package cd.shuri.smaprtpay.merchant.transactionvalidation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentTransactionValidationBinding
 import cd.shuri.smaprtpay.merchant.network.TransactionValidationRequest
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber
 
 /**
@@ -29,6 +29,8 @@ class TransactionValidation : Fragment() {
     private val userCode = SmartPayApp.preferences.getString("user_code", "")
     private val fcm = SmartPayApp.preferences.getString("fcm", "")
 
+    private lateinit var adapter: TransactionValidationListAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,27 +42,31 @@ class TransactionValidation : Fragment() {
 
         Timber.d("fcm: $fcm")
 
-        binding.transactionsToValidateRecyclerView.adapter = TransactionValidationListAdapter(
+        adapter =  TransactionValidationListAdapter(
             TransactionValidationListListenerV {
                 viewModel.validateTransaction(TransactionValidationRequest(
                     it.code!!,
                     userCode!!,
                     true,
                     fcm!!
-                ))
+                ), it)
             }, TransactionValidationListListenerC {
                 viewModel.validateTransaction(TransactionValidationRequest(
                     it.code!!,
                     userCode!!,
                     false,
                     fcm!!
-                ))
+                ), it)
             })
 
+        binding.transactionsToValidateRecyclerView.adapter = adapter
+
         observers()
+
+        setHasOptionsMenu(true)
+
         return binding.root
     }
-
 
     private fun observers() {
         viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
@@ -74,10 +80,25 @@ class TransactionValidation : Fragment() {
             }
         })
 
-        viewModel.showToast.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                Toast.makeText(requireContext(), viewModel.messageValidation.value, Toast.LENGTH_SHORT).show()
-                viewModel.showToastDone()
+        viewModel.validation.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val builder = if (it.status != "0") {
+                    MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
+                        .setMessage(it.message)
+                        .setPositiveButton("OK") {dialog, _ ->
+                            dialog.dismiss()
+                        }
+                } else {
+                    MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
+                        .setMessage(it.message)
+                        .setPositiveButton("OK") {dialog, _ ->
+                            dialog.dismiss()
+                            viewModel.navigateToHome()
+                        }
+                }
+                val dialog = builder.create()
+                dialog.setCanceledOnTouchOutside(false)
+                dialog.show()
             }
         })
 
@@ -87,6 +108,33 @@ class TransactionValidation : Fragment() {
                 viewModel.navigateToHomeDone()
             }
         })
+
+        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard",
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.showToastErrorDone()
+            }
+        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.transaction_validation_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.refresh -> {
+                viewModel.getTransactions()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+
+        }
     }
 
 }

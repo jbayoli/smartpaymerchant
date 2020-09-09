@@ -16,31 +16,32 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="56dp"
-            android:background="@color/homeBackgroundColor">
+            android:layout_marginTop="56dp">
 
             <TextView
                 android:id="@+id/phone_number_message_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="42dp"
-                android:text="Veuillez remplir le formulaire suivant pour ajouter votre compte à notre service Smartpay"
+                android:layout_marginEnd="16dp"
+                android:text="Veuillez saisir votre numéro de téléphone et cliquer sur le bouton Valider"
                 android:textAlignment="center"
+                android:fontFamily="@font/roboto"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
                 style="@style/AppTheme.TextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:hint="Entrez votre n° de téléphone"
-                app:errorEnabled="true"
+                android:fontFamily="@font/roboto"
+                android:hint="Entrer votre n° de téléphone*"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/country_code_til"
                 app:layout_constraintTop_toTopOf="@+id/country_code_til"
@@ -50,8 +51,9 @@
                     android:id="@+id/phone_number_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="9"
-                    android:inputType="phone" />
+                    android:fontFamily="@font/roboto"
+                    android:inputType="phone"
+                    android:maxLength="9" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintStart_toStartOf="@+id/phone_number_message_tv"
                 app:layout_constraintTop_toBottomOf="@id/phone_number_message_tv">
 
@@ -69,22 +72,45 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+243"
+                    android:fontFamily="@font/roboto"
                     android:maxLength="4"
-                    android:inputType="none" />
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/warn_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="Ce n° de téléphone, vous sera demandé pendant les procédures de réinitialisation du PIN FlexPay oublié"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/country_code_til"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="J'ai pris connaissance et j'accepte les termes"
+                app:layout_constraintEnd_toEndOf="@+id/warn_tv"
+                app:layout_constraintStart_toStartOf="@+id/warn_tv"
+                app:layout_constraintTop_toBottomOf="@+id/warn_tv" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/validate_button"
                 style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:text="Validez"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="34dp"
-                app:icon="@drawable/ic_check_black_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="Valider"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

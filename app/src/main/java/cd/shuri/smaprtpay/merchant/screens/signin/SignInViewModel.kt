@@ -4,14 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cd.shuri.smaprtpay.merchant.SmartPayApp
+import cd.shuri.smaprtpay.merchant.network.CommonResponse
 import cd.shuri.smaprtpay.merchant.network.LoginRequest
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 
 class SignInViewModel : ViewModel() {
@@ -30,7 +28,22 @@ class SignInViewModel : ViewModel() {
     private val _loginStatus = MutableLiveData<Int>()
     val loginStatus : LiveData<Int> get() = _loginStatus
 
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+
+    private val _step = MutableLiveData<Int>()
+    val step : LiveData<Int> get() = _step
+
+    private val _response = MutableLiveData<CommonResponse>()
+    val response: LiveData<CommonResponse> get() = _response
+
+
     var token = ""
+
+    private var auth: String? = null
+    private var customer: String? = null
+    private var roles: String? = null
+    private var name: String? = null
 
     private var viewModelJob = Job()
 
@@ -80,16 +93,21 @@ class SignInViewModel : ViewModel() {
                 _showDialogLoader.value = true
                 val response = SmartPayApi.smartPayApiService.login(request)
                 if (response.isSuccessful) {
-                    val auth = response.headers().get("Authorization")
-                    val customer = response.headers().get("customer")
-                    val roles = response.headers().get("roles")
+                    auth = response.headers().get("Authorization")
+                    customer = response.headers().get("customer")
+                    roles = response.headers().get("roles")
+                    name = response.headers().get("name")
+                    val savedStep = response.headers().get("step")?.toInt()
                     Timber.d("user code = $customer")
                     Timber.d("auth = $auth")
                     Timber.d("roles = $roles")
+                    Timber.d("name = $name")
                     _showDialogLoader.value = false
                     if (roles == "MERCHANT") {
                         _loginStatus.value = 0
-                        savePreference(customer!!, auth!!)
+                        savePreference(customer!!, auth!!, name!!, savedStep!!, request.username)
+                        _step.value = savedStep
+                        Timber.d("step == ${_step.value}")
                     } else {
                         _loginStatus.value = 1
                     }
@@ -102,6 +120,26 @@ class SignInViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _showDialogLoader.value = false
+                _showTToastForError.value = true
+                Timber.e("$e")
+            }
+        }
+    }
+
+    fun  deleteUser() {
+        viewModelScope.launch {
+            try {
+                val userCode = SmartPayApp.preferences.getString("user_code", "")
+                val userToken = SmartPayApp.preferences.getString("token", "")
+                val auth = "Bearer $userToken"
+                _showDialogLoader.value = true
+                val result = SmartPayApi.smartPayApiService.deleteUserAsync(auth, userCode!!).await()
+                Timber.d("$result")
+                _response.value = result
+                _showDialogLoader.value = false
+            } catch (e: Exception) {
+                _showDialogLoader.value = false
+                _showTToastForError.value = true
                 Timber.e("$e")
             }
         }
@@ -111,14 +149,27 @@ class SignInViewModel : ViewModel() {
         _showDialogLoader.value = null
     }
 
-    private fun savePreference(userCode: String, auth: String) {
-        val preferencesEditor = SmartPayApp.preferences.edit()
-        preferencesEditor.putString("fcm", token)
-        preferencesEditor.putString("user_code", userCode)
-        preferencesEditor.putString("token", auth)
-        preferencesEditor.apply()
+    fun showToastErrorDone() {
+        _showTToastForError.value = null
+    }
+
+    fun signIn() {
         _navigateToHome.value = true
     }
+
+    private suspend fun savePreference(userCode: String, auth: String, name: String, step: Int, userName: String) {
+        withContext(Dispatchers.Main) {
+            val preferencesEditor = SmartPayApp.preferences.edit()
+            preferencesEditor.putString("fcm", token)
+            preferencesEditor.putString("user_code", userCode)
+            preferencesEditor.putString("token", auth)
+            preferencesEditor.putString("name", name)
+            preferencesEditor.putString("username", userName)
+            preferencesEditor.putInt("step", step)
+            preferencesEditor.apply()
+        }
+    }
+
 
     fun navigateToHomeDone() {
         _navigateToHome.value = null

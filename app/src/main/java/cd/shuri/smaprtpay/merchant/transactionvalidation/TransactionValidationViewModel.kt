@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cd.shuri.smaprtpay.merchant.SmartPayApp
+import cd.shuri.smaprtpay.merchant.network.CommonResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import cd.shuri.smaprtpay.merchant.network.TransactionResponse
 import cd.shuri.smaprtpay.merchant.network.TransactionValidationRequest
@@ -17,17 +18,20 @@ class TransactionValidationViewModel: ViewModel() {
     private val _transactions =  MutableLiveData<List<TransactionResponse>>()
     val transactions : LiveData<List<TransactionResponse>> get() = _transactions
 
+    private val _validation = MutableLiveData<CommonResponse>()
+    val validation : LiveData<CommonResponse> get() = _validation
+
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
 
-    private val _showToast = MutableLiveData<Boolean>()
-    val  showToast : LiveData<Boolean> get() = _showToast
-
-    private val _messageValidation = MutableLiveData<String>()
-    val  messageValidation : LiveData<String> get() = _messageValidation
-
     private val _navigateToHome = MutableLiveData<Boolean>()
     val navigateToHome : LiveData<Boolean> get() = _navigateToHome
+
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+
+    private val _indexRemoved= MutableLiveData<Int>()
+    val indexRemoved: LiveData<Int> get() = _indexRemoved
 
     private var viewModelJob = Job()
 
@@ -48,15 +52,15 @@ class TransactionValidationViewModel: ViewModel() {
         _showDialogLoader.value = null
     }
 
-    fun showToastDone() {
-        _showToast.value = null
-    }
-
     fun navigateToHomeDone() {
         _navigateToHome.value = null
     }
 
-    private fun getTransactions() {
+    fun navigateToHome() {
+        _navigateToHome.value = true
+    }
+
+    fun getTransactions() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
@@ -79,28 +83,29 @@ class TransactionValidationViewModel: ViewModel() {
         }
     }
 
-    fun validateTransaction(request: TransactionValidationRequest) {
+    fun validateTransaction(request: TransactionValidationRequest, transaction: TransactionResponse) {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
                 val result = SmartPayApi.smartPayApiService.validateTransactionAsync(auth, request).await()
+                _validation.value = result
                 _showDialogLoader.value = false
-                if (result.status == "0") {
-                    _messageValidation.value = result.message
-                    _showToast.value = true
-                    _navigateToHome.value = true
-                } else if (result.status == "1") {
-                    _messageValidation.value = result.message
-                    _showToast.value = true
-                    _navigateToHome.value = true
+                if (result.status == "0" || result.status == "1") {
+                    val transacs = _transactions.value!!.toMutableList()
+                    _indexRemoved.value =  transacs.indexOf(transaction)
+                    transacs.remove(transaction)
+                    _transactions.value = transacs.toList()
                 }
             } catch (e: Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false
-                _messageValidation.value = "Http 500"
-                _showToast.value = true
+                _showTToastForError.value = true
             }
         }
+    }
+
+    fun showToastErrorDone() {
+        _showTToastForError.value = null
     }
 
     override fun onCleared() {

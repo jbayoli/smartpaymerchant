@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import cd.shuri.smaprtpay.merchant.SmartPayApp
 
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSignUpFirstBinding
 
@@ -24,7 +26,14 @@ class SignUpFirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val preferencesEditor = SmartPayApp.preferences.edit()
+        preferencesEditor.putString("isRegistrationDone", "false")
+        preferencesEditor.apply()
+
         binding = FragmentSignUpFirstBinding.inflate(layoutInflater)
+
+        (requireActivity() as AppCompatActivity).supportActionBar!!.show()
 
         observers()
 
@@ -97,14 +106,6 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumber2Empty.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                binding.phoneNumberTwoTil.error = "Ce champ est obligatoire"
-            } else {
-                binding.phoneNumberTwoTil.error = null
-            }
-        })
-
         viewModel.isEmailValid.observe(viewLifecycleOwner, Observer {
             if (it) {
                 binding.mailTil.error = null
@@ -115,12 +116,16 @@ class SignUpFirstFragment : Fragment() {
 
         viewModel.navigateToSignUp2.observe(viewLifecycleOwner, Observer {
             if (it != null) {
+                var phone2 = ""
+                if (binding.phoneNumberTwoTet.text.toString().isNotEmpty()) {
+                   phone2 =  "${binding.countryCodeTetTwo.text.toString().removePrefix("+")}${binding.phoneNumberTwoTet.text.toString()}"
+                }
                 findNavController().navigate(SignUpFirstFragmentDirections.actionSignUpFirstFragmentToSignUpSecondFragment(
                     binding.lastNameTet.text.toString(),
                     binding.firstNameTet.text.toString(),
                     binding.mailTet.text.toString(),
                     "${binding.countryCodeTetOne.text.toString().removePrefix("+")}${binding.phoneNumberOneTet.text.toString()}",
-                    "${binding.countryCodeTetTwo.text.toString().removePrefix("+")}${binding.phoneNumberTwoTet.text.toString()}",
+                    phone2,
                     binding.addressTet.text.toString()
                 ))
                 viewModel.navigateToSignUp2Done()

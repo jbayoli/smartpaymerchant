@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="transfer"
+            type="cd.shuri.smaprtpay.merchant.network.Transfers" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:elevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/date_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date :"
+                            android:fontFamily="@font/roboto"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+                        <TextView
+                            android:id="@+id/date_value_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{transfer.date}"
+                            android:fontFamily="@font/roboto"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/date_tv"
+                            tools:text="01 Avril 2020" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/card_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="Compte carte :" />
+
+                        <TextView
+                            android:id="@+id/card_value_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="@{transfer.card}"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/roboto"
+                            android:layout_toEndOf="@+id/card_tv"
+                            tools:text="150 $" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/mobile_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="Compte mobile :" />
+
+                        <TextView
+                            android:id="@+id/mobile_value_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="@{transfer.mobile}"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/roboto"
+                            android:layout_toEndOf="@+id/mobile_tv"
+                            tools:text="0897933589" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/amount_tv"
+                            android:fontFamily="@font/roboto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="Montant :" />
+
+                        <TextView
+                            android:id="@+id/amount_value_tv"
+                            android:fontFamily="@font/roboto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="@{transfer.amount}"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/amount_tv"
+                            tools:text="10000" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/currency_tv"
+                            android:fontFamily="@font/roboto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="Devise :" />
+
+                        <TextView
+                            android:id="@+id/currency_value_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="@{transfer.currency}"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/currency_tv"
+                            tools:text="CDF" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/payment_status_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:bindTransfersStatus="@{transfer.step}"
+                    tools:src="@drawable/ic_round_check_circle_24" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

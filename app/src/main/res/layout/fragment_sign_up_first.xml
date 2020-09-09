@@ -14,8 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/homeBackgroundColor">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/saving_message_tv"
@@ -24,7 +23,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Veuillez remplir le formulaire suivant pour vous enregistrer dans notre service Smartpay"
+                android:fontFamily="@font/roboto"
+                android:text="Veuillez remplir le formulaire suivant pour vous enregistrer sur FlexPay"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,27 +42,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/saving_message_tv" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/last_name_til"
-                style="@style/AppTheme.TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/identity_mail_tv">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/last_name_tet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Entrez votre nom"
-                    android:inputType="textPersonName" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/first_name_til"
                 style="@style/AppTheme.TextInputLayout"
                 android:layout_width="match_parent"
@@ -70,15 +49,40 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/last_name_til">
+                app:layout_constraintTop_toBottomOf="@+id/identity_mail_tv">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/first_name_tet"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/roboto"
                     android:layout_height="wrap_content"
-                    android:hint="Entrez votre prénom"
+                    android:hint="Entrez votre prénom*"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/last_name_til"
+                style="@style/AppTheme.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/first_name_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/last_name_tet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Entrez votre nom*"
+                    android:fontFamily="@font/roboto"
                     android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -91,7 +95,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Contact"
                 app:layout_constraintStart_toStartOf="@+id/saving_message_tv"
-                app:layout_constraintTop_toBottomOf="@+id/first_name_til" />
+                app:layout_constraintTop_toBottomOf="@+id/last_name_til" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mail_til"
@@ -99,8 +103,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contact_tv">
@@ -109,6 +114,7 @@
                     android:id="@+id/mail_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
                     android:hint="Entrez votre adresse mail"
                     android:inputType="textEmailAddress" />
 
@@ -121,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mail_til">
 
@@ -130,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:text="+243"
                     android:maxLength="4"
-                    android:inputType="none" />
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -140,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/country_code_til_one"
@@ -150,7 +158,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLength="9"
-                    android:hint="Entrez votre n° de téléphone 1"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Entrez votre n° de téléphone 1*"
                     android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -161,6 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:fontFamily="@font/roboto"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/phone_number_one_til">
@@ -171,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:text="+243"
                     android:maxLength="4"
-                    android:inputType="none" />
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -182,6 +192,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/country_code_til_two"
                 app:layout_constraintTop_toBottomOf="@+id/phone_number_one_til">
@@ -190,6 +201,7 @@
                     android:id="@+id/phone_number_two_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
                     android:hint="Entrez votre n° de téléphone 2"
                     android:maxLength="9"
                     android:inputType="phone" />
@@ -214,6 +226,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/address_tv">
@@ -222,7 +235,8 @@
                     android:id="@+id/address_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Entrez votre adresse"
+                    android:fontFamily="@font/roboto"
+                    android:hint="Entrez votre adresse*"
                     android:inputType="textMultiLine" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -230,14 +244,15 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/next_button"
                 style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp"
                 android:text="Suivant"
-                app:icon="@drawable/ic_arrow_forward_black_24dp"
-                app:layout_constraintTop_toBottomOf="@+id/address_til"
+                app:layout_constraintEnd_toEndOf="@+id/address_til"
+                app:layout_constraintStart_toStartOf="@+id/address_til"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/address_til" />
+                app:layout_constraintTop_toBottomOf="@+id/address_til" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

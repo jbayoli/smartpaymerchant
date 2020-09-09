@@ -1,14 +1,18 @@
 package cd.shuri.smaprtpay.merchant.utilities
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.screens.accounts.AccountsListAdapter
 import cd.shuri.smaprtpay.merchant.network.AccountsResponse
 import cd.shuri.smaprtpay.merchant.network.TransactionResponse
+import cd.shuri.smaprtpay.merchant.network.Transfers
 import cd.shuri.smaprtpay.merchant.screens.transaction.TransactionListAdapter
 import cd.shuri.smaprtpay.merchant.transactionvalidation.TransactionValidationListAdapter
+import cd.shuri.smaprtpay.merchant.transfer.TransferListAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 
@@ -56,11 +60,7 @@ fun setPhoneOrCardNum(textView: TextView, account: AccountsResponse) {
 
 @BindingAdapter("enableResendButton")
 fun enableResendButton(button: MaterialButton, isEnable: Boolean) {
-    if (isEnable) {
-        button.isEnabled = isEnable
-    } else {
-        button.isEnabled = isEnable
-    }
+    button.isEnabled = isEnable
 }
 
 @BindingAdapter("bindAccountsRecyclerView")
@@ -88,4 +88,43 @@ fun bindNoAccount(textView: TextView, accounts: List<AccountsResponse>) {
     } else {
         textView.visibility = View.GONE
     }
+}
+
+@BindingAdapter("bindTransfersStatus")
+fun bindTransfersStatus(img: ImageView, status: Int) {
+    when (status) {
+        2 -> {
+            img.setImageResource(R.drawable.ic_round_check_circle_24)
+        }
+        0 -> {
+            img.setImageResource(R.drawable.ic_round_remove_circle_24)
+        }
+        else -> {
+            img.setImageResource(R.drawable.ic_round_pause_circle_filled_24)
+        }
+    }
+}
+
+@BindingAdapter("bindTransactionStatus")
+fun bindTransactionStatus(img: ImageView, status: Boolean) {
+    if (status) {
+        img.setImageResource(R.drawable.ic_round_check_circle_24)
+    } else {
+        img.setImageResource(R.drawable.ic_round_remove_circle_24)
+    }
+}
+
+@BindingAdapter("hideNoTransactionTextView")
+fun hideNoTransactionTextView(textView: TextView, isTransactionDone: Boolean) {
+    if (isTransactionDone) {
+        textView.visibility = View.GONE
+    } else {
+        textView.visibility = View.VISIBLE
+    }
+}
+
+@BindingAdapter("bindTransferRecyclerView")
+fun bindTransferRecyclerView(recyclerView: RecyclerView, transfers: List<Transfers>) {
+    val adapter = recyclerView.adapter as TransferListAdapter
+    adapter.submitList(transfers)
 }

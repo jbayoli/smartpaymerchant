@@ -3,6 +3,7 @@ package cd.shuri.smaprtpay.merchant
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import timber.log.Timber
 
 class SmartPayApp :  Application() {
@@ -15,6 +16,7 @@ class SmartPayApp :  Application() {
 
     companion object {
         lateinit var preferences : SharedPreferences
+        val dialogLoader = LoaderDialog()
     }
 
 }

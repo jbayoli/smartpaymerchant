@@ -14,8 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/homeBackgroundColor">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/saving_message_tv"
@@ -24,7 +23,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Veuillez remplir le formulaire suivant pour vous enregistrer dans notre service Smartpay"
+                android:fontFamily="@font/roboto"
+                android:text="Veuillez remplir le formulaire suivant pour vous enregistrer sur FlexPay"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +49,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/identity_mail_tv">
@@ -57,7 +58,8 @@
                     android:id="@+id/activity_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Acivité"
+                    android:hint="Nom de l'activité*"
+                    android:fontFamily="@font/roboto"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -70,6 +72,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:endIconMode="dropdown_menu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,14 +82,9 @@
                     android:id="@+id/sector_auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Secteur"
+                    android:hint="Domaine d'activité*"
+                    android:fontFamily="@font/roboto"
                     android:inputType="none" />
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/sector_tet"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="Secteur"-->
-<!--                    android:inputType="text" />-->
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,6 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="RCCM"
+                    android:fontFamily="@font/roboto"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -119,6 +119,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rccm_til">
@@ -128,6 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="NIF"
+                    android:fontFamily="@font/roboto"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -140,6 +142,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nif_til">
@@ -148,7 +151,7 @@
                     android:id="@+id/owner_id_tet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ID Proprietaire"
+                    android:hint="ID NAT"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -156,15 +159,15 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/validate_button"
                 style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Validez"
-                app:icon="@drawable/ic_check_black_24dp"
-                app:layout_constraintTop_toBottomOf="@+id/owner_id_til"
+                android:layout_marginBottom="32dp"
+                android:text="Valider"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintEnd_toEndOf="@+id/owner_id_til"
+                app:layout_constraintStart_toStartOf="@+id/owner_id_til"
+                app:layout_constraintTop_toBottomOf="@+id/owner_id_til" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

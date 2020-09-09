@@ -17,10 +17,14 @@ interface SmartPayApiService {
     @POST("login")
     suspend fun login(@Body request: LoginRequest) : Response<Unit>
 
-    @POST("api/merchant/register")
+    @POST("register/merchant/api/step4")
     fun registerAsync(
-        @Header("Authorization") authorization: String,
         @Body request: RegisterRequest) : Deferred<CommonResponse>
+
+    @POST("register/merchant/api/step5")
+    fun addPaymentAccountAsync(
+        @Body request: AddPaymentMethodFirstTimeRequest
+    ): Deferred<CommonResponse>
 
     @POST("api/merchant/compte/add")
     fun addPaymentMethodAsync(
@@ -75,4 +79,51 @@ interface SmartPayApiService {
     fun getSectorsAsync(
         @Header("Authorization") authorization: String
     ) : Deferred<List<SectorsResponse>>
+
+    @POST("api/merchant/transfert/new")
+    fun cardToEMoneyAsync(
+        @Header("Authorization") authorization: String,
+        @Body request: TransferRequest
+    ): Deferred<TransferResponse>
+
+    @GET("api/merchant/transfert/list/{customer}")
+    fun getTransfersAsync(
+        @Path("customer") customer: String,
+        @Header("Authorization") authorization: String
+    ): Deferred<TransferListResponse>
+
+    @POST("api/merchant/password/reinit")
+    fun editPasswordAsync(
+        @Header("Authorization") authorization: String,
+        @Body request: EditPasswordRequestData
+    ): Deferred<EditPasswordResponseData>
+
+    @POST("register/merchant/api/reinitPassword/step3")
+    fun forgottenPINAsync(
+        @Body request: ForgottenPINRequestThree
+    ) : Deferred<ForgottenPINResponse>
+
+    @POST("register/merchant/api/reinitPassword/{step}")
+    fun forgottenPINAsync(
+        @Path("step") step: String,
+        @Body request: ForgottenPINRequestOneTwo
+    ) : Deferred<ForgottenPINResponse>
+
+    @GET("api/merchant/account/infos/{customer}")
+    fun getInfoAsync(
+        @Path("customer") customer: String,
+        @Header("Authorization") authorization: String
+    ): Deferred<Profile>
+
+    @POST("api/merchant/account/infos/update")
+    fun updateProfileAsync(
+        @Header("Authorization") authorization: String,
+        @Body request: UpdateProfile
+    ) : Deferred<CommonResponse>
+
+    @GET("api/merchant/account/register/delete/{customer}")
+    fun deleteUserAsync(
+        @Header("Authorization") authorization: String,
+        @Path("customer") customer: String
+    ) : Deferred<CommonResponse>
 }

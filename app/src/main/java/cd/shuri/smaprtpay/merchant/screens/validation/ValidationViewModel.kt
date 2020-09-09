@@ -27,6 +27,9 @@ class ValidationViewModel (phone: String): ViewModel(){
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
 
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+
     private lateinit var timer : CountDownTimer
 
     //The String version of the current time
@@ -55,7 +58,10 @@ class ValidationViewModel (phone: String): ViewModel(){
         _isTimerEnable.value = false
         _isCodeCorrect.value = true
         _isResendEnable.value = false
+        getCode()
+    }
 
+    private fun getCode() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -66,11 +72,10 @@ class ValidationViewModel (phone: String): ViewModel(){
                 token = task.result?.token!!
                 // Log and toast
                 Timber.d("token : $token")
-                sendCode(CodeRequest(phone, token))
+                sendCode(CodeRequest(phoneNumber, token))
                 sendingCodeTimer()
             })
     }
-
     private fun sendingCodeTimer() {
         //Creates a timer which triggers the end of the game when it finishes
         _isTimerEnable.value = true
@@ -125,6 +130,7 @@ class ValidationViewModel (phone: String): ViewModel(){
             } catch (e: Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false
+                _showTToastForError.value = true
             }
         }
     }
@@ -134,12 +140,16 @@ class ValidationViewModel (phone: String): ViewModel(){
     }
 
     fun checkCodeField(code: String){
-        _isCodeCorrect.value = code.length !in 0..2
+        _isCodeCorrect.value = code.length == 6
         if (_isCodeCorrect.value!!) validateCode(code)
     }
 
     fun showDialogLoaderDone() {
         _showDialogLoader.value = null
+    }
+
+    fun showToastErrorDone() {
+        _showTToastForError.value = null
     }
 
     override fun onCleared() {

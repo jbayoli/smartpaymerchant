@@ -6,9 +6,10 @@
     <color name="appBarColor"> #ffffff</color>
     <color name="textColorPrimary">#000000</color>
     <color name="textInputOutlineColor">#003c8f</color>
-    <color name="homeBackgroundColor">#EDEFF1</color>
-    <color name="buttonBack">#003c8f</color>
+    <color name="homeBackgroundColor">#eeeeee</color>
+    <color name="buttonBack">#448aff</color>
     <color name="validateColor">#009688</color>
-    <color name="failColor">#E41708</color>
-    <color name="warningColor">#FF5722</color>
+    <color name="failColor">#F44336</color>
+    <color name="alertColor">#DCD3D3</color>
+    <color name="light_grey">#9D9DA2</color>
 </resources>

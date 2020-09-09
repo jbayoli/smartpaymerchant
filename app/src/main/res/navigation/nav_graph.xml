@@ -26,6 +26,35 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_singInFragment_to_userCodeFragment"
+            app:destination="@id/userCodeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_singInFragment_to_signUpFirstFragment"
+            app:destination="@id/signUpFirstFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <argument
+            android:name="showDialogForRegister"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="shshowDialogForAccount"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_singInFragment_to_addFirstPaymentAccountFragment"
+            app:destination="@id/addFirstPaymentAccountFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -39,23 +68,12 @@
             android:name="phoneNumber"
             app:argType="string" />
         <action
-            android:id="@+id/action_signUpFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/signUpFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_signUpFragment_to_signUpFirstFragment"
             app:destination="@id/signUpFirstFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/signUpFragment"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/signUpFirstFragment"
@@ -96,8 +114,8 @@
             android:name="address"
             app:argType="string" />
         <action
-            android:id="@+id/action_signUpSecondFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_signUpSecondFragment_to_addFirstPaymentAccountFragment"
+            app:destination="@id/addFirstPaymentAccountFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -108,7 +126,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.home.HomeFragment"
-        android:label="SmartPay Marchand"
+        android:label="FlexPay Marchand"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_transactionsFragment"
@@ -161,6 +179,41 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_QRCodeFragment"
+            app:destination="@id/QRCodeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_transfersFragment"
+            app:destination="@id/transfersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_doTransferFragment2"
+            app:destination="@id/doTransferFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_renewPasswordFragment"
+            app:destination="@id/renewPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
@@ -179,19 +232,19 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/transactionValidation"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/accountsFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.accounts.AccountsFragment"
-        android:label="Moyen de paiements"
+        android:label="Compte de paiements"
         tools:layout="@layout/fragment_accounts" />
     <fragment
         android:id="@+id/addAccountFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.addaccount.AddAccountFragment"
-        android:label="Ajouter moyen de paiements"
-        tools:layout="@layout/fragment_add_account" >
+        android:label="Ajouter compte de paiements"
+        tools:layout="@layout/fragment_add_account">
         <action
             android:id="@+id/action_addAccountFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -199,13 +252,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/addAccountFragment"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.account.AccountFragment"
-        android:label="SmartPay"
+        android:label="FlexPay Marchand"
         tools:layout="@layout/fragment_account" >
         <action
             android:id="@+id/action_accountFragment_to_validationFragment"
@@ -213,9 +266,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/accountFragment"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/validationFragment"
@@ -232,7 +283,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/validationFragment"
+            app:popUpTo="@id/accountFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -264,5 +315,153 @@
             app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_transactionValidation"
+            app:destination="@id/transactionValidation"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/QRCodeFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.qrcode.QRCodeFragment"
+        android:label="QRCode Marchand"
+        tools:layout="@layout/fragment_q_r_code">
+        <argument
+            android:name="codeText"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/transfersFragment"
+        android:name="cd.shuri.smaprtpay.merchant.transfer.TransfersFragment"
+        android:label="Mes Transferts"
+        tools:layout="@layout/fragment_transfers"/>
+    <fragment
+        android:id="@+id/doTransferFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.dotransfer.DoTransferFragment"
+        android:label="Transfert"
+        tools:layout="@layout/fragment_do_transfer" >
+        <action
+            android:id="@+id/action_doTransferFragment_to_transfersFragment"
+            app:destination="@id/transfersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/doTransferFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_validationTransaction"
+        app:destination="@id/transactionValidation"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/splashScreenFragment"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/renewPasswordFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.renewpassword.RenewPasswordFragment"
+        android:label="FlexPay Marchand"
+        tools:layout="@layout/fragment_renew_password">
+        <argument
+            android:name="isPINForgotten"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_renewPasswordFragment_to_singInFragment"
+            app:destination="@id/singInFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/singInFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="user"
+            app:argType="string"
+            android:defaultValue="user" />
+    </fragment>
+    <fragment
+        android:id="@+id/codeFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.forgottenpin.ui.CodeFragment"
+        android:label="FlexPay Marchand"
+        tools:layout="@layout/fragment_code">
+        <action
+            android:id="@+id/action_codeFragment_to_renewPasswordFragment"
+            app:destination="@id/renewPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/userCodeFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.forgottenpin.ui.UserCodeFragment"
+        android:label="SmartPay"
+        tools:layout="@layout/fragment_user_code">
+        <action
+            android:id="@+id/action_userCodeFragment_to_codeFragment"
+            app:destination="@id/codeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <action
+        android:id="@+id/toHomeFragment"
+        app:destination="@id/homeFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popUpTo="@id/addAccountFragment"
+        app:popUpToInclusive="true"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:launchSingleTop="true" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.profile.ProfileFragment"
+        android:label="Info"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFirstPaymentAccountFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.addfirstpaymentaccount.AddFirstPaymentAccountFragment"
+        android:label="Ajouter compte"
+        tools:layout="@layout/fragment_add_first_payment_account" >
+        <action
+            android:id="@+id/action_addFirstPaymentAccountFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/singInFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.editProfile.EditProfileFragment"
+        android:label="Modifier profle"
+        tools:layout="@layout/edit_profile_fragment">
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="profileInfo"
+            app:argType="cd.shuri.smaprtpay.merchant.network.Profile" />
+    </fragment>
+
 </navigation>

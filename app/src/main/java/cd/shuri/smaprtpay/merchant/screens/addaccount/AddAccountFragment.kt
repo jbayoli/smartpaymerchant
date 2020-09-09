@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import cd.shuri.smaprtpay.merchant.NavGraphDirections
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 
@@ -31,6 +32,28 @@ class AddAccountFragment : Fragment() {
     private var accountType = 0
     private var operatorCode = ""
     private val useCode = SmartPayApp.preferences.getString("user_code", "")
+    private val months = mutableListOf<String>()
+    private val years = mutableListOf<Int>()
+    private var selectedMonth = ""
+    private var selectedYear = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        for (e in 1..12) {
+            if (e in 1..9) {
+                months.add(e - 1, "0$e")
+            } else {
+                months.add(e - 1, "$e")
+            }
+        }
+
+        var yearIndex = 0
+        for (y in 20..50) {
+            years.add(yearIndex, y)
+            yearIndex += 1
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +61,12 @@ class AddAccountFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentAddAccountBinding.inflate(layoutInflater)
+
+        val adapterMonth = ArrayAdapter(requireContext(), R.layout.list_items, months)
+        val adapterYear = ArrayAdapter(requireContext(), R.layout.list_items, years)
+
+        (binding.monthTil.editText as? AutoCompleteTextView)?.setAdapter(adapterMonth)
+        (binding.yearTil.editText as? AutoCompleteTextView)?.setAdapter(adapterYear)
 
         val dialog = AddAccountDialogFragment(viewModel)
         dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -51,6 +80,14 @@ class AddAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.monthAuto.setOnItemClickListener { adapterView, _, i, _ ->
+            selectedMonth = adapterView.getItemAtPosition(i).toString()
+        }
+
+        binding.yearAuto.setOnItemClickListener { adapterView, _, i, _ ->
+            selectedYear = "${adapterView.getItemAtPosition(i)}"
+        }
 
         binding.mobileMoneyAuto.setOnItemClickListener { adapterView, _, i, _ ->
             Timber.d("user select ${adapterView.getItemAtPosition(i)}")
@@ -101,20 +138,32 @@ class AddAccountFragment : Fragment() {
                 operator =  operatorCode,
                 type = accountType,
                 card = binding.cardNumberTet.text.toString(),
-                expiration = binding.cardExpiryTet.text.toString(),
+                expiration = "$selectedMonth/$selectedYear",
                 customer = useCode!!,
                 shortCode = binding.shortCodeTet.text.toString()
             ))
 
             if (valid) {
-                viewModel.addPaymentMethod(AddPaymentMethodRequest(
-                    operator =  operatorCode,
-                    type = accountType,
-                    card = binding.cardNumberTet.text.toString(),
-                    expiration = binding.cardExpiryTet.text.toString(),
-                    customer = useCode,
-                    shortCode = binding.shortCodeTet.text.toString()
-                ))
+                if (binding.isMobileAccount.isChecked) {
+                    viewModel.addPaymentMethod(AddPaymentMethodRequest(
+                        operator =  operatorCode,
+                        type = accountType,
+                        card = binding.cardNumberTet.text.toString(),
+                        expiration = "$selectedMonth/$selectedYear",
+                        customer = useCode,
+                        shortCode = binding.shortCodeTet.text.toString()
+                    ))
+                } else {
+                    viewModel.addPaymentMethod(AddPaymentMethodRequest(
+                        operator =  operatorCode,
+                        type = accountType,
+                        card = binding.cardNumberTet.text.toString(),
+                        expiration = "$selectedMonth/$selectedYear",
+                        customer = useCode,
+                        shortCode = binding.shortCodeTet.text.toString()
+                    ))
+                }
+
             } else {
                 return
             }
@@ -178,11 +227,13 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isExpirationEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isExpirationValid.observe(viewLifecycleOwner, Observer {
             if (it) {
-                binding.cardExpiryTil.error = "Ce champ est obligatoir"
+                binding.monthTil.error = null
+                binding.yearTil.error = null
             } else {
-                binding.cardExpiryTil.error = null
+                binding.monthTil.error = "Invalide"
+                binding.yearTil.error = "Invalide"
             }
         })
 
@@ -232,6 +283,17 @@ class AddAccountFragment : Fragment() {
             if (it != null) {
                 findNavController().navigate(AddAccountFragmentDirections.actionAddAccountFragmentToHomeFragment())
                 viewModel.navigateToHomeDone()
+            }
+        })
+
+        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard",
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.showToastErrorDone2()
             }
         })
     }

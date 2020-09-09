@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/signUpFirstFragment"
-        android:title="Enregistrement" />
-    <item
-        android:id="@+id/accountsFragment"
-        android:title="Moyen de paiements" />
-    <item
-        android:id="@+id/addAccountFragment"
-        android:title="Ajouter moyen de paiements" />
-
-<!--    <item-->
-<!--        android:id="@+id/cardToMobileMoney"-->
-<!--        android:title="Carte vers Emoney" />-->
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_baseline_refresh_24"
+        app:showAsAction="always"
+        android:title="Actualiser" />
     <item
         android:id="@+id/singInFragment"
-        android:title="Se deconnecter" />
+        android:title="Se deconnecter"
+        android:icon="@drawable/ic_round_power_settings_new_24"
+        app:showAsAction="always"/>
 </menu>

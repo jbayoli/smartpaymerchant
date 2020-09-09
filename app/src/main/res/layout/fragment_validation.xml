@@ -20,8 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="56dp"
-            android:background="@color/homeBackgroundColor">
+            android:layout_marginTop="56dp">
 
             <TextView
                 android:id="@+id/validation_message_tv"
@@ -32,6 +31,7 @@
                 android:layout_marginEnd="24dp"
                 android:text="En attente du code de validation envoyé par SMS au"
                 android:textAlignment="center"
+                android:fontFamily="@font/roboto"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,13 +42,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto"
+                android:text="@{phoneNumber}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:textStyle="bold"
-                android:text="@{phoneNumber}"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/validation_message_tv"
-                tools:text="+243 897 933 589"/>
+                tools:text="+243 897 933 589" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/code_til"
@@ -67,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:maxLength="3"
+                    android:maxLength="6"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,7 +76,8 @@
                 android:id="@+id/code_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Entrez le code envoyé"
+                android:text="Entrer le code envoyé"
+                android:fontFamily="@font/roboto"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintStart_toStartOf="@+id/code_til"
                 app:layout_constraintEnd_toEndOf="@+id/code_til"
@@ -87,6 +89,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Renvoyer le code"
+                android:fontFamily="@font/roboto"
+                android:textStyle="bold"
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintTop_toBottomOf="@+id/code_text"
@@ -99,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
                 android:text="@{viewModel.currentTimeString}"
                 app:layout_constraintTop_toTopOf="@+id/resend_button"
                 app:layout_constraintEnd_toEndOf="@+id/validation_message_tv"
@@ -109,15 +114,13 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/validate_button"
                 style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:text="Validez"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="34dp"
-                app:icon="@drawable/ic_check_black_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Valider"
+                app:layout_constraintEnd_toEndOf="@+id/timer"
+                app:layout_constraintStart_toStartOf="@+id/resend_button"
+                app:layout_constraintTop_toBottomOf="@+id/resend_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

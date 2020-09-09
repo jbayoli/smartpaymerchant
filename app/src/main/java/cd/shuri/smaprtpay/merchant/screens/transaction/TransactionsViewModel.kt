@@ -19,6 +19,9 @@ class TransactionsViewModel: ViewModel() {
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
 
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+
     private var viewModelJob = Job()
 
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -54,9 +57,14 @@ class TransactionsViewModel: ViewModel() {
             } catch (e: Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false
+                _showTToastForError.value = true
                 _transactions.value = ArrayList()
             }
         }
+    }
+
+    fun showToastErrorDone() {
+        _showTToastForError.value = null
     }
 
     override fun onCleared() {

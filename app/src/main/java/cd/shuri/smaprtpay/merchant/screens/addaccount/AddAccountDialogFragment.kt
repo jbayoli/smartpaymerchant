@@ -21,7 +21,9 @@ class AddAccountDialogFragment(private val viewModel: AddAccountViewModel) : Dia
             }.setNegativeButton("Carte") { _, _ ->
                 viewModel.setAccountType(2)
             }
-            builder.create()
+            val dialog = builder.create()
+            dialog.setCanceledOnTouchOutside(false)
+            dialog
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 }

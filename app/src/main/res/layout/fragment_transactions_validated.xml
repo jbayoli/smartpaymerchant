@@ -46,7 +46,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:bindTransactionsRecyclerView="@{viewModel.transactions}" />
+                        app:bindTransactionsRecyclerView="@{viewModel.transactions}"
+                        tools:listitem="@layout/transaction_items"/>
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

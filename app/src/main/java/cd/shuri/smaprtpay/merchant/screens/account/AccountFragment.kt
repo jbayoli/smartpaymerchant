@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAccountBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * A simple [Fragment] subclass.
@@ -40,7 +42,21 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.validateButton.setOnClickListener {
-            viewModel.setPhoneNumber(binding.phoneNumberTet.text.toString())
+            if (binding.checkBox.isChecked) {
+                viewModel.setPhoneNumber(binding.phoneNumberTet.text.toString())
+            } else {
+                val builder = MaterialAlertDialogBuilder(
+                    requireContext(),
+                    R.style.ThemeOverlay_AppTheme_Dialog
+                )
+                    .setMessage("Veuillez accepter les terms pour continuer à utiliser FlexPay")
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                val dialog = builder.create()
+                dialog.setCanceledOnTouchOutside(false)
+                dialog.show()
+            }
         }
     }
 

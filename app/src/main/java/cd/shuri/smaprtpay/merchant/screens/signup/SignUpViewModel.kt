@@ -32,9 +32,6 @@ class SignUpViewModel : ViewModel() {
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
 
-    private val _showDialog = MutableLiveData<Boolean>()
-    val showDialog : LiveData<Boolean> get() = _showDialog
-
     private val _isUserNameExist = MutableLiveData<Boolean>()
     val isUserNameExist : LiveData<Boolean> get() = _isUserNameExist
 
@@ -43,6 +40,9 @@ class SignUpViewModel : ViewModel() {
 
     private val _navigateTo = MutableLiveData<Boolean>()
     val navigateTo : LiveData<Boolean> get() = _navigateTo
+
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
 
     private var viewModelJob = Job()
 
@@ -109,8 +109,10 @@ class SignUpViewModel : ViewModel() {
                         preferencesEditor.putString("user_code", result.customer!!)
                         preferencesEditor.putString("token", result.token!!)
                         preferencesEditor.putString("fcm", request.fcm)
+                        preferencesEditor.putString("name", request.code)
+                        preferencesEditor.putString("username", request.username)
                         preferencesEditor.apply()
-                        _showDialog.value = true
+                        _navigateTo.value = true
                     }
                     "2" -> {
                         _isUserNameExist.value = true
@@ -120,21 +122,18 @@ class SignUpViewModel : ViewModel() {
                     }
                 }
             } catch (e: Exception) {
+                _showDialogLoader.value = false
                 Timber.e("$e")
+                _showTToastForError.value = true
             }
         }
     }
-
-    fun showDialogDone() {
-        _showDialog.value = null
-    }
-
-    fun navigate(isNavigateReady: Boolean) {
-        _navigateTo.value = isNavigateReady
-    }
-
     fun navigationDone() {
         _navigateTo.value = null
+    }
+
+    fun showToastErrorDone() {
+        _showTToastForError.value = null
     }
 
     override fun onCleared() {

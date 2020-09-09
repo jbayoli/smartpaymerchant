@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">SP Marchand</string>
+    <string name="app_name">FlexPay Marchand</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notification_chanel_id" translatable="false">fcm_merchant_channel</string>
+    <string name="validate_payment_frag">ACTION_SHOW_VALIDATE_FRAGMENT</string>
 </resources>

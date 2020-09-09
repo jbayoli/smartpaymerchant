@@ -18,9 +18,6 @@ class SignUpFirstViewModel: ViewModel() {
     private val _isPhoneNumber1Empty= MutableLiveData<Boolean>()
     val isPhoneNumber1Empty : LiveData<Boolean> get() = _isPhoneNumber1Empty
 
-    private val _isPhoneNumber2Empty= MutableLiveData<Boolean>()
-    val isPhoneNumber2Empty : LiveData<Boolean> get() = _isPhoneNumber2Empty
-
     private val _isPhoneNumber1Valid= MutableLiveData<Boolean>()
     val isPhoneNumber1Valid : LiveData<Boolean> get() = _isPhoneNumber1Valid
 
@@ -55,11 +52,7 @@ class SignUpFirstViewModel: ViewModel() {
             _isFirstNameEmpty.value = false
         }
 
-        if (email.isEmpty()) {
-            _isEmailEmpty.value = true
-            valid = false
-        } else {
-            _isEmailEmpty.value = false
+        if (email.isNotEmpty()) {
             if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 _isEmailValid.value = true
             } else {
@@ -81,11 +74,7 @@ class SignUpFirstViewModel: ViewModel() {
             }
         }
 
-        if (phone2.isEmpty()) {
-            _isPhoneNumber2Empty.value = true
-            valid = false
-        } else {
-            _isPhoneNumber2Empty.value = false
+        if (phone2.isNotEmpty()) {
             if (phone2.length in 1..8) {
                 _isPhoneNumber2Valid.value = false
                 valid = false

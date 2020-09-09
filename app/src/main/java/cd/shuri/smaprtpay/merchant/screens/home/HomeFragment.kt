@@ -1,5 +1,9 @@
 package cd.shuri.smaprtpay.merchant.screens.home
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -13,6 +17,7 @@ import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentHomeBinding
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -25,15 +30,22 @@ class HomeFragment : Fragment() {
 
     private val dialog = LoaderDialog()
 
+    private val name = SmartPayApp.preferences.getString("name", "")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding.name = name
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.show()
 
         setHasOptionsMenu(true)
+
+        viewModel.getDashBoardData()
+
+        createChannel(getString(R.string.notification_chanel_id), "Paiement")
 
         observers()
 
@@ -47,21 +59,13 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
-            R.id.signUpFirstFragment -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSignUpFirstFragment())
-                true
-            }
-            R.id.accountsFragment -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAccountsFragment())
-                true
-            }
-            R.id.addAccountFragment -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddAccountFragment())
-                true
-            }
             R.id.singInFragment -> {
                 deleteSharedPreferences()
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSingInFragment())
+                true
+            }
+            R.id.refresh -> {
+                viewModel.getDashBoardData()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -72,35 +76,101 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.transactionsCv.setOnClickListener {
-            if(viewModel.response.value!!.all!! > 0) {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionsFragment())
-            }else {
-                Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+        binding.transactionsButton.setOnClickListener {
+            viewModel.response.value?.let {
+                if(it.all!! > 0) {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionsFragment())
+                }else {
+                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
-        binding.transactionsDoneCv.setOnClickListener {
-            if (viewModel.response.value!!.clos!! > 0) {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionsValidatedFragment())
-            } else {
-                Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+        binding.finishedButton.setOnClickListener {
+            viewModel.response.value?.let {
+                if (it.clos!! > 0) {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionsValidatedFragment())
+                } else {
+                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
-        binding.waitingTransactionsCv.setOnClickListener {
-            if (viewModel.response.value!!.waiting!! > 0) {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionValidation())
-            } else {
-                Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+        binding.waitButton.setOnClickListener {
+            viewModel.response.value?.let {
+                if (it.waiting!! > 0) {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionValidation())
+                } else {
+                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                }
             }
+        }
+
+        binding.myTransfersButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransfersFragment())
+        }
+
+        binding.newTransferButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDoTransferFragment2())
+        }
+
+        binding.qrCode.setOnClickListener {
+            name?.let {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToQRCodeFragment(it))
+            }
+        }
+
+        binding.method.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAccountsFragment())
+        }
+
+        binding.addMethod.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddAccountFragment())
+        }
+
+        binding.reinitPin.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRenewPasswordFragment())
+        }
+
+        binding.profileButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
         }
     }
 
     private fun deleteSharedPreferences() {
         val preferencesEditor = SmartPayApp.preferences.edit()
-        preferencesEditor.clear()
+        preferencesEditor.remove("token")
         preferencesEditor.apply()
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        // START create a channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                // Change importance
+                NotificationManager.IMPORTANCE_HIGH
+            )
+                // Disable badges for this channel
+                .apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.BLUE
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = "Paiement à valider"
+
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+
+            notificationManager.createNotificationChannel(notificationChannel)
+
+        }
+        // END create channel
     }
 
     private fun observers() {
@@ -116,11 +186,48 @@ class HomeFragment : Fragment() {
         })
 
         viewModel.response.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                binding.allTv.text = "Transactions(${it.all})"
-                binding.waitingTv.text = "En attente(${it.waiting})"
-                binding.doneTv.text = "Clos(${it.clos})"
+            it?.let{
+                binding.numberOfTransaction.text = bindNumberOfTransaction(it.all!!)
+                binding.numberOfWait.text = bindNumberOfTransaction(it.waiting!!)
+                binding.numberOfClos.text = bindNumberOfTransaction(it.clos!!)
             }
         })
+
+        viewModel.transfers.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.numberOfTransfer.text = bindNumberOfTransaction(it.size)
+            }
+        })
+
+        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard",
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.showToastErrorDone()
+            }
+        })
+    }
+
+    private fun bindNumberOfTransaction(number: Int)  : String {
+        return if (number in 1000..999_999) {
+            val numberString = number.toString()
+            if (numberString[1] != '0' ) {
+                "${numberString.first()}.${numberString[1]}K"
+            } else {
+                "${numberString.first()}K"
+            }
+        } else if (number in 1_000_000..999_999_999) {
+            val numberString = number.toString()
+            if (numberString[1] != '0' ) {
+                "${numberString.first()}.${numberString[1]}M"
+            } else {
+                "${numberString.first()}M"
+            }
+        } else {
+            "$number"
+        }
     }
 }
