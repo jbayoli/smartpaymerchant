@@ -99,7 +99,7 @@ data class AddPaymentMethodFirstTimeRequest(
     val card: String? = null,
     val expiration: String? = null,
     val customer: String,
-    val shortCode: String? = null,
+    val shortCode: String,
     val cardName: String? = null
 )
 

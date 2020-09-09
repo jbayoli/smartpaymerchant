@@ -85,7 +85,6 @@ class AddFirstPaymentAccountFragment : Fragment() {
 
         observers()
 
-
         return  binding.root
     }
 
@@ -147,7 +146,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
         val shortCode = if(binding.shortCodeTet.text.toString().isNotEmpty()) {
             binding.shortCodeTet.text.toString()
         } else {
-            null
+            ""
         }
 
 
@@ -162,7 +161,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     binding.cardNumberTet.text.toString(),
                     "$selectedMonth/$selectedYear",
                     useCode!!,
-                    null,
+                    "",
                     binding.cardNameTet.text.toString()
                 )
                 val valid = viewModel.validateForm(request)
@@ -331,6 +330,5 @@ class AddFirstPaymentAccountFragment : Fragment() {
                 viewModel.showToastErrorDone2()
             }
         })
-
     }
 }

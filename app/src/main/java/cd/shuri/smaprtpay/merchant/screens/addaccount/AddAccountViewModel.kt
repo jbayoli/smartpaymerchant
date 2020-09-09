@@ -24,9 +24,6 @@ class AddAccountViewModel: ViewModel() {
     private val _isCardProviderSelected = MutableLiveData<Boolean>()
     val isCardProviderSelected: LiveData<Boolean> get() = _isCardProviderSelected
 
-    private val _isShortCodeEmpty = MutableLiveData<Boolean>()
-    val isShortCodeEmpty: LiveData<Boolean> get() = _isShortCodeEmpty
-
     private val _isPhoneNumberEmpty = MutableLiveData<Boolean>()
     val isPhoneNumberEmpty: LiveData<Boolean> get() = _isPhoneNumberEmpty
 
@@ -35,6 +32,9 @@ class AddAccountViewModel: ViewModel() {
 
     private val _isCardNumberEmpty = MutableLiveData<Boolean>()
     val isCardNumberEmpty: LiveData<Boolean> get() = _isCardNumberEmpty
+
+    private val _isCardNameValid = MutableLiveData<Boolean>()
+    val isCardNameValid: LiveData<Boolean> get() = _isCardNameValid
 
     private val _isExpirationValid = MutableLiveData<Boolean>()
     val isExpirationValid: LiveData<Boolean> get() = _isExpirationValid
@@ -88,13 +88,6 @@ class AddAccountViewModel: ViewModel() {
             valid = false
         }
 
-        if (request.shortCode.isEmpty()) {
-            _isShortCodeEmpty.value = true
-            valid = false
-        } else {
-            _isShortCodeEmpty.value = false
-        }
-
         if (request.phone!!.isEmpty()) {
             _isPhoneNumberEmpty.value = true
             valid = false
@@ -125,6 +118,13 @@ class AddAccountViewModel: ViewModel() {
             valid = false
         } else {
             _isCardNumberEmpty.value = false
+        }
+
+        if (request.cardName.isNullOrEmpty()) {
+            _isCardNameValid.value = false
+            valid = false
+        } else {
+            _isCardNameValid.value = true
         }
 
         if (request.expiration?.length!! < 4) {

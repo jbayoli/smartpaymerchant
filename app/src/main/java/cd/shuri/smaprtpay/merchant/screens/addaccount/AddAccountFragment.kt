@@ -211,11 +211,11 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isShortCodeEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardNameValid.observe(viewLifecycleOwner, Observer {
             if (it) {
-                binding.shortCodeTil.error = "Ce champ est obligatoir"
+                binding.cardNameTil.error = null
             } else {
-                binding.shortCodeTil.error = null
+                binding.cardNameTil.error = "Ce champ est obligatoir"
             }
         })
 

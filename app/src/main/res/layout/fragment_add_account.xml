@@ -219,6 +219,31 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/card_name_til"
+                    style="@style/AppTheme.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:fontFamily="@font/roboto"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_number_til">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/card_name_tet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:hint="Nom sur la carte"
+                        android:maxLength="15"
+                        android:maxLines="1"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                        android:inputType="textPersonName|textCapWords" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <TextView
                     android:id="@+id/expiration_date_tv"
                     android:layout_width="wrap_content"
@@ -229,7 +254,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="24dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_number_til"/>
+                    app:layout_constraintTop_toBottomOf="@+id/card_name_til"/>
 
                 <LinearLayout
                     android:id="@+id/expiration_date_content"
