@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -119,10 +120,36 @@ class AddFirstPaymentAccountFragment : Fragment() {
         binding.validateButton.setOnClickListener {
             addPaymentMethod()
         }
+
+        binding.mobileMoneyAuto.addTextChangedListener {
+            binding.phoneNumberTil.error = null
+        }
+
+        binding.cardOperatorAuto.addTextChangedListener {
+            binding.cardNameTil.error = null
+            binding.cardNumberTil.error = null
+            binding.monthTil.error = null
+            binding.yearTil.error = null
+        }
     }
 
     private fun addPaymentMethod(){
         val phoneNumber = "${binding.countryCodeTet.text.toString().removePrefix("+")}${binding.phoneNumberTet.text.toString()}"
+
+        if (binding.mobileMoneyAuto.text.isEmpty()) {
+            operatorCode1 = ""
+        }
+
+        if (binding.cardOperatorAuto.text.isEmpty()) {
+            operatorCode2 = ""
+        }
+
+        val shortCode = if(binding.shortCodeTet.text.toString().isNotEmpty()) {
+            binding.shortCodeTet.text.toString()
+        } else {
+            null
+        }
+
 
         when {
             operatorCode1.isEmpty() -> {
@@ -155,7 +182,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     null,
                     null,
                     useCode!!,
-                    binding.shortCodeTet.text.toString(),
+                    shortCode,
                     null
                 )
                 val valid = viewModel.validateForm(request)
@@ -175,7 +202,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     binding.cardNumberTet.text.toString(),
                     "$selectedMonth/$selectedYear",
                     useCode!!,
-                    binding.shortCodeTet.text.toString(),
+                    shortCode,
                     binding.cardNameTet.text.toString()
                 )
                 val valid = viewModel.validateForm(request)
@@ -234,14 +261,6 @@ class AddFirstPaymentAccountFragment : Fragment() {
                 binding.phoneNumberTil.error = "Ce champ est obligatoir"
             } else {
                 binding.phoneNumberTil.error = null
-            }
-        })
-
-        viewModel.isShortCodeEmpty.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                binding.shortCodeTil.error = "Ce champ est obligatoir"
-            } else {
-                binding.shortCodeTil.error = null
             }
         })
 

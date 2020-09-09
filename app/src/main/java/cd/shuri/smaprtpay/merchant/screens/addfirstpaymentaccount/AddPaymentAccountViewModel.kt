@@ -17,9 +17,6 @@ class AddPaymentAccountViewModel : ViewModel() {
     private val _isCardProviderSelected = MutableLiveData<Boolean>()
     val isCardProviderSelected: LiveData<Boolean> get() = _isCardProviderSelected
 
-    private val _isShortCodeEmpty = MutableLiveData<Boolean>()
-    val isShortCodeEmpty: LiveData<Boolean> get() = _isShortCodeEmpty
-
     private val _isPhoneNumberEmpty = MutableLiveData<Boolean>()
     val isPhoneNumberEmpty: LiveData<Boolean> get() = _isPhoneNumberEmpty
 
@@ -90,18 +87,17 @@ class AddPaymentAccountViewModel : ViewModel() {
             valid = false
             _isCardProviderSelected.value = false
             _isMobileProviderSelected.value = false
+
+            _isPhoneNumberEmpty.value = false
+            _isPhoneNumberValid.value = true
+            _isCardNumberEmpty.value = false
+            _isExpirationValid.value = true
+            _isCardNameEmpty.value = false
         } else {
             _isCardProviderSelected.value = true
             _isMobileProviderSelected.value = true
 
             request.operator1?.let {
-                if (request.shortCode.isNullOrEmpty()) {
-                    _isShortCodeEmpty.value = true
-                    valid = false
-                } else {
-                    _isShortCodeEmpty.value = false
-                }
-
                 if (request.phone.isNullOrEmpty()) {
                     _isPhoneNumberEmpty.value = true
                     valid = false
