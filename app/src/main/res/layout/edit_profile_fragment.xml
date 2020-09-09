@@ -59,7 +59,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:hint="Entrer votre prénom*"
-                    android:inputType="textPersonName" />
+                    android:maxLength="20"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:inputType="textPersonName|textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +84,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:hint="Entrer votre nom*"
-                    android:inputType="textPersonName" />
+                    android:maxLength="20"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:inputType="textPersonName|textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -314,7 +318,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:hint="Nom de l'activité*"
-                    android:inputType="text" />
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:inputType="text|textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
