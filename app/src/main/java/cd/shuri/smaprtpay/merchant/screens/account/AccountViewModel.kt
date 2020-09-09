@@ -75,6 +75,14 @@ class AccountViewModel: ViewModel() {
         }
     }
 
+    fun showDialogLoaderDone() {
+        _showDialogLoader.value = null
+    }
+
+    fun setCountryCode(countryCode: String) {
+        this.countryCode = countryCode.replaceFirst("+", "")
+    }
+
     private fun checkPhoneNumberField() {
         if (phoneNumber.value?.isEmpty()!!)
             _isPhoneNumberCorrect.value = false

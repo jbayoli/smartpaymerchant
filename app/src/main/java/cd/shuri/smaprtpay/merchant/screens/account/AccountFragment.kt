@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAccountBinding
+import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
@@ -21,6 +22,7 @@ class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
 
     private val viewModel by viewModels<AccountViewModel>()
+    val dialog = LoaderDialog()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +45,7 @@ class AccountFragment : Fragment() {
 
         binding.validateButton.setOnClickListener {
             if (binding.checkBox.isChecked) {
+                viewModel.setCountryCode(binding.countryCodeTet.text.toString())
                 viewModel.setPhoneNumber(binding.phoneNumberTet.text.toString())
             } else {
                 val builder = MaterialAlertDialogBuilder(
@@ -68,6 +71,17 @@ class AccountFragment : Fragment() {
                     .actionAccountFragmentToValidationFragment("${binding.countryCodeTet.text.toString()
                         .removePrefix("+")}${binding.phoneNumberTet.text.toString()}"))
                 viewModel.navigateToValidationFragmentDone()
+            }
+        })
+
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                if (it) {
+                    dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
+                } else {
+                    dialog.dismiss()
+                }
+                viewModel.showDialogLoaderDone()
             }
         })
     }

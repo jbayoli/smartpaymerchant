@@ -72,7 +72,6 @@ class ValidationViewModel (phone: String): ViewModel(){
                 token = task.result?.token!!
                 // Log and toast
                 Timber.d("token : $token")
-                sendCode(CodeRequest(phoneNumber, token))
                 sendingCodeTimer()
             })
     }
