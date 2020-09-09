@@ -45,7 +45,7 @@
                 android:hint="Saisir le code envoyé par SMS*"
                 android:fontFamily="@font/roboto"
                 android:maxLength="6"
-                android:inputType="numberDecimal" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

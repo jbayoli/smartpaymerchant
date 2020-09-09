@@ -131,6 +131,7 @@
                     android:fontFamily="@font/roboto"
                     android:hint="N° réinitialisation PIN*"
                     android:inputType="phone"
+                    android:digits="1234567890"
                     android:maxLength="9" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -208,6 +209,7 @@
                     android:fontFamily="@font/roboto"
                     android:hint="N° de contact 1*"
                     android:inputType="phone"
+                    android:digits="1234567890"
                     android:maxLength="9" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -251,6 +253,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:hint="N° de contact 2"
+                    android:digits="1234567890"
                     android:inputType="phone"
                     android:maxLength="9" />
 
