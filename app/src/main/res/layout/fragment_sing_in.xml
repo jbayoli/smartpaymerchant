@@ -54,7 +54,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Entrez votre code utilisateur*"
-                android:inputType="textPersonName" />
+                android:maxLength="10"
+                android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

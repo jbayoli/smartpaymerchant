@@ -62,6 +62,7 @@
                     android:fontFamily="@font/roboto"
                     android:maxLength="8"
                     android:textAllCaps="true"
+                    android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
                     android:inputType="textCapCharacters" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -85,6 +86,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Code utilisateur de votre choix*"
                     android:fontFamily="@font/roboto"
+                    android:maxLength="10"
+                    android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
                     android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -109,7 +112,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Code associé"
                     android:fontFamily="@font/roboto"
-                    android:inputType="textCapWords" />
+                    android:maxLength="10"
+                    android:inputType="textCapCharacters" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
