@@ -402,8 +402,8 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/add_method"
-                        android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -434,8 +434,8 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/reinit_pin"
-                        android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -466,8 +466,8 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/method"
-                        android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -508,8 +508,8 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/qr_code"
-                        android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -541,8 +541,8 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/new_transfer_button"
-                        android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -565,8 +565,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:text="Transférer\n"
-                                android:textSize="13sp"
+                                android:text="Transférer"
                                 android:textAlignment="center"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
@@ -574,8 +573,8 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/profile_button"
-                        android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
