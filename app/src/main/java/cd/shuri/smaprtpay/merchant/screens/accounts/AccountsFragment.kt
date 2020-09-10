@@ -9,9 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import cd.shuri.smaprtpay.merchant.R
 
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAccountsBinding
+import cd.shuri.smaprtpay.merchant.screens.signin.SingInFragmentDirections
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber
 
 /**
@@ -35,7 +38,19 @@ class AccountsFragment : Fragment() {
                 findNavController().navigate(AccountsFragmentDirections.actionAccountsFragmentToEditPaymentAccountFragment(it))
             },
             DeleteAccountClickListener {
-                Timber.d("Delete ${it.type}")
+                val builder =
+                    MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
+                        .setMessage("Vous êtes sur le point de supprimer votre compte de paiement")
+                        .setPositiveButton("Supprrimer") { dialog, _ ->
+                            dialog.dismiss()
+                            viewModel.deletePaymentAccount(it.code!!)
+                        }
+                        .setNegativeButton("Annuler") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                val dialog = builder.create()
+                dialog.setCanceledOnTouchOutside(false)
+                dialog.show()
             }
         )
 
@@ -63,6 +78,13 @@ class AccountsFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 viewModel.showToastErrorDone()
+            }
+        })
+
+        viewModel.deleteResponse.observe(viewLifecycleOwner, Observer {
+            Timber.d("$it")
+            if (it.status != "0") {
+                Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }

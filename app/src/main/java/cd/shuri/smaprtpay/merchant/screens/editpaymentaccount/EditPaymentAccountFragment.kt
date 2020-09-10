@@ -108,11 +108,11 @@ class EditPaymentAccountFragment : Fragment() {
         }
 
         binding.validateButton.setOnClickListener {
-            addPaymentMethod()
+            editPaymentMethod()
         }
     }
 
-    private fun addPaymentMethod() {
+    private fun editPaymentMethod() {
         if (accountType == 1) {
             val valid = viewModel.validateFormMobile(
                 AddPaymentMethodRequest(

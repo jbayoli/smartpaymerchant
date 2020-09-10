@@ -132,4 +132,10 @@ interface SmartPayApiService {
         @Header("Authorization") authorization: String,
         @Path("customer") customer: String
     ) : Deferred<CommonResponse>
+
+    @POST("api/merchant/compte/delete")
+    fun deletePaymentAccountAsync(
+        @Header("Authorization") authorization: String,
+        @Body request: DeletePaymentAccount
+    ) : Deferred<CommonResponse>
 }
