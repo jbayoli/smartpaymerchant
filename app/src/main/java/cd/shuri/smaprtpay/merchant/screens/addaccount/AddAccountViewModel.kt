@@ -7,6 +7,7 @@ import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.AddPaymentMethodRequest
 import cd.shuri.smaprtpay.merchant.network.ProvidersData
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
+import cd.shuri.smaprtpay.merchant.network.SmartPayApi2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -161,7 +162,7 @@ class AddAccountViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.addPaymentMethodAsync(auth, request).await()
+                val result = SmartPayApi2.smartPayApiService.addPaymentMethodAsync(auth, request).await()
                 _showDialogLoader.value = false
                 Timber.d("Message: ${result.message} status: ${result.status}")
                 if (result.status == "0") {

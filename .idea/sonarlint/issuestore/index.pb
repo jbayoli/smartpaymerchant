@@ -131,3 +131,5 @@ napp/src/main/java/cd/shuri/smaprtpay/merchant/screens/addfirstpaymentaccount/Ad
 Yapp/src/main/java/cd/shuri/smaprtpay/merchant/screens/editProfile/EditProfileViewModel.kt,b/6/b656f6d72cd17ac19a60b144233068ac7546a0be
 ˆ
 Xapp/src/main/java/cd/shuri/smaprtpay/merchant/screens/editProfile/EditProfileFragment.kt,d/5/d5b173ae7a9eea61c2a3e85ef065f8c9f2a2340c
+‹
+[app/src/main/java/cd/shuri/smaprtpay/merchant/screens/transaction/TransactionListAdapter.kt,d/1/d1079e6f813296ed479e453ec28113d44df28015

@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:bindAccountsRecyclerView="@{viewModel.paymentMethods}"
-                        tools:listitem="@layout/transaction_items"/>
+                        tools:listitem="@layout/account_items"/>
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

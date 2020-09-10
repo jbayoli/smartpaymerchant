@@ -28,3 +28,26 @@ object SmartPayApi {
     //Instantiate the service so that we can access APIs in this object
     val smartPayApiService: SmartPayApiService = retrofit.create(SmartPayApiService::class.java)
 }
+
+object SmartPayApi2 {
+    //Base api url
+    private const val BASE_URL = "http://192.168.2.144:3006/"
+
+    //Set connection timeout, write timeout and read timeout
+    private val okHttpClient = OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .build()
+
+    //instantiate retrofit with timeouts, Moshi Converter Factory, Moshi coroutine factory and base url
+    private val retrofit = Retrofit.Builder()
+        .client(okHttpClient)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .baseUrl(BASE_URL)
+        .build()
+
+    //Instantiate the service so that we can access APIs in this object
+    val smartPayApiService: SmartPayApiService = retrofit.create(SmartPayApiService::class.java)
+}

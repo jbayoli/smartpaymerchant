@@ -115,10 +115,13 @@ data class ProvidersData(
 @JsonClass(generateAdapter = true)
 data class AccountsResponse(
     val code: String?,
+    val card: String?,
+    val cardName: String?,
+    val expiration: String?,
     val phone: String?,
+    val shortCode: String?,
     val value: String?,
-    val type: String?,
-    val shortCode: String?
+    val type: Int?
 )
 
 @JsonClass(generateAdapter = true)

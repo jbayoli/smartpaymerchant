@@ -33,7 +33,7 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -52,14 +52,14 @@
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                             android:layout_toEndOf="@+id/type_tv"
                             android:layout_marginStart="8dp"
-                            android:text="@{account.type}"
-                            tools:text="Orange Money" />
+                            app:setAccountsType="@{account}"
+                            tools:text="Mobile Money" />
                     </RelativeLayout>
 
 
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -79,12 +79,12 @@
                             android:layout_toEndOf="@+id/number_card_exp_tv"
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/roboto"
-                            android:text="@{account.value}"
+                            app:setPhoneOrCardNumValue="@{account}"
                             tools:text="08932782918" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -104,13 +104,10 @@
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                             android:layout_toEndOf="@+id/short_code_card_tv"
                             android:layout_marginStart="8dp"
-                            android:text="@{account.shortCode}"
+                            app:setShortCodeOrCardExpValue="@{account}"
                             tools:text="5738" />
                     </RelativeLayout>
-
-
                 </LinearLayout>
-
             </RelativeLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

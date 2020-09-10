@@ -130,7 +130,7 @@ class DoTransferFragment : Fragment() {
                 val mobileAccountItems = mutableListOf<String>()
                 val cardAccountItems = mutableListOf<String>()
                 for (e in it) {
-                    if (e.type == "Mobile Money") {
+                    if (e.type == 1) {
                         mobileAccountItems.add("${e.type} - ${e.value!!.replaceRange(0, 3, "0")}")
                     } else {
                         cardAccountItems.add("${e.type} - ${e.value}")

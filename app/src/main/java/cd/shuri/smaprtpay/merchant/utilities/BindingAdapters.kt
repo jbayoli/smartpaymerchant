@@ -42,7 +42,7 @@ fun setCodeError(textLayout: TextInputLayout, isCodeCorrect: Boolean) {
 
 @BindingAdapter("setShortCodeOrCardExp")
 fun setShortCodeOrCardExp(textView: TextView, account: AccountsResponse) {
-    if (account.type == "Mobile Money") {
+    if (account.type == 1) {
         textView.text = "ShortCode :"
     } else {
         textView.text = "Date d'expiration :"
@@ -51,10 +51,43 @@ fun setShortCodeOrCardExp(textView: TextView, account: AccountsResponse) {
 
 @BindingAdapter("setPhoneOrCardNum")
 fun setPhoneOrCardNum(textView: TextView, account: AccountsResponse) {
-    if (account.type == "Mobile Money") {
+    if (account.type == 1) {
         textView.text = "Numéro :"
     } else {
         textView.text = "Carte :"
+    }
+}
+
+@BindingAdapter("setShortCodeOrCardExpValue")
+fun setShortCodeOrCardExpValue(textView: TextView, account: AccountsResponse) {
+    if (account.type == 1) {
+        textView.text = account.shortCode
+    } else {
+        textView.text = account.expiration
+    }
+}
+
+@BindingAdapter("setAccountsType")
+fun setAccountsType(textView: TextView, account: AccountsResponse) {
+    if (account.type == 1) {
+        textView.text = "Mobile Money"
+    } else {
+        textView.text = "Carte"
+    }
+}
+
+@BindingAdapter("setPhoneOrCardNumValue")
+fun setPhoneOrCardNumValue(textView: TextView, account: AccountsResponse) {
+    if (account.type == 1) {
+        account.phone?.let {
+            textView.text = if (it.startsWith("243")) {
+                it.replace("243", "0")
+            } else {
+                it
+            }
+        }
+    } else {
+        textView.text = account.card
     }
 }
 

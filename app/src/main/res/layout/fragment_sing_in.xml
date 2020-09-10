@@ -95,11 +95,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sign_up_button"
-            style="@style/AppTheme.Button.TextButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="S'inscrire"
+            app:strokeColor="@color/buttonBack"
             app:layout_constraintEnd_toStartOf="@+id/sign_in_button"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintTop_toTopOf="@+id/sign_in_button" />
