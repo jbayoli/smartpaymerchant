@@ -111,7 +111,7 @@ data class ProvidersData(
     val type: String?
 )
 
-
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class AccountsResponse(
     val code: String?,
@@ -120,9 +120,10 @@ data class AccountsResponse(
     val expiration: String?,
     val phone: String?,
     val shortCode: String?,
-    val value: String?,
+    val operator: String?,
+    val operatorName: String?,
     val type: Int?
-)
+): Parcelable
 
 @JsonClass(generateAdapter = true)
 data class DashboardResponse(

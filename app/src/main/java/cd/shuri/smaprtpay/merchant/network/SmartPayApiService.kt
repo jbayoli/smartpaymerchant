@@ -32,6 +32,12 @@ interface SmartPayApiService {
         @Body request: AddPaymentMethodRequest
     ): Deferred<CommonResponse>
 
+    @POST("api/merchant/compte/edit")
+    fun editPaymentMethodAsync(
+        @Header("Authorization") authorization: String,
+        @Body request: AddPaymentMethodRequest
+    ): Deferred<CommonResponse>
+
     @GET("api/default/providers/{type}")
     fun getMobileProvidersAsync(
         @Header("Authorization") authorization: String,

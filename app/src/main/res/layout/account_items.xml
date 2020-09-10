@@ -7,6 +7,14 @@
         <variable
             name="account"
             type="cd.shuri.smaprtpay.merchant.network.AccountsResponse" />
+
+        <variable
+            name="editClickListener"
+            type="cd.shuri.smaprtpay.merchant.screens.accounts.EditAccountClickListener" />
+
+        <variable
+            name="deleteClickListener"
+            type="cd.shuri.smaprtpay.merchant.screens.accounts.DeleteAccountClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -55,8 +63,6 @@
                             app:setAccountsType="@{account}"
                             tools:text="Mobile Money" />
                     </RelativeLayout>
-
-
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -108,6 +114,27 @@
                             tools:text="5738" />
                     </RelativeLayout>
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/edit_button"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_toStartOf="@+id/delete_button"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/ic_round_edit_24"
+                    android:onClick="@{() -> editClickListener.onClick(account)}"
+                    app:tint="@android:color/holo_blue_dark" />
+
+                <ImageView
+                    android:id="@+id/delete_button"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_round_delete_forever_24"
+                    android:onClick="@{() -> deleteClickListener.onClick(account)}"
+                    app:tint="@android:color/holo_red_dark"/>
             </RelativeLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

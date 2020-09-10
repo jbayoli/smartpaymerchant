@@ -75,7 +75,7 @@ class DoTransferFragment : Fragment() {
             val value = split.last()
             Timber.d("value: $value")
             for (e in viewModel.paymentMethods.value!!) {
-                if (e.value!! == value) {
+                if (e.card == value) {
                     selectedPaymentMethodCard = e.code!!
                 }
             }
@@ -85,10 +85,10 @@ class DoTransferFragment : Fragment() {
             val selection = adapterView.getItemAtPosition(i).toString()
             Timber.d("user select $selection")
             val split = selection.split(' ')
-            val value = split.last().replaceRange(0, 1, "243")
+            val value = split.last().replaceFirst("0", "243")
             Timber.d("value: $value")
             for (e in viewModel.paymentMethods.value!!) {
-                if (e.value!! == value) {
+                if (e.phone == value) {
                     selectedPaymentMethodMobile = e.code!!
                 }
             }
@@ -131,9 +131,9 @@ class DoTransferFragment : Fragment() {
                 val cardAccountItems = mutableListOf<String>()
                 for (e in it) {
                     if (e.type == 1) {
-                        mobileAccountItems.add("${e.type} - ${e.value!!.replaceRange(0, 3, "0")}")
+                        mobileAccountItems.add("Mobile Money - ${e.phone!!.replaceFirst("243", "0")}")
                     } else {
-                        cardAccountItems.add("${e.type} - ${e.value}")
+                        cardAccountItems.add("Carte - ${e.card}")
                     }
                 }
                 var accountAdapter =

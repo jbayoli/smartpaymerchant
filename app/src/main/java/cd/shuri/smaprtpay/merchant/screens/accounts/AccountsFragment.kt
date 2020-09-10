@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAccountsBinding
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -28,7 +30,14 @@ class AccountsFragment : Fragment() {
         binding = FragmentAccountsBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.paymentMethodRecyclerView.adapter = AccountsListAdapter()
+        binding.paymentMethodRecyclerView.adapter = AccountsListAdapter(
+            EditAccountClickListener {
+                findNavController().navigate(AccountsFragmentDirections.actionAccountsFragmentToEditPaymentAccountFragment(it))
+            },
+            DeleteAccountClickListener {
+                Timber.d("Delete ${it.type}")
+            }
+        )
 
         observers()
         return binding.root

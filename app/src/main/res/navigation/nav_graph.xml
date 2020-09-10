@@ -239,7 +239,15 @@
         android:id="@+id/accountsFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.accounts.AccountsFragment"
         android:label="Compte de paiements"
-        tools:layout="@layout/fragment_accounts" />
+        tools:layout="@layout/fragment_accounts" >
+        <action
+            android:id="@+id/action_accountsFragment_to_editPaymentAccountFragment"
+            app:destination="@id/editPaymentAccountFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
     <fragment
         android:id="@+id/addAccountFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.addaccount.AddAccountFragment"
@@ -462,6 +470,24 @@
         <argument
             android:name="profileInfo"
             app:argType="cd.shuri.smaprtpay.merchant.network.Profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPaymentAccountFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.editpaymentaccount.EditPaymentAccountFragment"
+        android:label="Modifer compte"
+        tools:layout="@layout/edit_payment_account_fragment" >
+        <action
+            android:id="@+id/action_editPaymentAccountFragment_to_accountsFragment"
+            app:destination="@id/accountsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/accountsFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="account"
+            app:argType="cd.shuri.smaprtpay.merchant.network.AccountsResponse" />
     </fragment>
 
 </navigation>
