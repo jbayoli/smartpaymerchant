@@ -31,6 +31,7 @@ class EditPaymentAccountFragment : Fragment() {
     private var selectedMonth = ""
     private var selectedYear = ""
     private var accountType = 0
+    private var accountCode = ""
     private val dialog = LoaderDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +60,7 @@ class EditPaymentAccountFragment : Fragment() {
         binding = EditPaymentAccountFragmentBinding.inflate(layoutInflater)
 
         operatorCode = args.account.operator!!
+        accountCode = args.account.code!!
 
         val viewModelFactory = EditPaymentAccountViewModelFactory(args.account.type!!)
         viewModel = ViewModelProvider(
@@ -118,7 +120,8 @@ class EditPaymentAccountFragment : Fragment() {
                     type = accountType,
                     phone = binding.phoneNumberTet.text.toString(),
                     customer = useCode!!,
-                    shortCode = binding.shortCodeTet.text.toString()
+                    shortCode = binding.shortCodeTet.text.toString(),
+                    code = accountCode
                 )
             )
             if (valid) {
@@ -130,7 +133,8 @@ class EditPaymentAccountFragment : Fragment() {
                             binding.countryCodeTet.text.toString().removePrefix("+")
                         }${binding.phoneNumberTet.text.toString()}",
                         customer = useCode,
-                        shortCode = binding.shortCodeTet.text.toString()
+                        shortCode = binding.shortCodeTet.text.toString(),
+                        code = accountCode
                     )
                 )
             } else {
@@ -144,7 +148,8 @@ class EditPaymentAccountFragment : Fragment() {
                     card = binding.cardNumberTet.text.toString(),
                     expiration = "$selectedMonth/$selectedYear",
                     customer = useCode!!,
-                    shortCode = binding.shortCodeTet.text.toString()
+                    shortCode = binding.shortCodeTet.text.toString(),
+                    code = accountCode
                 )
             )
 
@@ -157,7 +162,8 @@ class EditPaymentAccountFragment : Fragment() {
                             card = binding.cardNumberTet.text.toString(),
                             expiration = "$selectedMonth/$selectedYear",
                             customer = useCode,
-                            shortCode = binding.shortCodeTet.text.toString()
+                            shortCode = binding.shortCodeTet.text.toString(),
+                            code = accountCode
                         )
                     )
                 } else {
@@ -168,7 +174,8 @@ class EditPaymentAccountFragment : Fragment() {
                             card = binding.cardNumberTet.text.toString(),
                             expiration = "$selectedMonth/$selectedYear",
                             customer = useCode,
-                            shortCode = binding.shortCodeTet.text.toString()
+                            shortCode = binding.shortCodeTet.text.toString(),
+                            code = accountCode
                         )
                     )
                 }

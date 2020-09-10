@@ -86,7 +86,8 @@ data class AddPaymentMethodRequest(
     val expiration: String? = null,
     val customer: String,
     val shortCode: String,
-    val cardName: String? = null
+    val cardName: String? = null,
+    val code: String? = null
 )
 
 @JsonClass(generateAdapter = true)
@@ -264,4 +265,10 @@ data class UpdateProfile(
     val nif: String,
     val ownerId: String,
     val sector: String
+)
+
+@JsonClass(generateAdapter = true)
+data class DeletePaymentAccount(
+    val code: String?,
+    val customer: String?
 )
