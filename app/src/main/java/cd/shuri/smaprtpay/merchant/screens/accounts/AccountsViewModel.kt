@@ -13,8 +13,8 @@ import timber.log.Timber
 
 class AccountsViewModel : ViewModel() {
 
-    private val _paymentMethods = MutableLiveData<List<AccountsResponse>>()
-    val paymentMethods: LiveData<List<AccountsResponse>> get() = _paymentMethods
+    private val _paymentMethods = MutableLiveData<MutableList<AccountsResponse>>()
+    val paymentMethods: LiveData<MutableList<AccountsResponse>> get() = _paymentMethods
 
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
@@ -33,6 +33,7 @@ class AccountsViewModel : ViewModel() {
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
+    var indexOfRemovedAccount = 0
 
     init {
         _paymentMethods.value = ArrayList()
@@ -51,7 +52,7 @@ class AccountsViewModel : ViewModel() {
                     SmartPayApi2.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
                 _showDialogLoader.value = false
                 if (result.isNotEmpty()) {
-                    _paymentMethods.value = result
+                    _paymentMethods.value = result.toMutableList()
                     for (element in result) {
                         Timber.d("code: ${element.code}")
                     }
@@ -67,15 +68,19 @@ class AccountsViewModel : ViewModel() {
         }
     }
 
-    fun deletePaymentAccount(accountCode: String) {
+    fun deletePaymentAccount(account: AccountsResponse) {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
                 val result = SmartPayApi2.smartPayApiService.deletePaymentAccountAsync(
                     auth,
-                    DeletePaymentAccount(accountCode, userCode)
+                    DeletePaymentAccount(account.code, userCode)
                 ).await()
                 _showDialogLoader.value = false
+                if (result.status == "0") {
+                    indexOfRemovedAccount = _paymentMethods.value?.indexOf(account)!!
+                    _paymentMethods.value?.remove(account)
+                }
                 _deleteResponse.value = result
             } catch (e: Exception) {
                 Timber.d("$e")
