@@ -30,7 +30,7 @@ class ValidationViewModel (phone: String): ViewModel(){
     private val _showTToastForError = MutableLiveData<Boolean>()
     val showTToastForError: LiveData<Boolean> get() = _showTToastForError
 
-    private lateinit var timer : CountDownTimer
+    lateinit var timer : CountDownTimer
 
     //The String version of the current time
     val currentTimeString = Transformations.map(currentTime) { time ->
@@ -72,10 +72,9 @@ class ValidationViewModel (phone: String): ViewModel(){
                 token = task.result?.token!!
                 // Log and toast
                 Timber.d("token : $token")
-                sendingCodeTimer()
             })
     }
-    private fun sendingCodeTimer() {
+    fun sendingCodeTimer() {
         //Creates a timer which triggers the end of the game when it finishes
         _isTimerEnable.value = true
         timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
@@ -162,6 +161,6 @@ class ValidationViewModel (phone: String): ViewModel(){
         //Countdown time interval
         private const val ONE_SECOND = 1000L
         //Total time for the game
-        private const val COUNTDOWN_TIME = 90000L
+        private const val COUNTDOWN_TIME = 60000L
     }
 }

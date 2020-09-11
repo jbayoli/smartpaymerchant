@@ -35,6 +35,7 @@ class ValidationFragment : Fragment() {
 
         val viewModelFactory = ValidationViewModelFactory(args.phoneNumber)
         viewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(ValidationViewModel::class.java)
+        viewModel.sendingCodeTimer()
 
 
 
@@ -46,6 +47,11 @@ class ValidationFragment : Fragment() {
         observers()
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.timer.cancel()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

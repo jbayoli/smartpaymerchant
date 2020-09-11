@@ -307,7 +307,7 @@ class EditPaymentAccountFragment : Fragment() {
 
         viewModel.response.observe(viewLifecycleOwner, Observer {
             if (it.status != "0") {
-                Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         })
     }
