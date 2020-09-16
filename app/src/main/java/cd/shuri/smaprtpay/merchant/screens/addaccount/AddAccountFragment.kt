@@ -140,7 +140,8 @@ class AddAccountFragment : Fragment() {
                 card = binding.cardNumberTet.text.toString(),
                 expiration = "$selectedMonth/$selectedYear",
                 customer = useCode!!,
-                shortCode = binding.shortCodeTet.text.toString()
+                shortCode = binding.shortCodeTet.text.toString(),
+                cardName = binding.cardNameTet.toString()
             ))
 
             if (valid) {
@@ -151,7 +152,8 @@ class AddAccountFragment : Fragment() {
                         card = binding.cardNumberTet.text.toString(),
                         expiration = "$selectedMonth/$selectedYear",
                         customer = useCode,
-                        shortCode = binding.shortCodeTet.text.toString()
+                        shortCode = binding.shortCodeTet.text.toString(),
+                        cardName = binding.cardNameTet.toString()
                     ))
                 } else {
                     viewModel.addPaymentMethod(AddPaymentMethodRequest(
@@ -160,7 +162,8 @@ class AddAccountFragment : Fragment() {
                         card = binding.cardNumberTet.text.toString(),
                         expiration = "$selectedMonth/$selectedYear",
                         customer = useCode,
-                        shortCode = binding.shortCodeTet.text.toString()
+                        shortCode = binding.shortCodeTet.text.toString(),
+                        cardName = binding.cardNameTet.toString()
                     ))
                 }
 

@@ -239,7 +239,7 @@
                         android:hint="Nom sur la carte"
                         android:maxLength="15"
                         android:maxLines="1"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -"
                         android:inputType="textPersonName|textCapWords" />
 
                 </com.google.android.material.textfield.TextInputLayout>

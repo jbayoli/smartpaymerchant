@@ -58,8 +58,7 @@ class SignUpFragment : Fragment() {
                 binding.passwordTet.text.toString(),
                 binding.passwordConfirmTet.text.toString(),
                 args.phoneNumber,
-                args.fcmToken,
-                binding.bpmTet.text.toString()
+                args.fcmToken
             )
         )
         if (valid) {
@@ -70,8 +69,7 @@ class SignUpFragment : Fragment() {
                     binding.passwordTet.text.toString(),
                     binding.passwordConfirmTet.text.toString(),
                     args.phoneNumber,
-                    args.fcmToken,
-                    binding.bpmTet.text.toString()
+                    args.fcmToken
                 )
             )
         } else {
@@ -131,13 +129,6 @@ class SignUpFragment : Fragment() {
                 viewModel.showDialogLoaderDone()
             }
         })
-
-//        viewModel.showDialog.observe(viewLifecycleOwner, Observer {
-//            it {
-//                val dialog = AddCompanyDialog(viewModel)
-//                dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
-//            }
-//        })
 
         viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
             it?.let {

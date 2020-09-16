@@ -45,8 +45,7 @@ data class SingUpRequest(
     val password: String,
     val confirmedPassword: String,
     val phone: String,
-    val fcm: String,
-    val bpm: String = ""
+    val fcm: String
 )
 
 @JsonClass(generateAdapter = true)

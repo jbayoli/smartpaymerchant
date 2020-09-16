@@ -226,7 +226,7 @@
                         android:fontFamily="@font/roboto"
                         android:hint="Nom sur la carte"
                         android:maxLength="20"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -"
                         android:inputType="textPersonName|textCapWords" />
 
                 </com.google.android.material.textfield.TextInputLayout>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="name"
             type="String" />
@@ -46,15 +47,15 @@
                             android:id="@+id/profile_image"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/ic_round_person_24"
+                            android:src="@drawable/mon_compte"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@android:color/black" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <LinearLayout
                             android:id="@+id/account_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="@+id/profile_image"
                             app:layout_constraintStart_toEndOf="@+id/profile_image"
@@ -125,22 +126,15 @@
                                 android:layout_height="wrap_content">
 
 
-                                <com.google.android.material.card.MaterialCardView
+                                <ImageView
                                     android:id="@+id/transactions_list_image"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    app:cardBackgroundColor="@color/buttonBack"
-                                    app:cardCornerRadius="8dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/transactions"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_round_format_list_numbered_24"
-                                        app:tint="@android:color/white" />
-                                </com.google.android.material.card.MaterialCardView>
 
                                 <TextView
                                     android:id="@+id/number_of_transaction"
@@ -190,22 +184,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
-                                <com.google.android.material.card.MaterialCardView
+                                <ImageView
                                     android:id="@+id/wait_list_image"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    app:cardBackgroundColor="@color/buttonBack"
-                                    app:cardCornerRadius="8dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/en_attente"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_round_format_list_numbered_24"
-                                        app:tint="@android:color/white" />
-                                </com.google.android.material.card.MaterialCardView>
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
                                     android:id="@+id/number_of_wait"
@@ -266,22 +252,15 @@
                                 android:layout_height="wrap_content">
 
 
-                                <com.google.android.material.card.MaterialCardView
+                                <ImageView
                                     android:id="@+id/clos_list_image"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    app:cardBackgroundColor="@color/buttonBack"
-                                    app:cardCornerRadius="8dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/clos"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_round_format_list_numbered_24"
-                                        app:tint="@android:color/white" />
-                                </com.google.android.material.card.MaterialCardView>
 
                                 <TextView
                                     android:id="@+id/number_of_clos"
@@ -331,22 +310,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
-                                <com.google.android.material.card.MaterialCardView
+
+                                <ImageView
                                     android:id="@+id/transfer_list_image"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    app:cardBackgroundColor="@color/buttonBack"
-                                    app:cardCornerRadius="8dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/transfers"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_round_format_list_numbered_24"
-                                        app:tint="@android:color/white" />
-                                </com.google.android.material.card.MaterialCardView>
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
                                     android:id="@+id/number_of_transfer"
@@ -403,7 +375,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/add_method"
                         android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_height="100dp"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -419,8 +391,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_baseline_library_add_50"
-                                app:tint="@color/buttonBack" />
+                                android:src="@drawable/mes_comptes" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -435,7 +406,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/reinit_pin"
                         android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_height="100dp"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -451,8 +422,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_round_lock_50"
-                                app:tint="@color/buttonBack" />
+                                android:src="@drawable/changer_pin" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -467,7 +437,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/method"
                         android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_height="100dp"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -483,8 +453,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_round_monetization_on_24"
-                                app:tint="@color/buttonBack" />
+                                android:src="@drawable/mes_comptes" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -509,13 +478,13 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/qr_code"
                         android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_height="100dp"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="64dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:orientation="vertical"
@@ -525,8 +494,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_qr_code_50px"
-                                app:tint="@color/buttonBack" />
+                                android:src="@drawable/qrcode" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -542,7 +510,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/new_transfer_button"
                         android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_height="100dp"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -558,24 +526,23 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_round_send_24"
-                                app:tint="@color/buttonBack" />
+                                android:src="@drawable/transfers" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
                                 android:text="Transférer\n"
-                                android:textSize="13sp"
                                 android:textAlignment="center"
-                                android:textColor="@android:color/black" />
+                                android:textColor="@android:color/black"
+                                android:textSize="13sp" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/profile_button"
                         android:layout_width="70dp"
-                        android:layout_height="90dp"
+                        android:layout_height="100dp"
                         android:layout_margin="4dp"
                         android:elevation="0dp"
                         app:cardCornerRadius="8dp">
@@ -591,8 +558,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_round_person_24"
-                                app:tint="@color/buttonBack" />
+                                android:src="@drawable/mon_compte" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -600,7 +566,7 @@
                                 android:fontFamily="@font/roboto"
                                 android:text="Mon profil"
                                 android:textAlignment="center"
-                                android:textColor="@android:color/black"/>
+                                android:textColor="@android:color/black" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>

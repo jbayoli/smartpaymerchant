@@ -61,8 +61,7 @@
                     android:hint="Code marchand de votre choix*"
                     android:fontFamily="@font/roboto"
                     android:maxLength="8"
-                    android:textAllCaps="true"
-                    android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+                    android:digits="1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:inputType="textCapCharacters" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -93,31 +92,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/bpm_til"
-                style="@style/AppTheme.TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:fontFamily="@font/roboto"
-                app:helperText="Ex: AA01"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_name_til">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/bpm_tet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Code associé"
-                    android:fontFamily="@font/roboto"
-                    android:maxLength="10"
-                    android:inputType="textCapCharacters" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_til"
                 style="@style/AppTheme.TextInputLayout"
                 android:layout_width="match_parent"
@@ -129,7 +103,7 @@
                 app:passwordToggleEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bpm_til">
+                app:layout_constraintTop_toBottomOf="@+id/user_name_til">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_tet"

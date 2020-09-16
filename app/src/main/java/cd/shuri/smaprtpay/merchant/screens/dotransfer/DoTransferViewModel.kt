@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.AccountsResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import cd.shuri.smaprtpay.merchant.network.SmartPayApi2
 import cd.shuri.smaprtpay.merchant.network.TransferRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +63,7 @@ class DoTransferViewModel: ViewModel() {
             try {
                 _showDialogLoader.value = true
                 val result =
-                    SmartPayApi2.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
+                    SmartPayApi.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
                 _showDialogLoader.value = false
                 if (result.isNotEmpty()) {
                     _paymentMethods.value = result

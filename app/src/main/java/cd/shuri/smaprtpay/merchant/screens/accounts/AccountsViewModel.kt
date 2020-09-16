@@ -49,7 +49,7 @@ class AccountsViewModel : ViewModel() {
             try {
                 _showDialogLoader.value = true
                 val result =
-                    SmartPayApi2.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
+                    SmartPayApi.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
                 _showDialogLoader.value = false
                 if (result.isNotEmpty()) {
                     _paymentMethods.value = result.toMutableList()
@@ -63,28 +63,6 @@ class AccountsViewModel : ViewModel() {
                 Timber.e("$e")
                 _showDialogLoader.value = false
                 _paymentMethods.value = ArrayList()
-                _showTToastForError.value = true
-            }
-        }
-    }
-
-    fun deletePaymentAccount(account: AccountsResponse) {
-        viewModelScope.launch {
-            try {
-                _showDialogLoader.value = true
-                val result = SmartPayApi2.smartPayApiService.deletePaymentAccountAsync(
-                    auth,
-                    DeletePaymentAccount(account.code, userCode)
-                ).await()
-                _showDialogLoader.value = false
-                if (result.status == "0") {
-                    indexOfRemovedAccount = _paymentMethods.value?.indexOf(account)!!
-                    _paymentMethods.value?.remove(account)
-                }
-                _deleteResponse.value = result
-            } catch (e: Exception) {
-                Timber.d("$e")
-                _showDialogLoader.value = false
                 _showTToastForError.value = true
             }
         }
