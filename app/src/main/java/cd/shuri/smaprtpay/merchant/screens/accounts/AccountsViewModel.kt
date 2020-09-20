@@ -68,6 +68,28 @@ class AccountsViewModel : ViewModel() {
         }
     }
 
+    fun deletePaymentAccount(account: AccountsResponse) {
+        viewModelScope.launch {
+            try {
+                _showDialogLoader.value = true
+                val result = SmartPayApi.smartPayApiService.deletePaymentAccountAsync(
+                    auth,
+                    DeletePaymentAccount(account.code, userCode)
+                ).await()
+                _showDialogLoader.value = false
+                if (result.status == "0") {
+                    indexOfRemovedAccount = _paymentMethods.value?.indexOf(account)!!
+                    _paymentMethods.value?.remove(account)
+                }
+                _deleteResponse.value = result
+            } catch (e: Exception) {
+                Timber.d("$e")
+                _showDialogLoader.value = false
+                _showTToastForError.value = true
+            }
+        }
+    }
+
     fun showToastErrorDone() {
         _showTToastForError.value = null
     }

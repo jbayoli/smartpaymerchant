@@ -38,7 +38,7 @@
                     <ImageView
                         android:layout_width="200dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/mon_compte" />
+                        android:src="@drawable/mon_profile" />
 
                     <TextView
                         android:id="@+id/user_code"

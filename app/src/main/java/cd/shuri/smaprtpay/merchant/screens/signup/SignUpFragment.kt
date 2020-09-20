@@ -143,7 +143,11 @@ class SignUpFragment : Fragment() {
 
         viewModel.navigateTo.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpFirstFragment())
+                findNavController().navigate(
+                    SignUpFragmentDirections.actionSignUpFragmentToSignUpFirstFragment(
+                        args.phoneNumber
+                    )
+                )
                 viewModel.navigationDone()
             }
         })

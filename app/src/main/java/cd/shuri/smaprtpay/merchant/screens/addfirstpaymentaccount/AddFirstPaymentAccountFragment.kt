@@ -31,6 +31,7 @@ import timber.log.Timber
 class AddFirstPaymentAccountFragment : Fragment() {
 
     private lateinit var binding : FragmentAddFirstPaymentAccountBinding
+    private lateinit var args: AddFirstPaymentAccountFragmentArgs
 
     private val viewModel by viewModels<AddPaymentAccountViewModel>()
 
@@ -68,8 +69,10 @@ class AddFirstPaymentAccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        args = AddFirstPaymentAccountFragmentArgs.fromBundle(requireArguments())
         // Inflate the layout for this fragment
         binding = FragmentAddFirstPaymentAccountBinding.inflate(layoutInflater)
+        binding.phoneNumberTet.setText(args.phoneNumber.replaceFirst("243", ""))
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.show()
 

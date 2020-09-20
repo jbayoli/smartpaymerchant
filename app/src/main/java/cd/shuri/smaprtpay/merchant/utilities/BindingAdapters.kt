@@ -161,3 +161,12 @@ fun bindTransferRecyclerView(recyclerView: RecyclerView, transfers: List<Transfe
     val adapter = recyclerView.adapter as TransferListAdapter
     adapter.submitList(transfers)
 }
+
+@BindingAdapter("makeAccountEditable")
+fun makeAccountEditable(imageView: ImageView, account: AccountsResponse) {
+    if (account.type == 1) {
+        imageView.visibility = View.GONE
+    } else {
+        imageView.visibility = View.VISIBLE
+    }
+}

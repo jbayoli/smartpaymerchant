@@ -34,7 +34,26 @@ class AccountsFragment : Fragment() {
         binding = FragmentAccountsBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        accountsListAdapter = AccountsListAdapter()
+        accountsListAdapter = AccountsListAdapter(
+            EditAccountClickListener {
+                findNavController().navigate(AccountsFragmentDirections.actionAccountsFragmentToEditPaymentAccountFragment(it))
+            },
+            DeleteAccountClickListener {
+                val builder =
+                    MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
+                        .setMessage("Vous êtes sur le point de supprimer votre compte de paiement")
+                        .setPositiveButton("Supprrimer") { dialog, _ ->
+                            dialog.dismiss()
+                            viewModel.deletePaymentAccount(it)
+                        }
+                        .setNegativeButton("Annuler") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                val dialog = builder.create()
+                dialog.setCanceledOnTouchOutside(false)
+                dialog.show()
+            }
+        )
 
         binding.paymentMethodRecyclerView.adapter = accountsListAdapter
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".screens.addaccount.AddAccountFragment">
+    tools:context="cd.shuri.smaprtpay.merchant.screens.editpaymentaccount.EditPaymentAccountFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Veuillez remplir le formulaire suivant pour ajouter un compte de paiements à notre service FlexPay"
+                android:text="Veuillez remplir le formulaire suivant pour modifier votre compte de paiements"
                 android:textAlignment="center"
                 android:fontFamily="@font/roboto"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
@@ -237,9 +237,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:hint="Nom sur la carte"
-                        android:maxLength="20"
+                        android:maxLength="15"
                         android:maxLines="1"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                         android:inputType="textPersonName|textCapWords" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -370,7 +370,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/card" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </FrameLayout>

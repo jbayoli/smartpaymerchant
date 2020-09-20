@@ -47,7 +47,7 @@
                             android:id="@+id/profile_image"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/mon_compte"
+                            android:src="@drawable/mon_profile"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +65,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:text="Mon compte" />
+                                android:text="Marchand" />
 
                             <TextView
                                 android:id="@+id/user_name"
@@ -80,18 +80,6 @@
                                 app:layout_constraintTop_toBottomOf="@+id/account_tv"
                                 tools:text="Hervé" />
                         </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/roboto"
-                            android:text="Marchand"
-                            android:textColor="@android:color/black"
-                            app:layout_constraintBottom_toBottomOf="@+id/account_tv"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/account_tv" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -558,7 +546,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/mon_compte" />
+                                android:src="@drawable/mon_profile" />
 
                             <TextView
                                 android:layout_width="wrap_content"

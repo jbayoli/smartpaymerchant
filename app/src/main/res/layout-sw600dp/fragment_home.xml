@@ -46,7 +46,7 @@
                             android:id="@+id/profile_image"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/mon_compte"
+                            android:src="@drawable/mon_profile"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:text="Mon compte" />
+                                android:text="Marchand" />
 
                             <TextView
                                 android:id="@+id/user_name"
@@ -79,18 +79,6 @@
                                 app:layout_constraintTop_toBottomOf="@+id/account_tv"
                                 tools:text="Hervé" />
                         </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/roboto"
-                            android:text="Marchand"
-                            android:textColor="@android:color/black"
-                            app:layout_constraintBottom_toBottomOf="@+id/account_tv"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/account_tv" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -368,109 +356,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/quick_action_tv">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/add_method"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:elevation="0dp"
-                        app:cardCornerRadius="8dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="vertical"
-                            android:padding="4dp">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/mes_comptes" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
-                                android:text="Ajouter Compte"
-                                android:textAlignment="center"
-                                android:textColor="@android:color/black" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/reinit_pin"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:elevation="0dp"
-                        app:cardCornerRadius="8dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="vertical"
-                            android:padding="4dp">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/changer_pin" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
-                                android:text="Changer PIN"
-                                android:textAlignment="center"
-                                android:textColor="@android:color/black" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/method"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:elevation="0dp"
-                        app:cardCornerRadius="8dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="vertical"
-                            android:padding="4dp">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/mes_comptes" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
-                                android:text="Mes Comptes"
-                                android:textAlignment="center"
-                                android:textColor="@android:color/black" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/account_and_pin">
-
-                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/qr_code"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
@@ -534,6 +419,109 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/method"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:elevation="0dp"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:padding="4dp">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/mes_comptes" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:text="Mes Comptes"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/black" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/account_and_pin">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/reinit_pin"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:elevation="0dp"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:padding="4dp">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/changer_pin" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:text="Changer PIN"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/black" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/add_method"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:elevation="0dp"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            android:padding="4dp">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ajouter_compte" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:text="Ajouter Compte"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/black" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/profile_button"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
@@ -552,7 +540,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/mon_compte" />
+                                android:src="@drawable/mon_profile" />
 
                             <TextView
                                 android:layout_width="wrap_content"

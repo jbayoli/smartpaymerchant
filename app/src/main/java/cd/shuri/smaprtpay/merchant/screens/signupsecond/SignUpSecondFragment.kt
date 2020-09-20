@@ -1,19 +1,18 @@
 package cd.shuri.smaprtpay.merchant.screens.signupsecond
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
-
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSignUpSecondBinding
 import cd.shuri.smaprtpay.merchant.network.RegisterRequest
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
@@ -68,22 +67,8 @@ class SignUpSecondFragment : Fragment() {
     }
 
     private fun register() {
-        val valid = viewModel.validateForm(RegisterRequest(
-            args.lastName,
-            args.firstName,
-            args.email,
-            args.phone1,
-            args.phone2,
-            args.address,
-            binding.activityTet.text.toString(),
-            sector,
-            binding.rccmTet.text.toString(),
-            binding.nifTet.text.toString(),
-            binding.ownerIdTet.text.toString(),
-            userCode!!
-        ))
-        if (valid) {
-            viewModel.register(RegisterRequest(
+        val valid = viewModel.validateForm(
+            RegisterRequest(
                 args.lastName,
                 args.firstName,
                 args.email,
@@ -95,8 +80,26 @@ class SignUpSecondFragment : Fragment() {
                 binding.rccmTet.text.toString(),
                 binding.nifTet.text.toString(),
                 binding.ownerIdTet.text.toString(),
-                userCode
-            ))
+                userCode!!
+            )
+        )
+        if (valid) {
+            viewModel.register(
+                RegisterRequest(
+                    args.lastName,
+                    args.firstName,
+                    args.email,
+                    args.phone1,
+                    args.phone2,
+                    args.address,
+                    binding.activityTet.text.toString(),
+                    sector,
+                    binding.rccmTet.text.toString(),
+                    binding.nifTet.text.toString(),
+                    binding.ownerIdTet.text.toString(),
+                    userCode
+                )
+            )
         }
     }
 
@@ -122,7 +125,7 @@ class SignUpSecondFragment : Fragment() {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
-                }  else {
+                } else {
                     dialog.dismiss()
                 }
                 viewModel.showDialogLoaderDone()
@@ -131,14 +134,22 @@ class SignUpSecondFragment : Fragment() {
 
         viewModel.showToastSuccess.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                Toast.makeText(requireContext(), viewModel.messageRegister.value, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    viewModel.messageRegister.value,
+                    Toast.LENGTH_SHORT
+                ).show()
                 viewModel.showToastSuccessDone()
             }
         })
 
         viewModel.showToastError.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                Toast.makeText(requireContext(), viewModel.messageRegister.value, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    viewModel.messageRegister.value,
+                    Toast.LENGTH_SHORT
+                ).show()
                 viewModel.showToastErrorDone()
             }
         })
@@ -156,7 +167,11 @@ class SignUpSecondFragment : Fragment() {
 
         viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                findNavController().navigate(SignUpSecondFragmentDirections.actionSignUpSecondFragmentToAddFirstPaymentAccountFragment())
+                findNavController().navigate(
+                    SignUpSecondFragmentDirections.actionSignUpSecondFragmentToAddFirstPaymentAccountFragment(
+                        args.phoneNumber
+                    )
+                )
                 viewModel.navigateToHomeDone()
             }
         })
