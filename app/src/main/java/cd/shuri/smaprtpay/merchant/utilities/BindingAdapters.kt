@@ -139,11 +139,23 @@ fun bindTransfersStatus(img: ImageView, status: Int) {
 }
 
 @BindingAdapter("bindTransactionStatus")
-fun bindTransactionStatus(img: ImageView, status: Boolean) {
-    if (status) {
-        img.setImageResource(R.drawable.ic_round_check_circle_24)
-    } else {
-        img.setImageResource(R.drawable.ic_round_remove_circle_24)
+fun bindTransactionStatus(img: ImageView, status: Int) {
+//    if (status) {
+//        img.setImageResource(R.drawable.ic_round_check_circle_24)
+//    } else {
+//        img.setImageResource(R.drawable.ic_round_remove_circle_24)
+//    }
+
+    when (status) {
+        5 -> {
+            img.setImageResource(R.drawable.ic_round_check_circle_24)
+        }
+        4 -> {
+            img.setImageResource(R.drawable.ic_round_remove_circle_24)
+        }
+        else -> {
+            img.setImageResource(R.drawable.ic_round_pause_circle_filled_24)
+        }
     }
 }
 

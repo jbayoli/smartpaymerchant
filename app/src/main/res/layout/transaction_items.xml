@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    app:bindTransactionStatus="@{transaction.paid}"
+                    app:bindTransactionStatus="@{transaction.step}"
                     tools:src="@drawable/ic_round_check_circle_24" />
             </RelativeLayout>
         </LinearLayout>

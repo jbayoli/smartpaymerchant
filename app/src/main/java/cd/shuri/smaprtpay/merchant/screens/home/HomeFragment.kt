@@ -98,8 +98,28 @@ class HomeFragment : Fragment() {
 
         binding.waitButton.setOnClickListener {
             viewModel.response.value?.let {
-                if (it.waiting!! > 0) {
+                if (it.validatings!! > 0) {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionValidation())
+                } else {
+                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.waitTButton.setOnClickListener {
+            viewModel.response.value?.let {
+                if (it.waiting!! > 0) {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionInWaitFragment())
+                } else {
+                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.errorButton.setOnClickListener {
+            viewModel.response.value?.let {
+                if (it.errors!! > 0) {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionsErrorFragment())
                 } else {
                     Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
                 }
@@ -188,14 +208,11 @@ class HomeFragment : Fragment() {
         viewModel.response.observe(viewLifecycleOwner, Observer {
             it?.let{
                 binding.numberOfTransaction.text = bindNumberOfTransaction(it.all!!)
-                binding.numberOfWait.text = bindNumberOfTransaction(it.waiting!!)
+                binding.numberOfWait.text = bindNumberOfTransaction(it.validatings!!)
                 binding.numberOfClos.text = bindNumberOfTransaction(it.clos!!)
-            }
-        })
-
-        viewModel.transfers.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                binding.numberOfTransfer.text = bindNumberOfTransaction(it.size)
+                binding.numberOfTransfer.text = bindNumberOfTransaction(it.transferts!!)
+                binding.numberOfError.text = bindNumberOfTransaction(it.errors!!)
+                binding.numberOfWaitT.text = bindNumberOfTransaction(it.waiting!!)
             }
         })
 

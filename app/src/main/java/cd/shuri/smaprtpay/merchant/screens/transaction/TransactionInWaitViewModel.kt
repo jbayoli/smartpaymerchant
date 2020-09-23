@@ -1,24 +1,23 @@
-package cd.shuri.smaprtpay.merchant.screens.home
+package cd.shuri.smaprtpay.merchant.screens.transaction
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cd.shuri.smaprtpay.merchant.SmartPayApp
-import cd.shuri.smaprtpay.merchant.network.DashboardResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
+import cd.shuri.smaprtpay.merchant.network.TransactionResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class HomeViewModel : ViewModel() {
-
-    private val _response = MutableLiveData<DashboardResponse>()
-    val response: LiveData<DashboardResponse> get() = _response
+class TransactionInWaitViewModel : ViewModel() {
+    private val _transactions =  MutableLiveData<List<TransactionResponse>>()
+    val transactions : LiveData<List<TransactionResponse>> get() = _transactions
 
     private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
 
     private val _showTToastForError = MutableLiveData<Boolean>()
     val showTToastForError: LiveData<Boolean> get() = _showTToastForError
@@ -31,37 +30,37 @@ class HomeViewModel : ViewModel() {
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
-
     init {
-        savePreference()
+        _transactions.value = ArrayList()
+        getTransactions()
     }
 
     fun showDialogLoaderDone() {
         _showDialogLoader.value = null
     }
 
-    fun getDashBoardData() {
+    private fun getTransactions() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result =
-                    SmartPayApi.smartPayApiService.getDashBoardDataAsync(auth, userCode!!).await()
+                val result = SmartPayApi.smartPayApiService.getAllTransactionInWaitAsync(auth, userCode!!).await()
                 _showDialogLoader.value = false
-                Timber.d("$result")
-                _response.value = result
-
+                if (result.isNotEmpty()) {
+                    _transactions.value = result
+                    for (element in result) {
+                        Timber.d("code: ${element.code}")
+                    }
+                } else {
+                    Timber.d("No transactions")
+                    _transactions.value = ArrayList()
+                }
             } catch (e: Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                _transactions.value = ArrayList()
+                _showDialogLoader.value = true
             }
         }
-    }
-
-    private fun savePreference() {
-        val preferencesEditor = SmartPayApp.preferences.edit()
-        preferencesEditor.putInt("step", 0)
-        preferencesEditor.apply()
     }
 
     fun showToastErrorDone() {

@@ -57,7 +57,7 @@ interface SmartPayApiService {
     ) : Deferred<DashboardResponse>
 
 
-    @GET("api/merchant/transaction/waiting/{customer}")
+    @GET("api/merchant/transaction/all/{customer}")
     fun getAllTransactionAsync(
         @Header("Authorization") authorization: String,
         @Path("customer") customer : String
@@ -69,7 +69,19 @@ interface SmartPayApiService {
         @Path("customer") customer : String
     ) : Deferred<List<TransactionResponse>>
 
-    @GET("api/merchant/transaction/all/{customer}")
+    @GET("api/merchant/transaction/unsuccessfull/{customer}")
+    fun getAllTransactionErrorAsync(
+        @Header("Authorization") authorization: String,
+        @Path("customer") customer : String
+    ) : Deferred<List<TransactionResponse>>
+
+    @GET("api/merchant/transaction/waiting/{customer}")
+    fun getAllTransactionInWaitAsync(
+        @Header("Authorization") authorization: String,
+        @Path("customer") customer : String
+    ) : Deferred<List<TransactionResponse>>
+
+    @GET("api/merchant/transaction/validating/{customer}")
     fun getWaitingTransactionAsync(
         @Header("Authorization") authorization: String,
         @Path("customer") customer : String

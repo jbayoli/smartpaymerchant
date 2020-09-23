@@ -222,6 +222,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_transactionsErrorFragment"
+            app:destination="@id/transactionsErrorFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_transactionInWaitFragment"
+            app:destination="@id/transactionInWaitFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
@@ -501,5 +515,15 @@
             android:name="account"
             app:argType="cd.shuri.smaprtpay.merchant.network.AccountsResponse" />
     </fragment>
+    <fragment
+        android:id="@+id/transactionsErrorFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.transaction.TransactionsErrorFragment"
+        android:label="Echec"
+        tools:layout="@layout/transactions_error_fragment" />
+    <fragment
+        android:id="@+id/transactionInWaitFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.transaction.TransactionInWaitFragment"
+        android:label="En attente"
+        tools:layout="@layout/transaction_in_wait_fragment" />
 
 </navigation>

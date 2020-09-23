@@ -127,9 +127,12 @@ data class AccountsResponse(
 
 @JsonClass(generateAdapter = true)
 data class DashboardResponse(
-    val all: Int?,
-    val waiting: Int?,
-    val clos: Int?,
+    val all: Int? = 0,
+    val waiting: Int? = 0,
+    val clos: Int? = 0,
+    val validatings: Int? = 0,
+    val errors: Int? = 0,
+    val transferts: Int? = 0,
     val status: String?,
     val message: String?
 )
@@ -141,7 +144,8 @@ data class TransactionResponse(
     val client: String?,
     val reference: String?,
     val code: String?,
-    val paid: Boolean?
+    val paid: Boolean?,
+    val step: Int?
 )
 
 @JsonClass(generateAdapter = true)
