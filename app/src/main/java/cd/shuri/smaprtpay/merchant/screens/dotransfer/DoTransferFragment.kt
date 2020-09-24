@@ -49,8 +49,6 @@ class DoTransferFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items)
         (binding.currencyTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        binding.amountTet.setText("0.00")
-
         observers()
 
         return binding.root
