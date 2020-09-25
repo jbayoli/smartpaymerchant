@@ -36,6 +36,7 @@ class AddAccountFragment : Fragment() {
     private val years = mutableListOf<Int>()
     private var selectedMonth = ""
     private var selectedYear = ""
+    private var isMerchant = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,6 +110,18 @@ class AddAccountFragment : Fragment() {
         binding.validateButton.setOnClickListener {
             addPaymentMethod()
         }
+
+        binding.radioGroup.setOnCheckedChangeListener { _, i ->
+            if (i == R.id.radio_yes) {
+                Timber.d("Yes")
+                binding.radioYes.isChecked = true
+                isMerchant = true
+            } else {
+                Timber.d("No")
+                binding.radioNo.isChecked = true
+                isMerchant = false
+            }
+        }
     }
 
     private fun addPaymentMethod(){
@@ -118,7 +131,8 @@ class AddAccountFragment : Fragment() {
                 type = accountType,
                 phone = binding.phoneNumberTet.text.toString(),
                 customer = useCode!!,
-                shortCode = binding.shortCodeTet.text.toString()
+                shortCode = binding.shortCodeTet.text.toString(),
+                isMerchant = isMerchant
             ))
             if (valid) {
                 viewModel.addPaymentMethod(
@@ -127,7 +141,8 @@ class AddAccountFragment : Fragment() {
                         type = accountType,
                         phone = "${binding.countryCodeTet.text.toString().removePrefix("+")}${binding.phoneNumberTet.text.toString()}",
                         customer = useCode,
-                        shortCode = binding.shortCodeTet.text.toString()
+                        shortCode = binding.shortCodeTet.text.toString(),
+                        isMerchant = isMerchant
                     )
                 )
             } else {
@@ -141,31 +156,21 @@ class AddAccountFragment : Fragment() {
                 expiration = "$selectedMonth/$selectedYear",
                 customer = useCode!!,
                 shortCode = binding.shortCodeTet.text.toString(),
-                cardName = binding.cardNameTet.toString()
+                cardName = binding.cardNameTet.toString(),
+                isMerchant = isMerchant
             ))
 
             if (valid) {
-                if (binding.isMobileAccount.isChecked) {
-                    viewModel.addPaymentMethod(AddPaymentMethodRequest(
-                        operator =  operatorCode,
-                        type = accountType,
-                        card = binding.cardNumberTet.text.toString(),
-                        expiration = "$selectedMonth/$selectedYear",
-                        customer = useCode,
-                        shortCode = binding.shortCodeTet.text.toString(),
-                        cardName = binding.cardNameTet.toString()
-                    ))
-                } else {
-                    viewModel.addPaymentMethod(AddPaymentMethodRequest(
-                        operator =  operatorCode,
-                        type = accountType,
-                        card = binding.cardNumberTet.text.toString(),
-                        expiration = "$selectedMonth/$selectedYear",
-                        customer = useCode,
-                        shortCode = binding.shortCodeTet.text.toString(),
-                        cardName = binding.cardNameTet.toString()
-                    ))
-                }
+                viewModel.addPaymentMethod(AddPaymentMethodRequest(
+                    operator =  operatorCode,
+                    type = accountType,
+                    card = binding.cardNumberTet.text.toString(),
+                    expiration = "$selectedMonth/$selectedYear",
+                    customer = useCode,
+                    shortCode = binding.shortCodeTet.text.toString(),
+                    cardName = binding.cardNameTet.toString(),
+                    isMerchant = isMerchant
+                ))
 
             } else {
                 return

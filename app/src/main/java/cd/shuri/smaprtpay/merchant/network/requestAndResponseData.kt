@@ -86,7 +86,8 @@ data class AddPaymentMethodRequest(
     val customer: String,
     val shortCode: String,
     val cardName: String? = null,
-    val code: String? = null
+    val code: String? = null,
+    val isMerchant: Boolean
 )
 
 @JsonClass(generateAdapter = true)

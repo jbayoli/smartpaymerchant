@@ -46,7 +46,6 @@ class AddFirstPaymentAccountFragment : Fragment() {
     private val years = mutableListOf<Int>()
     private var selectedMonth = ""
     private var selectedYear = ""
-
     private var isMerchant = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

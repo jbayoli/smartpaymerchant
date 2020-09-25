@@ -35,7 +35,7 @@
                 android:id="@+id/mobile_money"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+
                 app:layout_constraintTop_toBottomOf="@+id/add_account_message_tv"
                 app:layout_constraintStart_toStartOf="@+id/add_account_message_tv">
                 <TextView
@@ -142,15 +142,42 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/is_mobile_account"
-                    android:layout_width="0dp"
-                    android:visibility="gone"
+                <LinearLayout
+                    android:id="@+id/isMerchant"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Compte marchand mobile"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_number_til"
-                    app:layout_constraintStart_toStartOf="@+id/country_code_til"
-                    app:layout_constraintEnd_toEndOf="@+id/phone_number_til"/>
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_number_til">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="Ce compte a-t-il déjà été configuré comme compte marchand chez votre opérateur?"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checkedButton="@id/radio_no"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_yes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Oui" />
+
+                        <RadioButton
+                            android:id="@+id/radio_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Non" />
+                    </RadioGroup>
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
