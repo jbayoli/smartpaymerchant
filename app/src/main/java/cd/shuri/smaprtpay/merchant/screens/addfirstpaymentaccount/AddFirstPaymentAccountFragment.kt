@@ -47,6 +47,8 @@ class AddFirstPaymentAccountFragment : Fragment() {
     private var selectedMonth = ""
     private var selectedYear = ""
 
+    private var isMerchant = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -133,6 +135,18 @@ class AddFirstPaymentAccountFragment : Fragment() {
             binding.monthTil.error = null
             binding.yearTil.error = null
         }
+
+        binding.radioGroup.setOnCheckedChangeListener { _, i ->
+            if (i == R.id.radio_yes) {
+                Timber.d("Yes")
+                binding.radioYes.isChecked = true
+                isMerchant = true
+            } else {
+                Timber.d("No")
+                binding.radioNo.isChecked = true
+                isMerchant = false
+            }
+        }
     }
 
     private fun addPaymentMethod(){
@@ -165,7 +179,8 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     "$selectedMonth/$selectedYear",
                     useCode!!,
                     "",
-                    binding.cardNameTet.text.toString()
+                    binding.cardNameTet.text.toString(),
+                    isMerchant
                 )
                 val valid = viewModel.validateForm(request)
                 if (valid) {
@@ -185,7 +200,8 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     null,
                     useCode!!,
                     shortCode,
-                    null
+                    null,
+                    isMerchant
                 )
                 val valid = viewModel.validateForm(request)
                 if (valid) {
@@ -205,7 +221,8 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     "$selectedMonth/$selectedYear",
                     useCode!!,
                     shortCode,
-                    binding.cardNameTet.text.toString()
+                    binding.cardNameTet.text.toString(),
+                    isMerchant
                 )
                 val valid = viewModel.validateForm(request)
                 if (valid) {

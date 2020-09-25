@@ -13,8 +13,8 @@ object SmartPayApi {
     //Set connection timeout, write timeout and read timeout
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(60, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
         .build()
 
     //instantiate retrofit with timeouts, Moshi Converter Factory, Moshi coroutine factory and base url

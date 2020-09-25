@@ -1,8 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="cd.shuri.smaprtpay.merchant.screens.addfirstpaymentaccount.AddFirstPaymentAccountFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -21,9 +21,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/roboto"
                 android:text="Veuillez remplir le formulaire suivant pour ajouter un compte de paiements à notre service FlexPay"
                 android:textAlignment="center"
-                android:fontFamily="@font/roboto"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -33,17 +33,18 @@
                 android:id="@+id/mobile_money"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/add_account_message_tv"
-                app:layout_constraintStart_toStartOf="@+id/add_account_message_tv">
+                app:layout_constraintStart_toStartOf="@+id/add_account_message_tv"
+                app:layout_constraintTop_toBottomOf="@+id/add_account_message_tv">
+
                 <TextView
                     android:id="@+id/mobile_money_tv"
                     style="@style/TextAppearance.AppTheme.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mobile Money"
                     android:layout_marginStart="24dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    android:text="Mobile Money"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/mobile_provider_til"
@@ -52,8 +53,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    app:endIconMode="dropdown_menu"
                     android:fontFamily="@font/roboto"
+                    app:endIconMode="dropdown_menu"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mobile_money_tv">
@@ -84,8 +85,8 @@
                         android:id="@+id/short_code_tet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Short code"
                         android:fontFamily="@font/roboto"
+                        android:hint="Short code"
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -104,10 +105,10 @@
                         android:id="@+id/country_code_tet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+243"
                         android:fontFamily="@font/roboto"
+                        android:inputType="phone"
                         android:maxLength="4"
-                        android:inputType="phone" />
+                        android:text="+243" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -126,41 +127,69 @@
                         android:id="@+id/phone_number_tet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="9"
+                        android:digits="1234567890"
                         android:fontFamily="@font/roboto"
                         android:hint="Entrer votre n° de téléphone"
-                        android:digits="1234567890"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:maxLength="9" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/is_mobile_account"
-                    android:layout_width="0dp"
-                    android:visibility="gone"
+                <LinearLayout
+                    android:id="@+id/isMerchant"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Compte marchand mobile"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_number_til"
-                    app:layout_constraintStart_toStartOf="@+id/country_code_til"
-                    app:layout_constraintEnd_toEndOf="@+id/phone_number_til"/>
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_number_til">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="Ce compte a-t-il déjà été configuré comme compte marchand chez votre opérateur?"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checkedButton="@id/radio_no"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_yes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Oui" />
+
+                        <RadioButton
+                            android:id="@+id/radio_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Non" />
+                    </RadioGroup>
+                </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/mobile_money"
-                app:layout_constraintStart_toStartOf="parent" >
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mobile_money">
 
                 <TextView
                     android:id="@+id/card_tv"
                     style="@style/TextAppearance.AppTheme.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Visa ou Mastercard"
                     android:layout_marginStart="24dp"
+                    android:text="Visa ou Mastercard"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/card_operator_til"
@@ -169,8 +198,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    app:endIconMode="dropdown_menu"
                     android:fontFamily="@font/roboto"
+                    app:endIconMode="dropdown_menu"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/card_tv">
@@ -223,11 +252,11 @@
                         android:id="@+id/card_name_tet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -"
                         android:fontFamily="@font/roboto"
                         android:hint="Nom sur la carte"
-                        android:maxLength="20"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -"
-                        android:inputType="textPersonName|textCapWords" />
+                        android:inputType="textPersonName|textCapWords"
+                        android:maxLength="20" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -235,12 +264,12 @@
                     android:id="@+id/expiration_date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date d'expiration"
-                    android:fontFamily="@font/roboto"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_marginStart="24dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="Date d'expiration"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_name_til"/>
+                    app:layout_constraintTop_toBottomOf="@+id/card_name_til" />
 
                 <LinearLayout
                     android:id="@+id/expiration_date_content"
@@ -257,8 +286,8 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:hint="Mois"
                         android:fontFamily="@font/roboto"
+                        android:hint="Mois"
                         app:endIconMode="dropdown_menu">
 
                         <AutoCompleteTextView
@@ -276,8 +305,8 @@
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:hint="Année"
                         android:fontFamily="@font/roboto"
+                        android:hint="Année"
                         app:endIconMode="dropdown_menu">
 
                         <AutoCompleteTextView
@@ -298,8 +327,8 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
-                    android:visibility="gone"
                     android:fontFamily="@font/roboto"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/expiration_date_content">
@@ -308,8 +337,8 @@
                         android:id="@+id/cvv_tet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="CVV"
                         android:fontFamily="@font/roboto"
+                        android:hint="CVV"
                         android:inputType="numberPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -317,13 +346,13 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/email_til"
                     style="@style/AppTheme.TextInputLayout"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:fontFamily="@font/roboto"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cvv_til">
@@ -332,8 +361,8 @@
                         android:id="@+id/email_tet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
                         android:fontFamily="@font/roboto"
+                        android:hint="Email"
                         android:inputType="textEmailAddress" />
 
                 </com.google.android.material.textfield.TextInputLayout>
