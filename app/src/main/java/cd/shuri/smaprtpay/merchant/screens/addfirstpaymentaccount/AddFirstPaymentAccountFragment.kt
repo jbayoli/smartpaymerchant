@@ -74,6 +74,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAddFirstPaymentAccountBinding.inflate(layoutInflater)
         binding.phoneNumberTet.setText(args.phoneNumber.replaceFirst("243", ""))
+        binding.phoneNumberTet.isEnabled = false
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.show()
 

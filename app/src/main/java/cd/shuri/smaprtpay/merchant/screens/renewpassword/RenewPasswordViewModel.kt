@@ -59,8 +59,10 @@ class RenewPasswordViewModel : ViewModel() {
                 Timber.d("message: ${result.message} status: ${result.status}")
                 if (result.status == "0") {
                     _responseStatus.value = result.status
+                    _showMessage.value = result.message
                 } else {
                     _responseStatus.value = result.status
+                    _showMessage.value = result.message
                 }
             } catch (e: Exception) {
                 Timber.e("${e.cause}")
@@ -80,6 +82,7 @@ class RenewPasswordViewModel : ViewModel() {
                 _showDialogLoader.value = false
                 if (result.status == "0") {
                     _navigateToSignIn.value = true
+                    _showMessage.value = result.message
                 }else {
                     _showMessage.value = result.message
                 }

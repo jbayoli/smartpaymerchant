@@ -160,7 +160,7 @@ class RenewPasswordFragment : Fragment() {
 
         viewModel.navigateToSignIn.observe(viewLifecycleOwner, Observer {
             it?.let {
-                //findNavController().navigate(RenewPasswordFragmentDirections.actionRenewPasswordFragmentToSignInFragment())
+                findNavController().navigate(RenewPasswordFragmentDirections.actionRenewPasswordFragmentToSingInFragment())
                 viewModel.navigateToSignInDone()
             }
         })

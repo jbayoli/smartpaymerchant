@@ -35,7 +35,7 @@
                 android:id="@+id/mobile_money"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/add_account_message_tv"
                 app:layout_constraintStart_toStartOf="@+id/add_account_message_tv">
                 <TextView
@@ -242,6 +242,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:hint="Numéro de carte"
+                        android:maxLength="19"
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -266,7 +267,6 @@
                         android:hint="Nom sur la carte"
                         android:maxLength="20"
                         android:maxLines="1"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -"
                         android:inputType="textPersonName|textCapWords" />
 
                 </com.google.android.material.textfield.TextInputLayout>

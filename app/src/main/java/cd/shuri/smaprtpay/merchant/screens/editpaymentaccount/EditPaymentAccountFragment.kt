@@ -26,6 +26,7 @@ class EditPaymentAccountFragment : Fragment() {
     private var operatorCode = ""
     private val useCode = SmartPayApp.preferences.getString("user_code", "")
     private val items = mutableListOf<String>()
+    private val cardItems = mutableListOf<String>()
     private val months = mutableListOf<String>()
     private val years = mutableListOf<Int>()
     private var selectedMonth = ""
@@ -33,24 +34,6 @@ class EditPaymentAccountFragment : Fragment() {
     private var accountType = 0
     private var accountCode = ""
     private val dialog = LoaderDialog()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        for (e in 1..12) {
-            if (e in 1..9) {
-                months.add(e - 1, "0$e")
-            } else {
-                months.add(e - 1, "$e")
-            }
-        }
-
-        var yearIndex = 0
-        for (y in 20..50) {
-            years.add(yearIndex, y)
-            yearIndex += 1
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,16 +51,33 @@ class EditPaymentAccountFragment : Fragment() {
             viewModelFactory
         ).get(EditPaymentAccountViewModel::class.java)
 
+        showProperForm()
+
+        observers()
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        for (e in 1..12) {
+            if (e in 1..9) {
+                months.add("0$e")
+            } else {
+                months.add("$e")
+            }
+        }
+
+
+        for (y in 20..50) {
+            years.add( y)
+        }
+
         val adapterMonth = ArrayAdapter(requireContext(), R.layout.list_items, months)
         val adapterYear = ArrayAdapter(requireContext(), R.layout.list_items, years)
 
         (binding.monthTil.editText as? AutoCompleteTextView)?.setAdapter(adapterMonth)
         (binding.yearTil.editText as? AutoCompleteTextView)?.setAdapter(adapterYear)
-
-        showProperForm()
-
-        observers()
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -121,7 +121,8 @@ class EditPaymentAccountFragment : Fragment() {
                     phone = binding.phoneNumberTet.text.toString(),
                     customer = useCode!!,
                     shortCode = binding.shortCodeTet.text.toString(),
-                    code = accountCode
+                    code = accountCode,
+                    isMerchant = false
                 )
             )
             if (valid) {
@@ -134,7 +135,8 @@ class EditPaymentAccountFragment : Fragment() {
                         }${binding.phoneNumberTet.text.toString()}",
                         customer = useCode,
                         shortCode = binding.shortCodeTet.text.toString(),
-                        code = accountCode
+                        code = accountCode,
+                        isMerchant = false
                     )
                 )
             } else {
@@ -146,10 +148,12 @@ class EditPaymentAccountFragment : Fragment() {
                     operator = operatorCode,
                     type = accountType,
                     card = binding.cardNumberTet.text.toString(),
+                    cardName = binding.cardNameTet.text.toString(),
                     expiration = "$selectedMonth/$selectedYear",
                     customer = useCode!!,
                     shortCode = binding.shortCodeTet.text.toString(),
-                    code = accountCode
+                    code = accountCode,
+                    isMerchant = false
                 )
             )
 
@@ -160,10 +164,12 @@ class EditPaymentAccountFragment : Fragment() {
                             operator = operatorCode,
                             type = accountType,
                             card = binding.cardNumberTet.text.toString(),
+                            cardName = binding.cardNameTet.text.toString(),
                             expiration = "$selectedMonth/$selectedYear",
                             customer = useCode,
                             shortCode = binding.shortCodeTet.text.toString(),
-                            code = accountCode
+                            code = accountCode,
+                            isMerchant = false
                         )
                     )
                 } else {
@@ -172,10 +178,12 @@ class EditPaymentAccountFragment : Fragment() {
                             operator = operatorCode,
                             type = accountType,
                             card = binding.cardNumberTet.text.toString(),
+                            cardName = binding.cardNameTet.text.toString(),
                             expiration = "$selectedMonth/$selectedYear",
                             customer = useCode,
                             shortCode = binding.shortCodeTet.text.toString(),
-                            code = accountCode
+                            code = accountCode,
+                            isMerchant = false
                         )
                     )
                 }
@@ -206,6 +214,8 @@ class EditPaymentAccountFragment : Fragment() {
             binding.validateButton.visibility = View.VISIBLE
             (binding.cardOperatorTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             accountType = args.account.type!!
+            selectedMonth = args.account.expiration?.split('/')?.get(0)!!
+            selectedYear = args.account.expiration?.split('/')?.get(1)!!
         }
     }
 
@@ -236,6 +246,14 @@ class EditPaymentAccountFragment : Fragment() {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     items.add(element.name!!)
+                }
+            }
+        })
+
+        viewModel.providers.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
+                for (element in it) {
+                    cardItems.add(element.name!!)
                 }
             }
         })

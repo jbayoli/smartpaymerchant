@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/roboto"
-                android:text="Ce n° de téléphone, vous sera demandé pendant les procédures de réinitialisation du PIN FlexPay oublié"
+                android:text="Ce n° de téléphone, vous sera demandé pendant les procédures de réinitialisation du PIN oublié\nAttention!!! Le numéro que vous introduisez ici sera également utilisé comme votre compte de paiement par défaut"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
                 app:layout_constraintStart_toStartOf="@+id/country_code_til"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />

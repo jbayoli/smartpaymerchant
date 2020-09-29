@@ -156,7 +156,7 @@ class AddAccountFragment : Fragment() {
                 expiration = "$selectedMonth/$selectedYear",
                 customer = useCode!!,
                 shortCode = binding.shortCodeTet.text.toString(),
-                cardName = binding.cardNameTet.toString(),
+                cardName = binding.cardNameTet.text.toString(),
                 isMerchant = isMerchant
             ))
 
@@ -168,7 +168,7 @@ class AddAccountFragment : Fragment() {
                     expiration = "$selectedMonth/$selectedYear",
                     customer = useCode,
                     shortCode = binding.shortCodeTet.text.toString(),
-                    cardName = binding.cardNameTet.toString(),
+                    cardName = binding.cardNameTet.text.toString(),
                     isMerchant = isMerchant
                 ))
 

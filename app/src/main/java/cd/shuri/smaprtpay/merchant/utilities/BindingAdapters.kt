@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.screens.accounts.AccountsListAdapter
 import cd.shuri.smaprtpay.merchant.network.AccountsResponse
+import cd.shuri.smaprtpay.merchant.network.Notification
 import cd.shuri.smaprtpay.merchant.network.TransactionResponse
 import cd.shuri.smaprtpay.merchant.network.Transfers
+import cd.shuri.smaprtpay.merchant.screens.notifications.NotificationsAdapter
 import cd.shuri.smaprtpay.merchant.screens.transaction.TransactionListAdapter
 import cd.shuri.smaprtpay.merchant.transactionvalidation.TransactionValidationListAdapter
 import cd.shuri.smaprtpay.merchant.transfer.TransferListAdapter
@@ -140,12 +142,6 @@ fun bindTransfersStatus(img: ImageView, status: Int) {
 
 @BindingAdapter("bindTransactionStatus")
 fun bindTransactionStatus(img: ImageView, status: Int) {
-//    if (status) {
-//        img.setImageResource(R.drawable.ic_round_check_circle_24)
-//    } else {
-//        img.setImageResource(R.drawable.ic_round_remove_circle_24)
-//    }
-
     when (status) {
         5 -> {
             img.setImageResource(R.drawable.ic_round_check_circle_24)
@@ -181,4 +177,10 @@ fun makeAccountEditable(imageView: ImageView, account: AccountsResponse) {
     } else {
         imageView.visibility = View.VISIBLE
     }
+}
+
+@BindingAdapter("bindNotificationRecyclerView")
+fun bindNotificationRecyclerView(recyclerView: RecyclerView, notifications: List<Notification>) {
+    val adapter = recyclerView.adapter as NotificationsAdapter
+    adapter.submitList(notifications)
 }

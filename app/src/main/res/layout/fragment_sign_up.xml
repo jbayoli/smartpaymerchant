@@ -50,6 +50,7 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/roboto"
                 android:layout_marginEnd="24dp"
+                app:helperText="maximum 8 caractères"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/identity_mail_tv">
@@ -85,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Code utilisateur de votre choix*"
                     android:fontFamily="@font/roboto"
+                    android:enabled="false"
                     android:maxLength="10"
                     android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
                     android:inputType="textPersonName" />

@@ -236,6 +236,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
@@ -369,8 +376,8 @@
     <fragment
         android:id="@+id/doTransferFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.dotransfer.DoTransferFragment"
-        android:label="Transfert"
-        tools:layout="@layout/fragment_do_transfer" >
+        android:label="Approvisionner"
+        tools:layout="@layout/fragment_do_transfer">
         <action
             android:id="@+id/action_doTransferFragment_to_transfersFragment"
             app:destination="@id/transfersFragment"
@@ -525,5 +532,10 @@
         android:name="cd.shuri.smaprtpay.merchant.screens.transaction.TransactionInWaitFragment"
         android:label="En attente"
         tools:layout="@layout/transaction_in_wait_fragment" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.notifications.NotificationsFragment"
+        android:label="Notifications"
+        tools:layout="@layout/notifications_fragment" />
 
 </navigation>

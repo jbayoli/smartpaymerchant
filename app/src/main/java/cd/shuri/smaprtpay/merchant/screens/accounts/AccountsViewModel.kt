@@ -50,6 +50,7 @@ class AccountsViewModel : ViewModel() {
                 _showDialogLoader.value = true
                 val result =
                     SmartPayApi.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
+                Timber.d("$result")
                 _showDialogLoader.value = false
                 if (result.isNotEmpty()) {
                     _paymentMethods.value = result.toMutableList()

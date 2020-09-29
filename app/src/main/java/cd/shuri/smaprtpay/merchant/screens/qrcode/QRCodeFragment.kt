@@ -34,6 +34,8 @@ class QRCodeFragment : Fragment() {
         val args = QRCodeFragmentArgs.fromBundle(requireArguments())
         val name = args.codeText
 
+        binding.qRCodeText.text = args.codeText
+
         generateQRCode(name)
 
         return binding.root

@@ -40,6 +40,9 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
     private val _providers = MutableLiveData<List<ProvidersData>>()
     val providers: LiveData<List<ProvidersData>> get() = _providers
 
+    private val _cardProviders = MutableLiveData<List<ProvidersData>>()
+    val cardProviders: LiveData<List<ProvidersData>> get() = _cardProviders
+
     private val _showTToastForError = MutableLiveData<Boolean>()
     val showTToastForError: LiveData<Boolean> get() = _showTToastForError
 

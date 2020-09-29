@@ -52,7 +52,7 @@ class AccountFragment : Fragment() {
                     requireContext(),
                     R.style.ThemeOverlay_AppTheme_Dialog
                 )
-                    .setMessage("Veuillez accepter les terms pour continuer à utiliser FlexPay")
+                    .setMessage("Veuillez accepter les termes pour continuer à utiliser FlexPay")
                     .setPositiveButton("OK") { dialog, _ ->
                         dialog.dismiss()
                     }

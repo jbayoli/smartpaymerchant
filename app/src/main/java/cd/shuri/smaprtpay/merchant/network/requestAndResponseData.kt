@@ -277,3 +277,20 @@ data class DeletePaymentAccount(
     val code: String?,
     val customer: String?
 )
+
+@JsonClass(generateAdapter = true)
+data class NotificationResponse(
+    val message: String?,
+    val status: String?,
+    val notifications: List<Notification>?
+)
+
+@JsonClass(generateAdapter = true)
+data class Notification(
+    val reference: String?,
+    val amount: String?,
+    val description: String?,
+    val date: String?,
+    val customerName: String?,
+    val merchantName: String?
+)

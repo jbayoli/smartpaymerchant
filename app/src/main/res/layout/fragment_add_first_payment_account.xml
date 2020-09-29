@@ -232,6 +232,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:hint="Numéro de la carte"
+                        android:maxLength="19"
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -252,7 +253,6 @@
                         android:id="@+id/card_name_tet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -"
                         android:fontFamily="@font/roboto"
                         android:hint="Nom sur la carte"
                         android:inputType="textPersonName|textCapWords"

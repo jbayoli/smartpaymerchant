@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import cd.shuri.smaprtpay.client.screens.profile.ProfileViewModel
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.databinding.FragmentProfileBinding
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog

@@ -150,4 +150,10 @@ interface SmartPayApiService {
         @Header("Authorization") authorization: String,
         @Body request: DeletePaymentAccount
     ) : Deferred<CommonResponse>
+
+    @GET("api/merchant/notification/list/{customer}")
+    fun getNotificationsAsync(
+        @Header("Authorization") authorization: String,
+        @Path("customer") customer : String
+    ) : Deferred<NotificationResponse>
 }

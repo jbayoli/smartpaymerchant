@@ -127,7 +127,14 @@ class HomeFragment : Fragment() {
         }
 
         binding.myTransfersButton.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransfersFragment())
+            viewModel.response.value?.let {
+                if (it.transferts!! > 0) {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransfersFragment())
+                } else {
+                    Toast.makeText(requireContext(), "Aucun approvisionnement disponible", Toast.LENGTH_SHORT).show()
+                }
+            }
+
         }
 
         binding.newTransferButton.setOnClickListener {
@@ -154,6 +161,10 @@ class HomeFragment : Fragment() {
 
         binding.profileButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
+        }
+
+        binding.notifications.setOnClickListener {
+            findNavController().navigate((HomeFragmentDirections.actionHomeFragmentToNotificationsFragment()))
         }
     }
 
