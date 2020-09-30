@@ -43,8 +43,6 @@ class SignUpSecondFragment : Fragment() {
     ): View? {
         args = SignUpSecondFragmentArgs.fromBundle(requireArguments())
 
-        Timber.d("Phone1 : ${args.phone1} Phone2: ${args.phone2}")
-
         binding = FragmentSignUpSecondBinding.inflate(layoutInflater)
         observers()
         return binding.root
@@ -67,38 +65,19 @@ class SignUpSecondFragment : Fragment() {
     }
 
     private fun register() {
+        val request = args.registerData
+        request.activity = binding.activityTet.text.toString()
+        request.sector = sector
+        request.rccm = binding.rccmTet.text.toString()
+        request.nif = binding.nifTet.text.toString()
+        request.owner = binding.ownerIdTet.text.toString()
+        request.customer = userCode!!
         val valid = viewModel.validateForm(
-            RegisterRequest(
-                args.lastName,
-                args.firstName,
-                args.email,
-                args.phone1,
-                args.phone2,
-                args.address,
-                binding.activityTet.text.toString(),
-                sector,
-                binding.rccmTet.text.toString(),
-                binding.nifTet.text.toString(),
-                binding.ownerIdTet.text.toString(),
-                userCode!!
-            )
+            request
         )
         if (valid) {
             viewModel.register(
-                RegisterRequest(
-                    args.lastName,
-                    args.firstName,
-                    args.email,
-                    args.phone1,
-                    args.phone2,
-                    args.address,
-                    binding.activityTet.text.toString(),
-                    sector,
-                    binding.rccmTet.text.toString(),
-                    binding.nifTet.text.toString(),
-                    binding.ownerIdTet.text.toString(),
-                    userCode
-                )
+                request
             )
         }
     }

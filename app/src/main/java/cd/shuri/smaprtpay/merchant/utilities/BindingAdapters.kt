@@ -173,7 +173,13 @@ fun bindTransferRecyclerView(recyclerView: RecyclerView, transfers: List<Transfe
 @BindingAdapter("makeAccountEditable")
 fun makeAccountEditable(imageView: ImageView, account: AccountsResponse) {
     if (account.type == 1) {
-        imageView.visibility = View.GONE
+        account.default?.let {
+            if (it) {
+                imageView.visibility = View.GONE
+            } else {
+                imageView.visibility = View.VISIBLE
+            }
+        }
     } else {
         imageView.visibility = View.VISIBLE
     }

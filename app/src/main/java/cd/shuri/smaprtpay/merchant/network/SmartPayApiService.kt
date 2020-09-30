@@ -156,4 +156,7 @@ interface SmartPayApiService {
         @Header("Authorization") authorization: String,
         @Path("customer") customer : String
     ) : Deferred<NotificationResponse>
+
+    @GET("api/support/communes")
+    fun getCommuneAsync() : Deferred<List<Commune>>
 }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -82,6 +83,14 @@ class AccountFragment : Fragment() {
                     dialog.dismiss()
                 }
                 viewModel.showDialogLoaderDone()
+            }
+        })
+
+        viewModel.response.observe(viewLifecycleOwner, Observer {
+            if (it.status == "2") {
+                binding.textInputLayout.error = "Ce numéro est utilisé par un autre compte"
+            } else if (it.status == "1") {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

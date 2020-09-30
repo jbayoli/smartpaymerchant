@@ -135,7 +135,8 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_round_delete_forever_24"
                     android:onClick="@{() -> deleteClickListener.onClick(account)}"
-                    app:tint="@android:color/holo_red_dark"/>
+                    app:tint="@android:color/holo_red_dark"
+                    app:makeAccountEditable="@{account}"/>
             </RelativeLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

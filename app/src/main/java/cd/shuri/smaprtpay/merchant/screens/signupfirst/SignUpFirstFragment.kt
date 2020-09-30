@@ -4,13 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSignUpFirstBinding
+import cd.shuri.smaprtpay.merchant.network.RegisterRequest
+import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -22,6 +29,15 @@ class SignUpFirstFragment : Fragment() {
     private val viewModel by viewModels<SignUpFirstViewModel>()
 
     private lateinit var args: SignUpFirstFragmentArgs
+
+    private var communeSelected = ""
+
+    private val items = mutableListOf<String>()
+    private val itemsCode = mutableListOf<String>()
+
+    val dialog = LoaderDialog()
+
+    private lateinit var request : RegisterRequest
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,16 +65,34 @@ class SignUpFirstFragment : Fragment() {
         binding.nextButton.setOnClickListener {
             navigate()
         }
+
+        binding.communeAuto.setOnItemClickListener { _, _, i, _ ->
+            communeSelected = itemsCode[i]
+        }
     }
 
     private fun navigate() {
+
+        var phone2 = ""
+        if (binding.phoneNumberTwoTet.text.toString().isNotEmpty()) {
+            phone2 = "${
+                binding.countryCodeTetTwo.text.toString().removePrefix("+")
+            }${binding.phoneNumberTwoTet.text.toString()}"
+        }
+
+        request = RegisterRequest(
+            lastName= binding.lastNameTet.text.toString(),
+            firstName = binding.firstNameTet.text.toString(),
+            email = binding.mailTet.text.toString(),
+            phone1 = "243${binding.phoneNumberOneTet.text.toString()}",
+            phone2 = phone2,
+            commune = communeSelected,
+            number = binding.numberTet.text.toString(),
+            street = binding.streetTet.text.toString()
+        )
+
         val valid = viewModel.validateFrom(
-            binding.lastNameTet.text.toString(),
-            binding.firstNameTet.text.toString(),
-            binding.mailTet.text.toString(),
-            binding.phoneNumberOneTet.text.toString(),
-            binding.phoneNumberTwoTet.text.toString(),
-            binding.addressTet.text.toString()
+            request
         )
 
         if (valid) {
@@ -93,11 +127,27 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isAddressEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isAddressCommuneEmpty.observe(viewLifecycleOwner, Observer {
             if (it) {
-                binding.addressTil.error = "Ce champ est obligatoire"
+                binding.communeTil.error = "Ce champ est obligatoire"
             } else {
-                binding.addressTil.error = null
+                binding.communeTil.error = null
+            }
+        })
+
+        viewModel.isAddressNumberEmpty.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.numberTil.error = "Ce champ est obligatoire"
+            } else {
+                binding.numberTil.error = null
+            }
+        })
+
+        viewModel.isAddressStreetEmpty.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.streetTil.error = "Ce champ est obligatoire"
+            } else {
+                binding.numberTil.error = null
             }
         })
 
@@ -119,22 +169,10 @@ class SignUpFirstFragment : Fragment() {
 
         viewModel.navigateToSignUp2.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                var phone2 = ""
-                if (binding.phoneNumberTwoTet.text.toString().isNotEmpty()) {
-                    phone2 = "${
-                        binding.countryCodeTetTwo.text.toString().removePrefix("+")
-                    }${binding.phoneNumberTwoTet.text.toString()}"
-                }
+
                 findNavController().navigate(
                     SignUpFirstFragmentDirections.actionSignUpFirstFragmentToSignUpSecondFragment(
-                        binding.lastNameTet.text.toString(),
-                        binding.firstNameTet.text.toString(),
-                        binding.mailTet.text.toString(),
-                        "${
-                            binding.countryCodeTetOne.text.toString().removePrefix("+")
-                        }${binding.phoneNumberOneTet.text.toString()}",
-                        phone2,
-                        binding.addressTet.text.toString(),
+                        request,
                         args.phoneNumber
                     )
                 )
@@ -155,6 +193,40 @@ class SignUpFirstFragment : Fragment() {
                 binding.phoneNumberTwoTil.error = null
             } else {
                 binding.phoneNumberTwoTil.error = "n° de téléphone invalide"
+            }
+        })
+
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                if (it) {
+                    dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
+                } else {
+                    dialog.dismiss()
+                }
+                viewModel.showDialogLoaderDone()
+            }
+        })
+
+        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard",
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.showToastErrorDone2()
+            }
+        })
+
+        viewModel.communes.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
+                for (element in it) {
+                    Timber.d("name : ${element.name}")
+                    items.add(element.name!!)
+                    itemsCode.add(element.code!!)
+                }
+                val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items)
+                (binding.communeTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
         })
     }

@@ -8,7 +8,8 @@ import java.util.concurrent.TimeUnit
 
 object SmartPayApi {
     //Base api url
-    private const val BASE_URL = "http://41.243.7.46:3005/"
+    //private const val BASE_URL = "http://41.243.7.46:3005/"
+    private const val BASE_URL = "http://192.168.2.144:3006/"
 
     //Set connection timeout, write timeout and read timeout
     private val okHttpClient = OkHttpClient.Builder()

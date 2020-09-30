@@ -99,28 +99,6 @@
         android:name="cd.shuri.smaprtpay.merchant.screens.signupsecond.SignUpSecondFragment"
         android:label="Enregistrement(2)"
         tools:layout="@layout/fragment_sign_up_second" >
-        <argument
-            android:name="lastName"
-            app:argType="string" />
-        <argument
-            android:name="firstName"
-            app:argType="string" />
-        <argument
-            android:name="email"
-            app:argType="string" />
-        <argument
-            android:name="phone1"
-            app:argType="string" />
-        <argument
-            android:name="phone2"
-            app:argType="string" />
-        <argument
-            android:name="address"
-            app:argType="string" />
-        <argument
-            android:name="phoneNumber"
-            app:argType="string"
-            android:defaultValue="" />
         <action
             android:id="@+id/action_signUpSecondFragment_to_addFirstPaymentAccountFragment"
             app:destination="@id/addFirstPaymentAccountFragment"
@@ -130,6 +108,13 @@
             app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/signUpFirstFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="registerData"
+            app:argType="cd.shuri.smaprtpay.merchant.network.RegisterRequest" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"

@@ -56,6 +56,7 @@ data class SingUpResponse(
     val status: String?
 )
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class RegisterRequest(
     @Json(name = "nom")
@@ -65,16 +66,17 @@ data class RegisterRequest(
     val email: String,
     val phone1: String,
     val phone2: String = "",
-    @Json(name = "adress")
-    val address: String,
-    val activity: String, // Nom de l'activité
-    val sector: String,  //Domaine d'activité
-    val rccm: String? = null,
-    val nif: String? = null,
+    var activity: String = "", // Nom de l'activité
+    var sector: String = "",  //Domaine d'activité
+    var rccm: String? = null,
+    var nif: String? = null,
     @Json(name = "proprietaire")
-    val owner: String? =null,
-    val customer: String
-)
+    var owner: String? =null,
+    var customer: String = "",
+    val number: String,
+    val commune: String,
+    val street: String
+):Parcelable
 
 @JsonClass(generateAdapter = true)
 data class AddPaymentMethodRequest(
@@ -124,7 +126,8 @@ data class AccountsResponse(
     val shortCode: String?,
     val operator: String?,
     val operatorName: String?,
-    val type: Int?
+    val type: Int?,
+    val default: Boolean?
 ): Parcelable
 
 @JsonClass(generateAdapter = true)
@@ -293,4 +296,10 @@ data class Notification(
     val date: String?,
     val customerName: String?,
     val merchantName: String?
+)
+
+@JsonClass(generateAdapter = true)
+data class Commune(
+    val code: String?,
+    val name: String?
 )

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cd.shuri.smaprtpay.merchant.network.CodeRequest
+import cd.shuri.smaprtpay.merchant.network.CommonResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
@@ -29,6 +30,9 @@ class AccountViewModel: ViewModel() {
 
     private val _showTToastForError = MutableLiveData<Boolean>()
     val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+
+    private val _response = MutableLiveData<CommonResponse>()
+    val response : LiveData<CommonResponse> get() = _response
 
     private var token = ""
 
@@ -65,8 +69,11 @@ class AccountViewModel: ViewModel() {
                 val request = CodeRequest(phoneNumber, token)
                 val result = SmartPayApi.smartPayApiService.sendCodeAsync(request).await()
                 Timber.d("message: ${result.message} status: ${result.status}")
+                if(result.status == "0") {
+                    _navigateToValidationFragment.value = true
+                }
+                _response.value = result
                 _showDialogLoader.value = false
-                _navigateToValidationFragment.value = true
             } catch (e: Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false

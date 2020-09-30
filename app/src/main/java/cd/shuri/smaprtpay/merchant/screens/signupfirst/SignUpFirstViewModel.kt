@@ -4,6 +4,14 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import cd.shuri.smaprtpay.merchant.network.Commune
+import cd.shuri.smaprtpay.merchant.network.RegisterRequest
+import cd.shuri.smaprtpay.merchant.network.SmartPayApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SignUpFirstViewModel: ViewModel() {
     private val _isLastNameEmpty= MutableLiveData<Boolean>()
@@ -24,8 +32,14 @@ class SignUpFirstViewModel: ViewModel() {
     private val _isPhoneNumber2Valid= MutableLiveData<Boolean>()
     val isPhoneNumber2Valid : LiveData<Boolean> get() = _isPhoneNumber2Valid
 
-    private val _isAddressEmpty= MutableLiveData<Boolean>()
-    val isAddressEmpty : LiveData<Boolean> get() = _isAddressEmpty
+    private val _isAddressNumberEmpty= MutableLiveData<Boolean>()
+    val isAddressNumberEmpty : LiveData<Boolean> get() = _isAddressNumberEmpty
+
+    private val _isAddressStreetEmpty= MutableLiveData<Boolean>()
+    val isAddressStreetEmpty : LiveData<Boolean> get() = _isAddressStreetEmpty
+
+    private val _isAddressCommuneEmpty= MutableLiveData<Boolean>()
+    val isAddressCommuneEmpty : LiveData<Boolean> get() = _isAddressCommuneEmpty
 
     private val _isEmailValid= MutableLiveData<Boolean>()
     val isEmailValid : LiveData<Boolean> get() = _isEmailValid
@@ -33,27 +47,72 @@ class SignUpFirstViewModel: ViewModel() {
     private val _navigateToSignUp2= MutableLiveData<Boolean>()
     val navigateToSignUp2 : LiveData<Boolean> get() = _navigateToSignUp2
 
-    fun validateFrom(lastName: String, firstName: String, email: String, phone1: String, phone2: String, address: String)
+    private val _communes = MutableLiveData<List<Commune>>()
+    val communes: LiveData<List<Commune>> get() = _communes
+
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+
+    private val _showDialogLoader = MutableLiveData<Boolean>()
+    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+
+
+    private var viewModelJob = Job()
+
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    init {
+        getAllCommunes()
+    }
+
+    private fun getAllCommunes() {
+        viewModelScope.launch {
+            try {
+                _showDialogLoader.value = true
+                val result = SmartPayApi.smartPayApiService.getCommuneAsync().await()
+                _showDialogLoader.value = false
+                if (result.isNotEmpty()) {
+                    _communes.value = result
+                } else {
+                    _communes.value = listOf()
+                }
+            } catch (e: Exception) {
+                _showDialogLoader.value = false
+                _showTToastForError.value = true
+                Timber.e("$e")
+            }
+        }
+    }
+
+    fun showDialogLoaderDone() {
+        _showDialogLoader.value = null
+    }
+
+    fun showToastErrorDone2() {
+        _showTToastForError.value = null
+    }
+
+    fun validateFrom(request: RegisterRequest)
             :Boolean
     {
         var valid = true
 
-        if (lastName.isEmpty()) {
+        if (request.lastName.isEmpty()) {
             _isLastNameEmpty.value = true
             valid = false
         } else {
             _isLastNameEmpty.value = false
         }
 
-        if (firstName.isEmpty()) {
+        if (request.firstName.isEmpty()) {
             _isFirstNameEmpty.value = true
             valid = false
         } else {
             _isFirstNameEmpty.value = false
         }
 
-        if (email.isNotEmpty()) {
-            if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (request.email.isNotEmpty()) {
+            if (Patterns.EMAIL_ADDRESS.matcher(request.email).matches()) {
                 _isEmailValid.value = true
             } else {
                 _isEmailValid.value = false
@@ -61,12 +120,12 @@ class SignUpFirstViewModel: ViewModel() {
             }
         }
 
-        if (phone1.isEmpty()) {
+        if (request.phone1.isEmpty()) {
             _isPhoneNumber1Empty.value = true
             valid = false
         } else {
             _isPhoneNumber1Empty.value = false
-            if (phone1.length in 1..8) {
+            if (request.phone1.length in 1..8) {
                 _isPhoneNumber1Valid.value = false
                 valid = false
             } else {
@@ -74,8 +133,8 @@ class SignUpFirstViewModel: ViewModel() {
             }
         }
 
-        if (phone2.isNotEmpty()) {
-            if (phone2.length in 1..8) {
+        if (request.phone2.isNotEmpty()) {
+            if (request.phone2.length in 1..8) {
                 _isPhoneNumber2Valid.value = false
                 valid = false
             } else {
@@ -83,11 +142,25 @@ class SignUpFirstViewModel: ViewModel() {
             }
         }
 
-        if (address.isEmpty()) {
-            _isAddressEmpty.value = true
+        if (request.commune.isEmpty()) {
+            _isAddressCommuneEmpty.value = true
             valid = false
         } else {
-            _isAddressEmpty.value = false
+            _isAddressCommuneEmpty.value = false
+        }
+
+        if (request.number.isEmpty()) {
+            _isAddressNumberEmpty.value = true
+            valid = false
+        } else {
+            _isAddressNumberEmpty.value = false
+        }
+
+        if (request.street.isEmpty()) {
+            _isAddressStreetEmpty.value = true
+            valid = false
+        } else {
+            _isAddressStreetEmpty.value = false
         }
         return valid
     }
