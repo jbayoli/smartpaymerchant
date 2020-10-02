@@ -29,6 +29,11 @@ class EditProfileFragment : Fragment() {
     private var sector = ""
     private val items = mutableListOf<String>()
 
+    private var communeSelected = ""
+
+    private val items2 = mutableListOf<String>()
+    private val itemsCode = mutableListOf<String>()
+
     val dialog = LoaderDialog()
 
     override fun onCreateView(
@@ -45,12 +50,14 @@ class EditProfileFragment : Fragment() {
         binding.mailTet.setText(info.email)
         binding.phoneNumberOneTet.setText(info.phone?.replaceFirst("243", ""))
         binding.phoneNumberTwoTet.setText(info.phone2?.replaceFirst("243", ""))
-        binding.addressTet.setText(info.adress)
         binding.activityTet.setText(info.activity)
         binding.sectorAuto.setText(info.sector)
         binding.rccmTet.setText(info.rccm)
         binding.nifTet.setText(info.nif)
         binding.ownerIdTet.setText(info.ownerId)
+        binding.numberTet.setText(info.number)
+        binding.communeAuto.setText(info.commune)
+        binding.streetTet.setText(info.street)
 
         observers()
 
@@ -126,12 +133,14 @@ class EditProfileFragment : Fragment() {
             ""
         }
 
-        val address = if (isFieldNotEmpty(
-                binding.addressTet.text.toString(),
-                binding.addressTil
-            )
-        ) {
-            binding.addressTet.text.toString()
+        val number = if (binding.numberTet.text.toString().isNotEmpty()) {
+            binding.numberTet.text.toString()
+        } else {
+            ""
+        }
+
+        val street = if (binding.streetTet.text.toString().isNotEmpty()) {
+            binding.streetTet.text.toString()
         } else {
             ""
         }
@@ -154,7 +163,9 @@ class EditProfileFragment : Fragment() {
             binding.mailTet.text.toString(),
             phoneNumber1,
             phoneNumber2,
-            address,
+            communeSelected,
+            street,
+            number,
             activity,
             binding.rccmTet.text.toString(),
             binding.nifTet.text.toString(),
@@ -163,7 +174,7 @@ class EditProfileFragment : Fragment() {
         )
 
         val validRequest =
-            firstName.isNotEmpty() && lastName.isNotEmpty() && tokenPhoneNumber.isNotEmpty() && phoneNumber1.isNotEmpty() && address.isNotEmpty() && activity.isNotEmpty()
+            firstName.isNotEmpty() && lastName.isNotEmpty() && tokenPhoneNumber.isNotEmpty() && phoneNumber1.isNotEmpty() && number.isNotEmpty() && street.isNotEmpty() && activity.isNotEmpty()
 
         if (validRequest) {
             viewModel.updateProfile(request)
@@ -221,6 +232,22 @@ class EditProfileFragment : Fragment() {
             if (it != null) {
                 findNavController().navigate(EditProfileFragmentDirections.actionEditProfileFragmentToProfileFragment())
                 viewModel.navigateToDone()
+            }
+        })
+
+        viewModel.communes.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
+                for (element in it) {
+                    Timber.d("name : ${element.name}")
+                    items2.add(element.name!!)
+                    itemsCode.add(element.code!!)
+                }
+                if (items2.contains(args.profileInfo.commune)) {
+                    val index = items2.indexOf(args.profileInfo.commune)
+                    communeSelected = itemsCode[index]
+                }
+                val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items2)
+                (binding.communeTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
         })
     }

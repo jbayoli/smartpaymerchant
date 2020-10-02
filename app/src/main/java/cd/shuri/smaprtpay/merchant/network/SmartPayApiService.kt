@@ -159,4 +159,7 @@ interface SmartPayApiService {
 
     @GET("api/support/communes")
     fun getCommuneAsync() : Deferred<List<Commune>>
+
+    @GET("api/support/help")
+    fun getHelpDataAsync() : Deferred<HelpData>
 }

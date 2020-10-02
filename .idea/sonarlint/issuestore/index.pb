@@ -159,3 +159,11 @@ _app/src/main/java/cd/shuri/smaprtpay/merchant/screens/transaction/TransactionsE
 [app/src/main/java/cd/shuri/smaprtpay/merchant/screens/notifications/NotificationsAdapter.kt,a/c/ac83e04d170fdbe3c7782c0de9bad7ef43730b5d
 Œ
 \app/src/main/java/cd/shuri/smaprtpay/merchant/screens/notifications/NotificationsFragment.kt,f/b/fba178f23e8499884feb32ca3ba13e21a6d0e26b
+{
+Kapp/src/main/java/cd/shuri/smaprtpay/merchant/screens/help/HelpViewModel.kt,8/9/89a29f961c47af78bc02a228ba2c64c4dae95de8
+z
+Japp/src/main/java/cd/shuri/smaprtpay/merchant/screens/help/HelpFragment.kt,d/d/dd639c32734c1566f6b69bcacb9af89323ae9c5e
+A
+secure.properties,6/3/6332865c8209d854b4f425b345ddca45981f8278
+@
+local.properties,0/7/0712df971a99ac4d2fccb8e0fb19f377f3374cca

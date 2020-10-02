@@ -166,6 +166,10 @@ class HomeFragment : Fragment() {
         binding.notifications.setOnClickListener {
             findNavController().navigate((HomeFragmentDirections.actionHomeFragmentToNotificationsFragment()))
         }
+
+        binding.helpButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToHelpFragment())
+        }
     }
 
     private fun deleteSharedPreferences() {

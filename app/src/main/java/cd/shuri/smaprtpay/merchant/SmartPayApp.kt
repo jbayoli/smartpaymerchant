@@ -12,10 +12,12 @@ class SmartPayApp :  Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         preferences =  applicationContext.getSharedPreferences("cd.infoset.smartpay.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE)
+        context = applicationContext
     }
 
     companion object {
         lateinit var preferences : SharedPreferences
+        lateinit var context: Context
         val dialogLoader = LoaderDialog()
     }
 

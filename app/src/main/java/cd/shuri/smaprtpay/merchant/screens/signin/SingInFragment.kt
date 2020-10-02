@@ -9,7 +9,6 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
@@ -46,7 +45,6 @@ class SingInFragment : Fragment() {
 
         if (!name.isNullOrEmpty()) {
             binding.userNameTet.setText(name)
-//            binding.userNameTet.isEnabled = false
         }
 
         showDialogs()
@@ -80,6 +78,10 @@ class SingInFragment : Fragment() {
 
         binding.forgetPasseWordButton.setOnClickListener {
             findNavController().navigate(SingInFragmentDirections.actionSingInFragmentToUserCodeFragment())
+        }
+
+        binding.helpButton.setOnClickListener {
+            findNavController().navigate(SingInFragmentDirections.actionSingInFragmentToHelpFragment())
         }
     }
 
@@ -144,7 +146,7 @@ class SingInFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.isPasswordEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isPasswordEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.passwordTil.error = "Ce champ est obligatoire"
             } else {
@@ -152,7 +154,7 @@ class SingInFragment : Fragment() {
             }
         })
 
-        viewModel.isUserNameEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isUserNameEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.userNameTil.error = "Ce champ est obligatoire"
             } else {
@@ -160,7 +162,7 @@ class SingInFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -171,14 +173,14 @@ class SingInFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToHome.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(SingInFragmentDirections.actionSingInFragmentToHomeFragment())
                 viewModel.navigateToHomeDone()
             }
         })
 
-        viewModel.step.observe(viewLifecycleOwner, Observer {
+        viewModel.step.observe(viewLifecycleOwner, {
             it?.let {
                 when (it) {
                     3 -> {
@@ -194,7 +196,7 @@ class SingInFragment : Fragment() {
             }
         })
 
-        viewModel.loginStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.loginStatus.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it == 1) {
                     Toast.makeText(
@@ -207,7 +209,7 @@ class SingInFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -218,7 +220,7 @@ class SingInFragment : Fragment() {
             }
         })
 
-        viewModel.response.observe(viewLifecycleOwner, Observer {
+        viewModel.response.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 if (it.status == "0") {

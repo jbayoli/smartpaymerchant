@@ -1,20 +1,18 @@
 package cd.shuri.smaprtpay.merchant.screens.addaccount
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import cd.shuri.smaprtpay.merchant.NavGraphDirections
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
-
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAddAccountBinding
 import cd.shuri.smaprtpay.merchant.network.AddPaymentMethodRequest
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
@@ -181,7 +179,7 @@ class AddAccountFragment : Fragment() {
     private fun observers() {
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items)
-        viewModel.accountType.observe(viewLifecycleOwner, Observer {
+        viewModel.accountType.observe(viewLifecycleOwner, {
             if (it == 1) {
                 binding.mobileMoney.visibility = View.VISIBLE
                 binding.validateButton.visibility = View.VISIBLE
@@ -195,7 +193,7 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardOperatorTil.error = null
             } else {
@@ -211,7 +209,7 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberTil.error = "Ce champ est obligatoir"
             } else {
@@ -219,7 +217,7 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardNameValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardNameValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardNameTil.error = null
             } else {
@@ -227,7 +225,7 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardNumberTil.error = "Ce champ est obligatoir"
             } else {
@@ -235,7 +233,7 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isExpirationValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isExpirationValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.monthTil.error = null
                 binding.yearTil.error = null
@@ -245,7 +243,7 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -256,21 +254,21 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.showToastSuccess.observe(viewLifecycleOwner, Observer {
+        viewModel.showToastSuccess.observe(viewLifecycleOwner, {
             if (it != null) {
                 Toast.makeText(requireContext(), "${viewModel.messageAddAccount.value}", Toast.LENGTH_SHORT).show()
                 viewModel.showToastSuccessDone()
             }
         })
 
-        viewModel.showToastError.observe(viewLifecycleOwner, Observer {
+        viewModel.showToastError.observe(viewLifecycleOwner, {
             if (it != null) {
                 Toast.makeText(requireContext(), "${viewModel.messageAddAccount.value}", Toast.LENGTH_SHORT).show()
                 viewModel.showToastErrorDone()
             }
         })
 
-        viewModel.providers.observe(viewLifecycleOwner, Observer {
+        viewModel.providers.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -279,7 +277,7 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberTil.error = null
             } else {
@@ -287,14 +285,14 @@ class AddAccountFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToHome.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(AddAccountFragmentDirections.actionAddAccountFragmentToHomeFragment())
                 viewModel.navigateToHomeDone()
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),

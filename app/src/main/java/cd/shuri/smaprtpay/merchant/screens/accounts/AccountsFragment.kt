@@ -36,7 +36,19 @@ class AccountsFragment : Fragment() {
         binding.viewModel = viewModel
         accountsListAdapter = AccountsListAdapter(
             EditAccountClickListener {
-                findNavController().navigate(AccountsFragmentDirections.actionAccountsFragmentToEditPaymentAccountFragment(it))
+                val builder = MaterialAlertDialogBuilder(
+                    requireContext(),
+                    R.style.ThemeOverlay_AppTheme_Dialog
+                )
+                    .setTitle("Validation")
+                    .setMessage("Un code de validation vous sera envoyé pour valider la modification du compte de paiement")
+                    .setPositiveButton("OK") { dialog, _ ->
+                        findNavController().navigate(AccountsFragmentDirections.actionAccountsFragmentToEditPaymentAccountFragment(it))
+                        dialog.dismiss()
+                    }
+                val dialog = builder.create()
+                dialog.setCanceledOnTouchOutside(false)
+                dialog.show()
             },
             DeleteAccountClickListener {
                 val builder =

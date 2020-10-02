@@ -41,11 +41,23 @@ class QRCodeFragment : Fragment() {
         return binding.root
     }
 
+    @Suppress("DEPRECATION")
     private fun generateQRCode(inputValue: String) {
         val windowManager = requireActivity().getSystemService(WINDOW_SERVICE) as WindowManager
-        val display = windowManager.defaultDisplay
+
+        val display = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            requireContext().display
+        } else {
+            windowManager.defaultDisplay
+        }
         val point  = Point()
-        display.getSize(point)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            val windowMetrics = windowManager.currentWindowMetrics
+            windowMetrics.bounds
+        } else {
+            display?.getSize(point)
+        }
+
         val width = point.x
         val height = point.y
         var smallerDimension = if (width < height) {

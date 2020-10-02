@@ -1,7 +1,6 @@
 package cd.shuri.smaprtpay.merchant.screens.addfirstpaymentaccount
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +9,13 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAddFirstPaymentAccountBinding
 import cd.shuri.smaprtpay.merchant.network.AddPaymentMethodFirstTimeRequest
-import cd.shuri.smaprtpay.merchant.network.AddPaymentMethodRequest
-import cd.shuri.smaprtpay.merchant.screens.addaccount.AddAccountDialogFragment
-import cd.shuri.smaprtpay.merchant.screens.addaccount.AddAccountFragmentDirections
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import timber.log.Timber
 
@@ -235,14 +231,14 @@ class AddFirstPaymentAccountFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showToastError.observe(viewLifecycleOwner, Observer {
+        viewModel.showToastError.observe(viewLifecycleOwner, {
             if (it != null) {
                 Toast.makeText(requireContext(), "${viewModel.messageAddAccount.value}", Toast.LENGTH_SHORT).show()
                 viewModel.showToastErrorDone()
             }
         })
 
-        viewModel.providersCard.observe(viewLifecycleOwner, Observer {
+        viewModel.providersCard.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -253,7 +249,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.providersPhone.observe(viewLifecycleOwner, Observer {
+        viewModel.providersPhone.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -264,7 +260,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -275,7 +271,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberTil.error = "Ce champ est obligatoir"
             } else {
@@ -283,7 +279,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardNumberTil.error = "Ce champ est obligatoir"
             } else {
@@ -291,7 +287,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardNameEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardNameEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardNameTil.error = "Ce champ est obligatoir"
             } else {
@@ -299,7 +295,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isExpirationValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isExpirationValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.monthTil.error = null
                 binding.yearTil.error = null
@@ -309,7 +305,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberTil.error = null
             } else {
@@ -317,7 +313,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardOperatorTil.error = null
             } else {
@@ -325,7 +321,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.mobileProviderTil.error = null
             } else {
@@ -333,14 +329,14 @@ class AddFirstPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToHome.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(AddFirstPaymentAccountFragmentDirections.actionAddFirstPaymentAccountFragmentToHomeFragment())
                 viewModel.navigateToHomeDone()
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),

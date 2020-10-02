@@ -249,7 +249,9 @@ data class Profile(
     @Json(name = "phone1")
     val phone: String?,
     val phone2: String?,
-    val adress:String?,
+    val commune: String?,
+    val street: String?,
+    val number: String?,
     val activity: String?,
     val rccm: String?,
     val nif: String?,
@@ -267,7 +269,9 @@ data class UpdateProfile(
     val email: String,
     val phone1: String,
     val phone2: String,
-    val adress: String,
+    val commune: String,
+    val street: String,
+    val number: String,
     val activity: String,
     val rccm: String,
     val nif: String,
@@ -302,4 +306,11 @@ data class Notification(
 data class Commune(
     val code: String?,
     val name: String?
+)
+
+@JsonClass(generateAdapter = true)
+data class HelpData(
+    val helpPhoneNumber: String?,
+    val helpEmail: String?,
+    val helpText: String?
 )

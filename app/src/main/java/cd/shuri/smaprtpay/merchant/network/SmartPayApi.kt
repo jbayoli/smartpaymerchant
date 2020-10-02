@@ -1,5 +1,7 @@
 package cd.shuri.smaprtpay.merchant.network
 
+import cd.shuri.smaprtpay.merchant.R
+import cd.shuri.smaprtpay.merchant.SmartPayApp
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -8,8 +10,8 @@ import java.util.concurrent.TimeUnit
 
 object SmartPayApi {
     //Base api url
-    //private const val BASE_URL = "http://41.243.7.46:3005/"
-    private const val BASE_URL = "http://192.168.2.144:3006/"
+    private val host = SmartPayApp.context.getString(R.string.host_test)
+    private val BASE_URL = host
 
     //Set connection timeout, write timeout and read timeout
     private val okHttpClient = OkHttpClient.Builder()

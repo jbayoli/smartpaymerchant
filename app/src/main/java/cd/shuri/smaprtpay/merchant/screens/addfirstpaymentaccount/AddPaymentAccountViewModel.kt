@@ -35,9 +35,6 @@ class AddPaymentAccountViewModel : ViewModel() {
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
 
-    private val _showToastSuccess = MutableLiveData<Boolean>()
-    val  showToastSuccess : LiveData<Boolean> get() = _showToastSuccess
-
     private val _showToastError = MutableLiveData<Boolean>()
     val  showToastError : LiveData<Boolean> get() = _showToastError
 
@@ -70,10 +67,6 @@ class AddPaymentAccountViewModel : ViewModel() {
 
     fun showDialogLoaderDone() {
         _showDialogLoader.value = null
-    }
-
-    fun showToastSuccessDone() {
-        _showToastSuccess.value = null
     }
 
     fun showToastErrorDone() {
@@ -187,7 +180,6 @@ class AddPaymentAccountViewModel : ViewModel() {
                 if (result.status == "0") {
                     registrationDone()
                     _messageAddAccount.value = result.message
-                    _showToastSuccess.value = true
                     _navigateToHome.value = true
                 } else {
                     _messageAddAccount.value = result.message

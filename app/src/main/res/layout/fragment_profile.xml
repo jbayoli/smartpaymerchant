@@ -292,14 +292,15 @@
                                 android:text="Adresse: " />
 
                             <TextView
+                                android:id="@+id/address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{viewModel.response.adress}"
                                 android:textSize="16sp"
                                 android:fontFamily="@font/roboto"
                                 android:textColor="@android:color/black"
                                 android:textStyle="bold"
-                                tools:text="13 Rue" />
+                                app:bindAddressData="@{viewModel.response}"
+                                tools:text="23 nyango Selembae" />
                         </LinearLayout>
                     </LinearLayout>
 

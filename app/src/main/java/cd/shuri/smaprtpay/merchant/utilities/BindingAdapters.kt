@@ -6,11 +6,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cd.shuri.smaprtpay.merchant.R
+import cd.shuri.smaprtpay.merchant.network.*
 import cd.shuri.smaprtpay.merchant.screens.accounts.AccountsListAdapter
-import cd.shuri.smaprtpay.merchant.network.AccountsResponse
-import cd.shuri.smaprtpay.merchant.network.Notification
-import cd.shuri.smaprtpay.merchant.network.TransactionResponse
-import cd.shuri.smaprtpay.merchant.network.Transfers
 import cd.shuri.smaprtpay.merchant.screens.notifications.NotificationsAdapter
 import cd.shuri.smaprtpay.merchant.screens.transaction.TransactionListAdapter
 import cd.shuri.smaprtpay.merchant.transactionvalidation.TransactionValidationListAdapter
@@ -189,4 +186,9 @@ fun makeAccountEditable(imageView: ImageView, account: AccountsResponse) {
 fun bindNotificationRecyclerView(recyclerView: RecyclerView, notifications: List<Notification>) {
     val adapter = recyclerView.adapter as NotificationsAdapter
     adapter.submitList(notifications)
+}
+
+@BindingAdapter("bindAddressData")
+fun bindAddressData(textView: TextView, profile: Profile?) {
+    textView.text = "N°/${profile?.number} Av/${profile?.street} C/${profile?.commune}"
 }

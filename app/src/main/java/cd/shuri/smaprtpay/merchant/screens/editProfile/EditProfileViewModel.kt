@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cd.shuri.smaprtpay.merchant.SmartPayApp
-import cd.shuri.smaprtpay.merchant.network.CommonResponse
-import cd.shuri.smaprtpay.merchant.network.SectorsResponse
-import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import cd.shuri.smaprtpay.merchant.network.UpdateProfile
+import cd.shuri.smaprtpay.merchant.network.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,6 +27,9 @@ class EditProfileViewModel: ViewModel() {
     private val _sectors = MutableLiveData<List<SectorsResponse>>()
     val sectors :LiveData<List<SectorsResponse>> get() = _sectors
 
+    private val _communes = MutableLiveData<List<Commune>>()
+    val communes: LiveData<List<Commune>> get() = _communes
+
     private var viewModelJob = Job()
 
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -39,6 +39,7 @@ class EditProfileViewModel: ViewModel() {
 
     init {
         getSectors()
+        getAllCommunes()
     }
 
     fun updateProfile(request: UpdateProfile){
@@ -64,7 +65,6 @@ class EditProfileViewModel: ViewModel() {
             try {
                 _showDialogLoader.value = true
                 val result = SmartPayApi.smartPayApiService.getSectorsAsync(auth).await()
-                _showDialogLoader.value = false
                 Timber.d("Sectors are ${result.size}")
                 if (result.isNotEmpty()) {
                     _sectors.value = result
@@ -76,6 +76,24 @@ class EditProfileViewModel: ViewModel() {
                 _sectors.value = ArrayList()
                 _showTToastForError.value = true
                 Timber.d("$e")
+            }
+        }
+    }
+
+    private fun getAllCommunes() {
+        viewModelScope.launch {
+            try {
+                val result = SmartPayApi.smartPayApiService.getCommuneAsync().await()
+                _showDialogLoader.value = false
+                if (result.isNotEmpty()) {
+                    _communes.value = result
+                } else {
+                    _communes.value = listOf()
+                }
+            } catch (e: Exception) {
+                _showDialogLoader.value = false
+                _showTToastForError.value = true
+                Timber.e("$e")
             }
         }
     }

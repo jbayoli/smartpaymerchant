@@ -55,6 +55,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_singInFragment_to_helpFragment"
+            app:destination="@id/helpFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -224,6 +231,13 @@
         <action
             android:id="@+id/action_homeFragment_to_notificationsFragment"
             app:destination="@id/notificationsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_helpFragment"
+            app:destination="@id/helpFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -522,5 +536,10 @@
         android:name="cd.shuri.smaprtpay.merchant.screens.notifications.NotificationsFragment"
         android:label="Notifications"
         tools:layout="@layout/notifications_fragment" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.help.HelpFragment"
+        android:label="Aide"
+        tools:layout="@layout/help_fragment" />
 
 </navigation>

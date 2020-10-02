@@ -1,14 +1,13 @@
 package cd.shuri.smaprtpay.merchant.screens.account
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAccountBinding
@@ -66,7 +65,7 @@ class AccountFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.navigateToValidationFragment.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToValidationFragment.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(AccountFragmentDirections
                     .actionAccountFragmentToValidationFragment("${binding.countryCodeTet.text.toString()
@@ -75,7 +74,7 @@ class AccountFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -86,7 +85,7 @@ class AccountFragment : Fragment() {
             }
         })
 
-        viewModel.response.observe(viewLifecycleOwner, Observer {
+        viewModel.response.observe(viewLifecycleOwner, {
             if (it.status == "2") {
                 binding.textInputLayout.error = "Ce numéro est utilisé par un autre compte"
             } else if (it.status == "1") {
