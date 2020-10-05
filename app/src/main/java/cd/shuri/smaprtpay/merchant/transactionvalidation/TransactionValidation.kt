@@ -1,8 +1,10 @@
 package cd.shuri.smaprtpay.merchant.transactionvalidation
 
+import android.app.NotificationManager
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,6 +14,7 @@ import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentTransactionValidationBinding
 import cd.shuri.smaprtpay.merchant.network.TransactionValidationRequest
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+import cd.shuri.smaprtpay.merchant.utilities.cancelNotification
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber
 
@@ -36,6 +39,9 @@ class TransactionValidation : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val notificationManager = ContextCompat.getSystemService(requireContext(), NotificationManager::class.java) as NotificationManager
+        notificationManager.cancelNotification()
+
         binding = FragmentTransactionValidationBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

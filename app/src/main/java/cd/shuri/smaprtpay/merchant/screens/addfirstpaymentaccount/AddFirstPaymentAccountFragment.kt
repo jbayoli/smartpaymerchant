@@ -38,6 +38,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
     private var operatorCode1 = ""
     private var operatorCode2 = ""
     private val useCode = SmartPayApp.preferences.getString("user_code", "")
+    private val defaultPhone = SmartPayApp.preferences.getString("default_phone", null)
     private val months = mutableListOf<String>()
     private val years = mutableListOf<Int>()
     private var selectedMonth = ""
@@ -69,7 +70,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
         args = AddFirstPaymentAccountFragmentArgs.fromBundle(requireArguments())
         // Inflate the layout for this fragment
         binding = FragmentAddFirstPaymentAccountBinding.inflate(layoutInflater)
-        binding.phoneNumberTet.setText(args.phoneNumber.replaceFirst("243", ""))
+        binding.phoneNumberTet.setText(defaultPhone)
         binding.phoneNumberTet.isEnabled = false
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.show()

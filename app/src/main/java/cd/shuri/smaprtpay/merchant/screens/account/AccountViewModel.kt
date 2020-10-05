@@ -3,6 +3,7 @@ package cd.shuri.smaprtpay.merchant.screens.account
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.CodeRequest
 import cd.shuri.smaprtpay.merchant.network.CommonResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
@@ -70,6 +71,9 @@ class AccountViewModel: ViewModel() {
                 val result = SmartPayApi.smartPayApiService.sendCodeAsync(request).await()
                 Timber.d("message: ${result.message} status: ${result.status}")
                 if(result.status == "0") {
+                    val preferencesEditor = SmartPayApp.preferences.edit()
+                    preferencesEditor.putString("default_phone", phoneNumber.replaceFirst("243", ""))
+                    preferencesEditor.apply()
                     _navigateToValidationFragment.value = true
                 }
                 _response.value = result

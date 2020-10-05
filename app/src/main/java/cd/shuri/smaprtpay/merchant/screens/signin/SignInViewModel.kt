@@ -97,6 +97,7 @@ class SignInViewModel : ViewModel() {
                     customer = response.headers().get("customer")
                     roles = response.headers().get("roles")
                     name = response.headers().get("name")
+                    val phone = response.headers().get("phone")
                     val savedStep = response.headers().get("step")?.toInt()
                     Timber.d("user code = $customer")
                     Timber.d("auth = $auth")
@@ -105,7 +106,7 @@ class SignInViewModel : ViewModel() {
                     _showDialogLoader.value = false
                     if (roles == "MERCHANT") {
                         _loginStatus.value = 0
-                        savePreference(customer!!, auth!!, name!!, savedStep!!, request.username)
+                        savePreference(customer!!, auth!!, name!!, savedStep!!, request.username, phone!!)
                         _step.value = savedStep
                         Timber.d("step == ${_step.value}")
                     } else {
@@ -157,7 +158,7 @@ class SignInViewModel : ViewModel() {
         _navigateToHome.value = true
     }
 
-    private suspend fun savePreference(userCode: String, auth: String, name: String, step: Int, userName: String) {
+    private suspend fun savePreference(userCode: String, auth: String, name: String, step: Int, userName: String, defaultPhone:String) {
         withContext(Dispatchers.Main) {
             val preferencesEditor = SmartPayApp.preferences.edit()
             preferencesEditor.putString("fcm", token)
@@ -166,6 +167,7 @@ class SignInViewModel : ViewModel() {
             preferencesEditor.putString("name", name)
             preferencesEditor.putString("username", userName)
             preferencesEditor.putInt("step", step)
+            preferencesEditor.putString("default_phone", defaultPhone.replaceFirst("243", ""))
             preferencesEditor.apply()
         }
     }

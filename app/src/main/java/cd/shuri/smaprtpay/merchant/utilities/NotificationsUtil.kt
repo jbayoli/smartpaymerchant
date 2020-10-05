@@ -18,11 +18,20 @@ private const val REQUEST_CODE_TWO = 1
 
 const val EXTRA_CODE = "cd.infoset.smartpay.merchant.CODE"
 const val ACTION_SHOW_VALIDATE_FRAGMENT = "cd.infoset.smartpay.merchant.ACTION_SHOW_VALIDATE_FRAGMENT"
+const val ACTION_SHOW_HOME_FRAGMENT = "cd.infoset.smartpay.merchant.ACTION_SHOW_HOME_FRAGMENT"
 
 fun NotificationManager.sendNotification(remoteMessage: RemoteMessage, applicationContext: Context) {
 
-    val contentIntent = Intent(applicationContext, MainActivity::class.java).apply {
-        action = ACTION_SHOW_VALIDATE_FRAGMENT
+    val type = remoteMessage.data["type"]
+
+    val contentIntent = if (type == "1"){
+        Intent(applicationContext, MainActivity::class.java).apply {
+            action = ACTION_SHOW_HOME_FRAGMENT
+        }
+    } else {
+        Intent(applicationContext, MainActivity::class.java).apply {
+            action = ACTION_SHOW_VALIDATE_FRAGMENT
+        }
     }
 
     val contentPendingIntent = PendingIntent.getActivity(
@@ -43,20 +52,33 @@ fun NotificationManager.sendNotification(remoteMessage: RemoteMessage, applicati
     val actionValidation = PendingIntent.getBroadcast(applicationContext, REQUEST_CODE, validationReceiver, PendingIntent.FLAG_UPDATE_CURRENT)
     val actionCancel = PendingIntent.getBroadcast(applicationContext, REQUEST_CODE_TWO, cancelReceiver, PendingIntent.FLAG_UPDATE_CURRENT)
 
-
-    val builder = NotificationCompat.Builder(
-        applicationContext,
-        applicationContext.getString(R.string.notification_chanel_id)
-    )
-        .setSmallIcon(R.drawable.logo)
-        .setContentTitle(remoteMessage.data["title"])
-        .setContentText(remoteMessage.data["content"])
-        .setContentIntent(contentPendingIntent)
-        .setAutoCancel(true)
-        .setPriority(NotificationCompat.PRIORITY_HIGH)
-        .setColor(Color.parseColor("#003c8f"))
-        .addAction(R.drawable.logo, "VALIDER", actionValidation)
-        .addAction(R.drawable.logo, "ANNULER", actionCancel)
+    val builder = if (type == "1") {
+        NotificationCompat.Builder(
+            applicationContext,
+            applicationContext.getString(R.string.notification_chanel_id)
+        )
+            .setSmallIcon(R.drawable.logo)
+            .setContentTitle(remoteMessage.data["title"])
+            .setContentText(remoteMessage.data["content"])
+            .setContentIntent(contentPendingIntent)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setColor(Color.parseColor("#003c8f"))
+            .addAction(R.drawable.logo, "VALIDER", actionValidation)
+            .addAction(R.drawable.logo, "ANNULER", actionCancel)
+    } else {
+        NotificationCompat.Builder(
+            applicationContext,
+            applicationContext.getString(R.string.notification_chanel_id)
+        )
+            .setSmallIcon(R.drawable.logo)
+            .setContentTitle(remoteMessage.data["title"])
+            .setContentText(remoteMessage.data["content"])
+            .setContentIntent(contentPendingIntent)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setColor(Color.parseColor("#003c8f"))
+    }
 
     notify(NOTIFICATION_ID, builder.build())
 }

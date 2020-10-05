@@ -5,11 +5,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import cd.shuri.smaprtpay.merchant.network.TransactionValidationRequest
-import cd.shuri.smaprtpay.merchant.transactionvalidation.TransactionValidationViewModel
 import cd.shuri.smaprtpay.merchant.utilities.EXTRA_CODE
 import cd.shuri.smaprtpay.merchant.utilities.cancelNotification
 import kotlinx.coroutines.Dispatchers
