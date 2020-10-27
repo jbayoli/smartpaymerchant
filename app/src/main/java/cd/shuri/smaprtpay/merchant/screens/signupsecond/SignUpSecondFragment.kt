@@ -9,12 +9,10 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSignUpSecondBinding
-import cd.shuri.smaprtpay.merchant.network.RegisterRequest
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import timber.log.Timber
 
@@ -84,7 +82,7 @@ class SignUpSecondFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.isActivityEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isActivityEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.activityTil.error = "Ce champ est obligatoire"
             } else {
@@ -92,7 +90,7 @@ class SignUpSecondFragment : Fragment() {
             }
         })
 
-        viewModel.isSectorSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isSectorSelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.sectorTil.error = null
             } else {
@@ -100,7 +98,7 @@ class SignUpSecondFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -111,7 +109,7 @@ class SignUpSecondFragment : Fragment() {
             }
         })
 
-        viewModel.showToastSuccess.observe(viewLifecycleOwner, Observer {
+        viewModel.showToastSuccess.observe(viewLifecycleOwner, {
             if (it != null) {
                 Toast.makeText(
                     requireContext(),
@@ -122,7 +120,7 @@ class SignUpSecondFragment : Fragment() {
             }
         })
 
-        viewModel.showToastError.observe(viewLifecycleOwner, Observer {
+        viewModel.showToastError.observe(viewLifecycleOwner, {
             if (it != null) {
                 Toast.makeText(
                     requireContext(),
@@ -133,7 +131,7 @@ class SignUpSecondFragment : Fragment() {
             }
         })
 
-        viewModel.sectors.observe(viewLifecycleOwner, Observer {
+        viewModel.sectors.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -144,7 +142,7 @@ class SignUpSecondFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToHome.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(
                     SignUpSecondFragmentDirections.actionSignUpSecondFragmentToAddFirstPaymentAccountFragment(
@@ -155,7 +153,7 @@ class SignUpSecondFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),

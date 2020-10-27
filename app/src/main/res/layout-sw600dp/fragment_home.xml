@@ -119,7 +119,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/clos"
+                                    android:src="@mipmap/clos"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -246,7 +246,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/transaction_in_wait"
+                                    android:src="@mipmap/transaction_in_wait"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -304,7 +304,7 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/transaction_error"
+                                    android:src="@mipmap/ic_transaction_error"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -507,7 +507,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/qrcode" />
+                                android:src="@mipmap/qrcode" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -570,7 +570,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/mes_comptes" />
+                                android:src="@mipmap/mes_comptes" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -601,7 +601,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/mes_comptes" />
+                                android:src="@mipmap/notification" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -609,6 +609,7 @@
                                 android:fontFamily="@font/roboto"
                                 android:text="Notifcations"
                                 android:textAlignment="center"
+                                android:layout_gravity="center"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -720,12 +721,16 @@
 
                 <TextView
                     android:id="@+id/note"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Note: Appro égale Approvisionnement"
+                    android:text="*Appro (Cette action vous permet de prendre l'argent depuis votre carte bancaire pour le mettre sur votre compte mobile money)"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textAlignment="center"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/last_line"/>
+                    app:layout_constraintTop_toBottomOf="@+id/last_line"
+                    android:textSize="12sp"/>
 
                 <Button
                     android:id="@+id/help_button"

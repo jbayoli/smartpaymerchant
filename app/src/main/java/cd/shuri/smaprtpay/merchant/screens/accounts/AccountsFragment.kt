@@ -1,18 +1,15 @@
 package cd.shuri.smaprtpay.merchant.screens.accounts
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
-
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAccountsBinding
-import cd.shuri.smaprtpay.merchant.screens.signin.SingInFragmentDirections
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber
@@ -74,7 +71,7 @@ class AccountsFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -85,7 +82,7 @@ class AccountsFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -96,7 +93,7 @@ class AccountsFragment : Fragment() {
             }
         })
 
-        viewModel.deleteResponse.observe(viewLifecycleOwner, Observer {
+        viewModel.deleteResponse.observe(viewLifecycleOwner, {
             Timber.d("$it")
             if (it.status != "0") {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

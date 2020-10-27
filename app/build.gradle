@@ -13,8 +13,8 @@ android {
         applicationId "cd.infoset.smartpay.merchant"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 17
-        versionName "2.0.6 Beta"
+        versionCode 18
+        versionName "2.0.8 Beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

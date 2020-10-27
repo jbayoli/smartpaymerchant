@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import cd.shuri.smaprtpay.merchant.databinding.TransactionInWaitFragmentBinding
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 
@@ -33,7 +32,7 @@ class TransactionInWaitFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -44,7 +43,7 @@ class TransactionInWaitFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),

@@ -42,7 +42,7 @@ class NotificationsViewModel : ViewModel() {
                 val result =
                     SmartPayApi.smartPayApiService.getNotificationsAsync(auth,userCode!!).await()
                 _showDialogLoader.value = false
-                Timber.d("Transfers => ${result.notifications?.size}")
+                Timber.d(" => ${result.notifications?.size}")
                 if (!result.notifications.isNullOrEmpty()) {
                     _notifications.value = result.notifications
                 }

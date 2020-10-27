@@ -265,7 +265,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:hint="Nom sur la carte"
-                        android:maxLength="20"
+                        android:maxLength="25"
                         android:maxLines="1"
                         android:inputType="textPersonName|textCapWords" />
 

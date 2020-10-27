@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
@@ -103,7 +102,7 @@ class SignUpFirstFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.isLastNameEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isLastNameEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.lastNameTil.error = "Ce champ est obligatoire"
             } else {
@@ -111,7 +110,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isFirstNameEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isFirstNameEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.firstNameTil.error = "Ce champ est obligatoire"
             } else {
@@ -119,7 +118,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isEmailEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isEmailEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.mailTil.error = "Ce champ est obligatoire"
             } else {
@@ -127,7 +126,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isAddressCommuneEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isAddressCommuneEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.communeTil.error = "Ce champ est obligatoire"
             } else {
@@ -135,7 +134,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isAddressNumberEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isAddressNumberEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.numberTil.error = "Ce champ est obligatoire"
             } else {
@@ -143,7 +142,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isAddressStreetEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isAddressStreetEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.streetTil.error = "Ce champ est obligatoire"
             } else {
@@ -151,7 +150,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumber1Empty.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumber1Empty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberOneTil.error = "Ce champ est obligatoire"
             } else {
@@ -159,7 +158,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isEmailValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isEmailValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.mailTil.error = null
             } else {
@@ -167,7 +166,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToSignUp2.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToSignUp2.observe(viewLifecycleOwner, {
             if (it != null) {
 
                 findNavController().navigate(
@@ -180,7 +179,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumber1Valid.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumber1Valid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberOneTil.error = null
             } else {
@@ -188,7 +187,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumber2Valid.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumber2Valid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberTwoTil.error = null
             } else {
@@ -196,7 +195,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -207,7 +206,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -218,7 +217,7 @@ class SignUpFirstFragment : Fragment() {
             }
         })
 
-        viewModel.communes.observe(viewLifecycleOwner, Observer {
+        viewModel.communes.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")

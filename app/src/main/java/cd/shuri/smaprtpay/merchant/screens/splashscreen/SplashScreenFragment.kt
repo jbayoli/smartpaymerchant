@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSplashScreenBinding
@@ -37,7 +36,7 @@ class SplashScreenFragment : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateTo.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (token!!.isNotEmpty()) {
                     if (isRegisterDone != null) {

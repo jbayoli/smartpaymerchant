@@ -11,6 +11,7 @@ import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.broadcast.CancelReceiver
 import cd.shuri.smaprtpay.merchant.broadcast.ValidationReceiver
 import com.google.firebase.messaging.RemoteMessage
+import timber.log.Timber
 
 private const val NOTIFICATION_ID = 0
 private const val REQUEST_CODE = 0
@@ -24,13 +25,15 @@ fun NotificationManager.sendNotification(remoteMessage: RemoteMessage, applicati
 
     val type = remoteMessage.data["type"]
 
+    Timber.i("Type : $type")
+
     val contentIntent = if (type == "1"){
         Intent(applicationContext, MainActivity::class.java).apply {
-            action = ACTION_SHOW_HOME_FRAGMENT
+            action = ACTION_SHOW_VALIDATE_FRAGMENT
         }
     } else {
         Intent(applicationContext, MainActivity::class.java).apply {
-            action = ACTION_SHOW_VALIDATE_FRAGMENT
+            action = ACTION_SHOW_HOME_FRAGMENT
         }
     }
 

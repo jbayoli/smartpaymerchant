@@ -89,7 +89,7 @@ data class AddPaymentMethodRequest(
     val shortCode: String,
     val cardName: String? = null,
     val code: String? = null,
-    val isMerchant: Boolean
+    val isMerchant: String
 )
 
 @JsonClass(generateAdapter = true)
@@ -104,7 +104,7 @@ data class AddPaymentMethodFirstTimeRequest(
     val customer: String,
     val shortCode: String,
     val cardName: String? = null,
-    val isMerchant: Boolean
+    val isMerchant: String
 )
 
 @JsonClass(generateAdapter = true)

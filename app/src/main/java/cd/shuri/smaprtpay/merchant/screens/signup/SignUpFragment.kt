@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSignUpBinding
 import cd.shuri.smaprtpay.merchant.network.SingUpRequest
@@ -85,7 +84,7 @@ class SignUpFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.isCodeEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isCodeEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.merchantCodeTil.error = "Ce champ est obligatoire"
             } else {
@@ -93,7 +92,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.isUserNameEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isUserNameEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.userNameTil.error = "Ce champ est obligatoire"
             } else {
@@ -101,7 +100,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.isPasswordEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isPasswordEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.passwordTil.error = "Ce champ est obligatoire"
             } else {
@@ -109,7 +108,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.isConfirmedPasswordEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isConfirmedPasswordEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.passwordConfirmTil.error = "Ce champ est obligatoire"
             } else {
@@ -117,7 +116,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.isPasswordsMatches.observe(viewLifecycleOwner, Observer {
+        viewModel.isPasswordsMatches.observe(viewLifecycleOwner, {
             if (it) {
                 binding.passwordConfirmTil.error = null
             } else {
@@ -125,7 +124,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -136,7 +135,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -147,7 +146,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateTo.observe(viewLifecycleOwner, {
             it?.let {
                 findNavController().navigate(
                     SignUpFragmentDirections.actionSignUpFragmentToSignUpFirstFragment(
@@ -158,7 +157,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.isUserNameExist.observe(viewLifecycleOwner, Observer {
+        viewModel.isUserNameExist.observe(viewLifecycleOwner, {
             if (it) {
                 binding.userNameTil.error = "Code utilisateur existe déjà"
             } else {
@@ -166,7 +165,7 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.isMerchantCodeExist.observe(viewLifecycleOwner, Observer {
+        viewModel.isMerchantCodeExist.observe(viewLifecycleOwner, {
             if (it) {
                 binding.merchantCodeTil.error = "Le code marchand existe déjà"
             } else {

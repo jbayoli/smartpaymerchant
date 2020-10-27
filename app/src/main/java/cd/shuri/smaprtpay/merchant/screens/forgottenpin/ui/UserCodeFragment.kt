@@ -1,14 +1,13 @@
 package cd.shuri.smaprtpay.merchant.screens.forgottenpin.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentUserCodeBinding
@@ -50,7 +49,7 @@ class UserCodeFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             it?.let {
                 if (it) {
                     SmartPayApp.dialogLoader.show(
@@ -64,14 +63,14 @@ class UserCodeFragment : Fragment() {
             }
         })
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateTo.observe(viewLifecycleOwner, {
             it?.let {
                 findNavController().navigate(UserCodeFragmentDirections.actionUserCodeFragmentToCodeFragment())
                 viewModel.navigateToDone()
             }
         })
 
-        viewModel.isCodeEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isCodeEmpty.observe(viewLifecycleOwner, {
             it?.let {
                 if (it) {
                     binding.userCodeTil.error = "Code utilisateur incorrect"
@@ -81,7 +80,7 @@ class UserCodeFragment : Fragment() {
             }
         })
 
-        viewModel.showToast.observe(viewLifecycleOwner, Observer {
+        viewModel.showToast.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -92,7 +91,7 @@ class UserCodeFragment : Fragment() {
             }
         })
 
-        viewModel.isCodeCorrect.observe(viewLifecycleOwner, Observer { code ->
+        viewModel.isCodeCorrect.observe(viewLifecycleOwner, { code ->
             code?.let {
                 if (it) {
                     binding.userCodeTil.error = null

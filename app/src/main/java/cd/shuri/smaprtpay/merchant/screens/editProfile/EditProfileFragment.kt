@@ -192,7 +192,7 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -203,7 +203,7 @@ class EditProfileFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -214,7 +214,7 @@ class EditProfileFragment : Fragment() {
             }
         })
 
-        viewModel.sectors.observe(viewLifecycleOwner, Observer {
+        viewModel.sectors.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -228,14 +228,14 @@ class EditProfileFragment : Fragment() {
             }
         })
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateTo.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(EditProfileFragmentDirections.actionEditProfileFragmentToProfileFragment())
                 viewModel.navigateToDone()
             }
         })
 
-        viewModel.communes.observe(viewLifecycleOwner, Observer {
+        viewModel.communes.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")

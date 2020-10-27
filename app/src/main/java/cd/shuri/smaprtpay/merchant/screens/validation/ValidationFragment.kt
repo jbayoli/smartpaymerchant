@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.databinding.FragmentValidationBinding
@@ -67,7 +66,7 @@ class ValidationFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.navigateToSignUpFragment.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToSignUpFragment.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(ValidationFragmentDirections
                     .actionValidationFragmentToSignUpFragment(viewModel.token,args.phoneNumber))
@@ -75,7 +74,7 @@ class ValidationFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -86,7 +85,7 @@ class ValidationFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),

@@ -43,7 +43,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
     private val years = mutableListOf<Int>()
     private var selectedMonth = ""
     private var selectedYear = ""
-    private var isMerchant = false
+    private var isMerchant = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,11 +137,11 @@ class AddFirstPaymentAccountFragment : Fragment() {
             if (i == R.id.radio_yes) {
                 Timber.d("Yes")
                 binding.radioYes.isChecked = true
-                isMerchant = true
+                isMerchant = "1"
             } else {
                 Timber.d("No")
                 binding.radioNo.isChecked = true
-                isMerchant = false
+                isMerchant = "0"
             }
         }
     }

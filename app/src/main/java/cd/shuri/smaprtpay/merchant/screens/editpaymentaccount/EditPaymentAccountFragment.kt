@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
@@ -122,7 +121,7 @@ class EditPaymentAccountFragment : Fragment() {
                     customer = useCode!!,
                     shortCode = binding.shortCodeTet.text.toString(),
                     code = accountCode,
-                    isMerchant = false
+                    isMerchant = "0"
                 )
             )
             if (valid) {
@@ -136,7 +135,7 @@ class EditPaymentAccountFragment : Fragment() {
                         customer = useCode,
                         shortCode = binding.shortCodeTet.text.toString(),
                         code = accountCode,
-                        isMerchant = false
+                        isMerchant = "0"
                     )
                 )
             } else {
@@ -153,7 +152,7 @@ class EditPaymentAccountFragment : Fragment() {
                     customer = useCode!!,
                     shortCode = binding.shortCodeTet.text.toString(),
                     code = accountCode,
-                    isMerchant = false
+                    isMerchant = "0"
                 )
             )
 
@@ -169,7 +168,7 @@ class EditPaymentAccountFragment : Fragment() {
                             customer = useCode,
                             shortCode = binding.shortCodeTet.text.toString(),
                             code = accountCode,
-                            isMerchant = false
+                            isMerchant = "0"
                         )
                     )
                 } else {
@@ -183,7 +182,7 @@ class EditPaymentAccountFragment : Fragment() {
                             customer = useCode,
                             shortCode = binding.shortCodeTet.text.toString(),
                             code = accountCode,
-                            isMerchant = false
+                            isMerchant = "0"
                         )
                     )
                 }
@@ -220,7 +219,7 @@ class EditPaymentAccountFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -231,7 +230,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -242,7 +241,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.providers.observe(viewLifecycleOwner, Observer {
+        viewModel.providers.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     items.add(element.name!!)
@@ -250,7 +249,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.providers.observe(viewLifecycleOwner, Observer {
+        viewModel.providers.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     cardItems.add(element.name!!)
@@ -258,7 +257,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardOperatorTil.error = null
             } else {
@@ -266,7 +265,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.mobileProviderTil.error = null
             } else {
@@ -274,7 +273,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberTil.error = "Ce champ est obligatoir"
             } else {
@@ -282,7 +281,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardNameValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardNameValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardNameTil.error = null
             } else {
@@ -290,7 +289,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardNumberTil.error = "Ce champ est obligatoir"
             } else {
@@ -298,7 +297,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isExpirationValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isExpirationValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.monthTil.error = null
                 binding.yearTil.error = null
@@ -308,7 +307,7 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.phoneNumberTil.error = null
             } else {
@@ -316,14 +315,14 @@ class EditPaymentAccountFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToHome.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(EditPaymentAccountFragmentDirections.actionEditPaymentAccountFragmentToAccountsFragment())
                 viewModel.navigateToHomeDone()
             }
         })
 
-        viewModel.response.observe(viewLifecycleOwner, Observer {
+        viewModel.response.observe(viewLifecycleOwner, {
             if (it.status != "0") {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }

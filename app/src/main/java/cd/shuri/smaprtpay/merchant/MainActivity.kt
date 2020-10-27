@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToValidationTransactionIfNeeded(intent: Intent?) {
         if (intent?.action == "cd.infoset.smartpay.merchant.ACTION_SHOW_VALIDATE_FRAGMENT") {
             navController.navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToTransactionValidation())
-        } else {
+        } else if(intent?.action == "cd.infoset.smartpay.merchant.ACTION_SHOW_HOME_FRAGMENT") {
             navController.navigate((SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment()))
         }
     }

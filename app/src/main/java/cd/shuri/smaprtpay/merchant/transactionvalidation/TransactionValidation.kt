@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
@@ -75,7 +74,7 @@ class TransactionValidation : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -86,7 +85,7 @@ class TransactionValidation : Fragment() {
             }
         })
 
-        viewModel.validation.observe(viewLifecycleOwner, Observer {
+        viewModel.validation.observe(viewLifecycleOwner, {
             it?.let {
                 val builder = if (it.status != "0") {
                     MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
@@ -108,14 +107,14 @@ class TransactionValidation : Fragment() {
             }
         })
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToHome.observe(viewLifecycleOwner, {
             if (it != null) {
                 findNavController().navigate(TransactionValidationDirections.actionTransactionValidationToHomeFragment())
                 viewModel.navigateToHomeDone()
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),

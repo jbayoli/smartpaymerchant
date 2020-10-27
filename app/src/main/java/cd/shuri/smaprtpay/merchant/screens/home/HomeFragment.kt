@@ -7,17 +7,14 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentHomeBinding
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
-import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -209,7 +206,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -220,7 +217,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        viewModel.response.observe(viewLifecycleOwner, Observer {
+        viewModel.response.observe(viewLifecycleOwner, {
             it?.let{
                 binding.numberOfTransaction.text = bindNumberOfTransaction(it.all!!)
                 binding.numberOfWait.text = bindNumberOfTransaction(it.validatings!!)
@@ -231,7 +228,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),

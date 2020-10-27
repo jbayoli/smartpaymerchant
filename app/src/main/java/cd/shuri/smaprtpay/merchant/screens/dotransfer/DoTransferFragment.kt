@@ -1,15 +1,14 @@
 package cd.shuri.smaprtpay.merchant.screens.dotransfer
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
@@ -123,7 +122,7 @@ class DoTransferFragment : Fragment() {
 
 
     private fun observers() {
-        viewModel.paymentMethods.observe(viewLifecycleOwner, Observer {
+        viewModel.paymentMethods.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 val mobileAccountItems = mutableListOf<String>()
                 val cardAccountItems = mutableListOf<String>()
@@ -143,7 +142,7 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -154,7 +153,7 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.isAmountValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isAmountValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.amountTil.error = null
             } else {
@@ -162,7 +161,7 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.isCurrencySelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isCurrencySelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.currencyTil.error = null
             } else {
@@ -170,7 +169,7 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.isCardSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isCardSelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cardTil.error = null
             } else {
@@ -178,7 +177,7 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.isMobileSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isMobileSelected.observe(viewLifecycleOwner, {
             if (it) {
                 binding.mobileTil.error = null
             } else {
@@ -186,7 +185,7 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.isCvvValid.observe(viewLifecycleOwner, Observer {
+        viewModel.isCvvValid.observe(viewLifecycleOwner, {
             if (it) {
                 binding.cvvTil.error = null
             } else {
@@ -194,10 +193,10 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.transferCardToEMoneyStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.transferCardToEMoneyStatus.observe(viewLifecycleOwner, {
             if (it != "0") {
                 MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
-                    .setMessage("Votre transfert a échoué")
+                    .setMessage("Votre approvisionnement a échoué")
                     .setPositiveButton("OK") { dialog, _ ->
                         dialog.dismiss()
                     }
@@ -205,7 +204,7 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToTransfersFragment.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToTransfersFragment.observe(viewLifecycleOwner, {
             it.let {
                 findNavController().navigate(
                     DoTransferFragmentDirections.actionDoTransferFragmentToTransfersFragment()
@@ -214,7 +213,7 @@ class DoTransferFragment : Fragment() {
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),

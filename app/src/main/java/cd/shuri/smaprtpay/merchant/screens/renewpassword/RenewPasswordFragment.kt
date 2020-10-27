@@ -1,13 +1,12 @@
 package cd.shuri.smaprtpay.merchant.screens.renewpassword
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentRenewPasswordBinding
@@ -29,7 +28,7 @@ class RenewPasswordFragment : Fragment() {
 
     private val userCode = SmartPayApp.preferences.getString("user_code", "")
 
-    private lateinit var args : RenewPasswordFragmentArgs
+    private lateinit var args: RenewPasswordFragmentArgs
 
     val dialog = LoaderDialog()
 
@@ -40,6 +39,7 @@ class RenewPasswordFragment : Fragment() {
         args = RenewPasswordFragmentArgs.fromBundle(requireArguments())
         binding = FragmentRenewPasswordBinding.inflate(layoutInflater)
         if (args.isPINForgotten) {
+            binding.confirmPasswordTil.visibility = View.GONE
             setHint("Nouveau PIN FlexPay", "Confirmer PIN FlexPay")
         } else {
             setHint("Ancien PIN FlexPay", "Nouveau PIN FlexPay")
@@ -64,12 +64,20 @@ class RenewPasswordFragment : Fragment() {
     private fun changePassword() {
         val valid = if (args.isPINForgotten) {
             viewModel.validateForm(
-                EditPasswordRequestData(binding.oldPasswordTet.text.toString(), binding.newPasswordTet.text.toString(), userCode!!),
+                EditPasswordRequestData(
+                    binding.oldPasswordTet.text.toString(),
+                    binding.newPasswordTet.text.toString(),
+                    userCode!!
+                ),
                 true
             )
-        }  else {
+        } else {
             viewModel.validateForm(
-                EditPasswordRequestData(binding.oldPasswordTet.text.toString(), binding.newPasswordTet.text.toString(), userCode!!)
+                EditPasswordRequestData(
+                    binding.oldPasswordTet.text.toString(),
+                    binding.newPasswordTet.text.toString(),
+                    userCode!!
+                )
             )
         }
 
@@ -77,19 +85,26 @@ class RenewPasswordFragment : Fragment() {
             if (args.isPINForgotten) {
                 viewModel.newPinRequest(
                     ForgottenPINRequestThree(
-                    args.user,
-                    binding.oldPasswordTet.text.toString(),
-                    binding.newPasswordTet.text.toString()
-                )
-                )
-            } else {
-                viewModel.changePassword(
-                    EditPasswordRequestData(
+                        args.user,
                         binding.oldPasswordTet.text.toString(),
-                        binding.newPasswordTet.text.toString(),
-                        userCode
+                        binding.newPasswordTet.text.toString()
                     )
                 )
+            } else {
+                val new = binding.newPasswordTet.text.toString()
+                val confirm = binding.confirmPasswordTet.text.toString()
+                if (new == confirm) {
+                    binding.confirmPasswordTil.error = null
+                    viewModel.changePassword(
+                        EditPasswordRequestData(
+                            binding.oldPasswordTet.text.toString(),
+                            binding.newPasswordTet.text.toString(),
+                            userCode
+                        )
+                    )
+                } else {
+                    binding.confirmPasswordTil.error = "PIN invalide"
+                }
             }
         } else {
             return
@@ -97,25 +112,25 @@ class RenewPasswordFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.isOldPasswordEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isOldPasswordEmpty.observe(viewLifecycleOwner, {
             if (it) {
-                binding.oldPasswordTil.error = "Mot de passe vide"
+                binding.oldPasswordTil.error = "PIN vide"
                 binding.oldPasswordTil.isErrorEnabled = true
             } else {
                 binding.oldPasswordTil.error = null
             }
         })
 
-        viewModel.isNewPasswordEmpty.observe(viewLifecycleOwner, Observer {
+        viewModel.isNewPasswordEmpty.observe(viewLifecycleOwner, {
             if (it) {
-                binding.newPasswordTil.error = "Mot de passe vide"
+                binding.newPasswordTil.error = "PIN vide"
                 binding.newPasswordTil.isErrorEnabled = true
             } else {
                 binding.newPasswordTil.error = null
             }
         })
 
-        viewModel.isPasswordMatches.observe(viewLifecycleOwner, Observer {
+        viewModel.isPasswordMatches.observe(viewLifecycleOwner, {
             if (it) {
                 if (args.isPINForgotten) {
                     binding.newPasswordTil.error = null
@@ -131,7 +146,7 @@ class RenewPasswordFragment : Fragment() {
             }
         })
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, Observer {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -142,7 +157,7 @@ class RenewPasswordFragment : Fragment() {
             }
         })
 
-        viewModel.responseStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.responseStatus.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (it == "0") {
                     binding.oldPasswordTil.error = null
@@ -152,20 +167,20 @@ class RenewPasswordFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    binding.oldPasswordTil.error = "L'ancien mot de passe saisi est incorrect"
+                    binding.oldPasswordTil.error = "L'ancien PIN saisi est incorrect"
                 }
                 viewModel.showToastDone()
             }
         })
 
-        viewModel.navigateToSignIn.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToSignIn.observe(viewLifecycleOwner, {
             it?.let {
                 findNavController().navigate(RenewPasswordFragmentDirections.actionRenewPasswordFragmentToSingInFragment())
                 viewModel.navigateToSignInDone()
             }
         })
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, Observer {
+        viewModel.showTToastForError.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -176,7 +191,7 @@ class RenewPasswordFragment : Fragment() {
             }
         })
 
-        viewModel.showMessage.observe(viewLifecycleOwner, Observer {
+        viewModel.showMessage.observe(viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 viewModel.showMessageDone()
