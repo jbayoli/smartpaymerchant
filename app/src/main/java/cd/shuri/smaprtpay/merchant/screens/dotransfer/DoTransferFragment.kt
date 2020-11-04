@@ -21,8 +21,6 @@ import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
- * Use the [DoTransferFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class DoTransferFragment : Fragment() {
 
