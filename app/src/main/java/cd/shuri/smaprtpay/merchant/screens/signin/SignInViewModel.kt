@@ -7,8 +7,7 @@ import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.CommonResponse
 import cd.shuri.smaprtpay.merchant.network.LoginRequest
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -54,18 +53,16 @@ class SignInViewModel : ViewModel() {
         _isUserNameEmpty.value = false
         _isPasswordEmpty.value = false
 
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Timber.e("getInstanceId failed ${task.exception}")
-                    return@OnCompleteListener
-                }
-                // Get new Instance ID token
-                token = task.result?.token!!
-
-                // Log and toast
-                Timber.d("token : $token")
-            })
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Timber.e("getInstanceId failed ${task.exception}")
+                return@addOnCompleteListener
+            }
+            //Get new Instance ID token
+            val token = task.result
+            // Log and toast
+            Timber.d("token : $token")
+        }
     }
 
     fun validateForm(request: LoginRequest) : Boolean {

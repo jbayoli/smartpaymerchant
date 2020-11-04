@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModel
 import cd.shuri.smaprtpay.merchant.network.CodeRequest
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import cd.shuri.smaprtpay.merchant.network.ValidateCodeRequest
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -62,17 +61,16 @@ class ValidationViewModel (phone: String): ViewModel(){
     }
 
     private fun getCode() {
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Timber.e("getInstanceId failed ${task.exception}")
-                    return@OnCompleteListener
-                }
-                // Get new Instance ID token
-                token = task.result?.token!!
-                // Log and toast
-                Timber.d("token : $token")
-            })
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Timber.e("getInstanceId failed ${task.exception}")
+                return@addOnCompleteListener
+            }
+            //Get new Instance ID token
+            val token = task.result
+            // Log and toast
+            Timber.d("token : $token")
+        }
     }
     fun sendingCodeTimer() {
         //Creates a timer which triggers the end of the game when it finishes

@@ -136,7 +136,7 @@ class SignUpFirstFragment : Fragment() {
 
         viewModel.isAddressNumberEmpty.observe(viewLifecycleOwner, {
             if (it) {
-                binding.numberTil.error = "Ce champ est obligatoire"
+                binding.numberTil.error = "obligatoire"
             } else {
                 binding.numberTil.error = null
             }
