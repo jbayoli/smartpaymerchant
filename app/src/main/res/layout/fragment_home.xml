@@ -602,7 +602,7 @@
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/last_line" />
+                    app:layout_constraintTop_toBottomOf="@+id/qr_code_image" />
 
                 <Button
                     android:id="@+id/help_button"
@@ -622,7 +622,7 @@
                     android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/help_button" />
+                    app:layout_constraintTop_toBottomOf="@+id/last_line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </FrameLayout>
