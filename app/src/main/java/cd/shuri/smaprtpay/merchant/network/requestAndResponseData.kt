@@ -77,7 +77,8 @@ data class RegisterRequest(
     var customer: String = "",
     val number: String,
     val commune: String,
-    val street: String
+    val street: String,
+    val sex: String = "M"
 ):Parcelable
 
 @JsonClass(generateAdapter = true)
