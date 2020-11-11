@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSingInBinding
@@ -28,7 +29,7 @@ class SingInFragment : Fragment() {
 
     private val viewModel by viewModels<SignInViewModel>()
 
-    private lateinit var args: SingInFragmentArgs
+    private val args: SingInFragmentArgs by navArgs()
 
     private val name = SmartPayApp.preferences.getString("username", "")
 
@@ -40,8 +41,6 @@ class SingInFragment : Fragment() {
     ): View? {
 
         binding = FragmentSingInBinding.inflate(layoutInflater)
-
-        args = SingInFragmentArgs.fromBundle(requireArguments())
 
         if (!name.isNullOrEmpty()) {
             binding.userNameTet.setText(name)

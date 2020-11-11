@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSignUpSecondBinding
@@ -25,7 +26,7 @@ class SignUpSecondFragment : Fragment() {
 
     private val viewModel by viewModels<SignUpSecondViewModel>()
 
-    private lateinit var args: SignUpSecondFragmentArgs
+    private val args: SignUpSecondFragmentArgs by navArgs()
 
     private val dialog = LoaderDialog()
 
@@ -39,7 +40,6 @@ class SignUpSecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        args = SignUpSecondFragmentArgs.fromBundle(requireArguments())
 
         binding = FragmentSignUpSecondBinding.inflate(layoutInflater)
         observers()

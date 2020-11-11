@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.EditPaymentAccountFragmentBinding
@@ -20,7 +21,7 @@ import timber.log.Timber
 class EditPaymentAccountFragment : Fragment() {
 
     private lateinit var binding: EditPaymentAccountFragmentBinding
-    private lateinit var args: EditPaymentAccountFragmentArgs
+    private val args: EditPaymentAccountFragmentArgs by navArgs()
     private lateinit var viewModel: EditPaymentAccountViewModel
     private var operatorCode = ""
     private val useCode = SmartPayApp.preferences.getString("user_code", "")
@@ -38,7 +39,6 @@ class EditPaymentAccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        args = EditPaymentAccountFragmentArgs.fromBundle(requireArguments())
         binding = EditPaymentAccountFragmentBinding.inflate(layoutInflater)
 
         operatorCode = args.account.operator!!

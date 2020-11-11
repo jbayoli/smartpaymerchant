@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentRenewPasswordBinding
 import cd.shuri.smaprtpay.merchant.network.EditPasswordRequestData
@@ -28,7 +29,7 @@ class RenewPasswordFragment : Fragment() {
 
     private val userCode = SmartPayApp.preferences.getString("user_code", "")
 
-    private lateinit var args: RenewPasswordFragmentArgs
+    private val args: RenewPasswordFragmentArgs by navArgs()
 
     val dialog = LoaderDialog()
 
@@ -36,7 +37,6 @@ class RenewPasswordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        args = RenewPasswordFragmentArgs.fromBundle(requireArguments())
         binding = FragmentRenewPasswordBinding.inflate(layoutInflater)
         if (args.isPINForgotten) {
             binding.confirmPasswordTil.visibility = View.GONE

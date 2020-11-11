@@ -1,6 +1,7 @@
 package cd.shuri.smaprtpay.merchant.network
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
@@ -56,6 +57,7 @@ data class SingUpResponse(
     val status: String?
 )
 
+@Keep
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class RegisterRequest(
@@ -115,6 +117,7 @@ data class ProvidersData(
     val type: String?
 )
 
+@Keep
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class AccountsResponse(
@@ -236,6 +239,7 @@ data class ForgottenPINRequestOneTwo(
     val code: String?
 )
 
+@Keep
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class Profile(

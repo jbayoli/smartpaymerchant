@@ -23,14 +23,10 @@ import timber.log.Timber
 class TransactionValidation : Fragment() {
 
     private lateinit var binding: FragmentTransactionValidationBinding
-
     private val viewModel by viewModels<TransactionValidationViewModel>()
-
     private val dialog = LoaderDialog()
-
     private val userCode = SmartPayApp.preferences.getString("user_code", "")
     private val fcm = SmartPayApp.preferences.getString("fcm", "")
-
     private lateinit var adapter: TransactionValidationListAdapter
 
     override fun onCreateView(
@@ -123,6 +119,10 @@ class TransactionValidation : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
+        })
+
+        viewModel.indexRemoved.observe( viewLifecycleOwner, {
+            adapter.notifyItemRemoved(it)
         })
     }
 

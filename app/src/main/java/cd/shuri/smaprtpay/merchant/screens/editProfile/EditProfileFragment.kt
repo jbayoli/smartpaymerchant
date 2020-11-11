@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.EditProfileFragmentBinding
@@ -23,17 +24,13 @@ class EditProfileFragment : Fragment() {
 
     private val viewModel by viewModels<EditProfileViewModel>()
     private lateinit var binding: EditProfileFragmentBinding
-    private lateinit var args: EditProfileFragmentArgs
+    private val args: EditProfileFragmentArgs by navArgs()
     private val usercode = SmartPayApp.preferences.getString("user_code", "")
-
     private var sector = ""
     private val items = mutableListOf<String>()
-
     private var communeSelected = ""
-
     private val items2 = mutableListOf<String>()
     private val itemsCode = mutableListOf<String>()
-
     val dialog = LoaderDialog()
 
     override fun onCreateView(
@@ -41,7 +38,6 @@ class EditProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = EditProfileFragmentBinding.inflate(layoutInflater)
-        args = EditProfileFragmentArgs.fromBundle(requireArguments())
         val info = args.profileInfo
 
         binding.firstNameTet.setText(info.firstname)

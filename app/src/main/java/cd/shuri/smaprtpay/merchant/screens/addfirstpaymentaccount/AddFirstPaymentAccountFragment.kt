@@ -12,6 +12,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAddFirstPaymentAccountBinding
@@ -27,7 +28,7 @@ import timber.log.Timber
 class AddFirstPaymentAccountFragment : Fragment() {
 
     private lateinit var binding : FragmentAddFirstPaymentAccountBinding
-    private lateinit var args: AddFirstPaymentAccountFragmentArgs
+    private val args: AddFirstPaymentAccountFragmentArgs by navArgs()
 
     private val viewModel by viewModels<AddPaymentAccountViewModel>()
 
@@ -67,7 +68,6 @@ class AddFirstPaymentAccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        args = AddFirstPaymentAccountFragmentArgs.fromBundle(requireArguments())
         // Inflate the layout for this fragment
         binding = FragmentAddFirstPaymentAccountBinding.inflate(layoutInflater)
         binding.phoneNumberTet.setText(defaultPhone)

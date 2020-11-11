@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.databinding.FragmentValidationBinding
 import cd.shuri.smaprtpay.merchant.network.CodeRequest
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
@@ -19,7 +20,7 @@ import cd.shuri.smaprtpay.merchant.utilities.phoneNumberFormat
 class ValidationFragment : Fragment() {
 
     private lateinit var binding: FragmentValidationBinding
-    private lateinit var args: ValidationFragmentArgs
+    private val args: ValidationFragmentArgs by navArgs()
     private lateinit var phoneNumberFormat : String
     private lateinit var viewModel: ValidationViewModel
     private val dialog = LoaderDialog()
@@ -28,8 +29,6 @@ class ValidationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        args = ValidationFragmentArgs.fromBundle(requireArguments())
         phoneNumberFormat = phoneNumberFormat("+${args.phoneNumber}")
 
         val viewModelFactory = ValidationViewModelFactory(args.phoneNumber)

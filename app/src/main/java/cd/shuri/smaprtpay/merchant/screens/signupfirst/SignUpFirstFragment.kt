@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSignUpFirstBinding
@@ -27,7 +28,7 @@ class SignUpFirstFragment : Fragment() {
 
     private val viewModel by viewModels<SignUpFirstViewModel>()
 
-    private lateinit var args: SignUpFirstFragmentArgs
+    private val args: SignUpFirstFragmentArgs by navArgs()
 
     private var communeSelected = ""
 
@@ -42,8 +43,6 @@ class SignUpFirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        args = SignUpFirstFragmentArgs.fromBundle(requireArguments())
 
         val preferencesEditor = SmartPayApp.preferences.edit()
         preferencesEditor.putString("isRegistrationDone", "false")

@@ -10,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.databinding.FragmentSignUpBinding
 import cd.shuri.smaprtpay.merchant.network.SingUpRequest
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
@@ -24,7 +25,7 @@ class SignUpFragment : Fragment() {
 
     private val viewModel by viewModels<SignUpViewModel>()
 
-    private lateinit var args: SignUpFragmentArgs
+    private val args: SignUpFragmentArgs by navArgs()
 
     private val dialog = LoaderDialog()
 
@@ -32,8 +33,6 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        args = SignUpFragmentArgs.fromBundle(requireArguments())
 
         binding = FragmentSignUpBinding.inflate(layoutInflater)
 
