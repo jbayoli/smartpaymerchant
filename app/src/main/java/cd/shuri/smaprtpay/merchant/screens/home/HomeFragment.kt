@@ -2,11 +2,16 @@ package cd.shuri.smaprtpay.merchant.screens.home
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +20,7 @@ import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentHomeBinding
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -24,6 +30,8 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel by viewModels<HomeViewModel>()
+
+    private lateinit var bitmap: Bitmap
 
     private val dialog = LoaderDialog()
 
@@ -43,6 +51,9 @@ class HomeFragment : Fragment() {
         viewModel.getDashBoardData()
 
         createChannel(getString(R.string.notification_chanel_id), "Paiement")
+        name?.let {
+            generateQRCode(it)
+        }
 
         observers()
 
@@ -83,16 +94,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.finishedButton.setOnClickListener {
-            viewModel.response.value?.let {
-                if (it.clos!! > 0) {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionsValidatedFragment())
-                } else {
-                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
         binding.waitButton.setOnClickListener {
             viewModel.response.value?.let {
                 if (it.validatings!! > 0) {
@@ -121,17 +122,6 @@ class HomeFragment : Fragment() {
                     Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-
-        binding.myTransfersButton.setOnClickListener {
-            viewModel.response.value?.let {
-                if (it.transferts!! > 0) {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransfersFragment())
-                } else {
-                    Toast.makeText(requireContext(), "Aucun approvisionnement disponible", Toast.LENGTH_SHORT).show()
-                }
-            }
-
         }
 
         binding.newTransferButton.setOnClickListener {
@@ -173,6 +163,45 @@ class HomeFragment : Fragment() {
         val preferencesEditor = SmartPayApp.preferences.edit()
         preferencesEditor.remove("token")
         preferencesEditor.apply()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun generateQRCode(inputValue: String) {
+        val windowManager = requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+        val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requireContext().display
+        } else {
+            windowManager.defaultDisplay
+        }
+        val point  = Point()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = windowManager.currentWindowMetrics
+            windowMetrics.bounds
+        } else {
+            display?.getSize(point)
+        }
+
+        val width = point.x
+        val height = point.y
+        var smallerDimension = if (width < height) {
+            width
+        } else {
+            height
+        }
+
+        smallerDimension = smallerDimension * 3 / 4
+
+        val qrgEncoder = QRGEncoder(inputValue, null, QRGContents.Type.TEXT, smallerDimension)
+        qrgEncoder.colorBlack = Color.parseColor("#003c8f")
+        qrgEncoder.colorWhite = Color.parseColor("#edeff1")
+
+        try {
+            bitmap = qrgEncoder.bitmap
+            binding.qrCodeImage.setImageBitmap(bitmap)
+        } catch (e: Exception) {
+            Timber.e("$e")
+        }
     }
 
     private fun createChannel(channelId: String, channelName: String) {
@@ -221,8 +250,6 @@ class HomeFragment : Fragment() {
             it?.let{
                 binding.numberOfTransaction.text = bindNumberOfTransaction(it.all!!)
                 binding.numberOfWait.text = bindNumberOfTransaction(it.validatings!!)
-                binding.numberOfClos.text = bindNumberOfTransaction(it.clos!!)
-                binding.numberOfTransfer.text = bindNumberOfTransaction(it.transferts!!)
                 binding.numberOfError.text = bindNumberOfTransaction(it.errors!!)
                 binding.numberOfWaitT.text = bindNumberOfTransaction(it.waiting!!)
             }

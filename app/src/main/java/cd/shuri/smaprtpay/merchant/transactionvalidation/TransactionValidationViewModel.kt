@@ -92,8 +92,8 @@ class TransactionValidationViewModel: ViewModel() {
                 _showDialogLoader.value = false
                 if (result.status == "0" || result.status == "1") {
                     val transacs = _transactions.value!!.toMutableList()
-                    _indexRemoved.value =  transacs.indexOf(transaction)
                     transacs.remove(transaction)
+                    _indexRemoved.value =  transacs.indexOf(transaction)
                     _transactions.value = transacs.toList()
                 }
             } catch (e: Exception) {
