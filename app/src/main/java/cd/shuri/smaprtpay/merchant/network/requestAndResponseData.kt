@@ -78,7 +78,7 @@ data class RegisterRequest(
     val number: String,
     val commune: String,
     val street: String,
-    val sex: String = "M"
+    val sex: String
 ):Parcelable
 
 @JsonClass(generateAdapter = true)

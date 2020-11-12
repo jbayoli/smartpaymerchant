@@ -480,7 +480,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/roboto"
-                                android:text="Alerte"
+                                android:text="Alerte\n"
                                 android:textAlignment="center"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
@@ -614,7 +614,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/note" />
-
 
                 <ImageView
                     android:id="@+id/qr_code_image"

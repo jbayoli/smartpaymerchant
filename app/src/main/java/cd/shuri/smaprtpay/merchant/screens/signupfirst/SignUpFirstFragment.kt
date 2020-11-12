@@ -35,6 +35,10 @@ class SignUpFirstFragment : Fragment() {
     private val items = mutableListOf<String>()
     private val itemsCode = mutableListOf<String>()
 
+    private val sexItems = listOf("Homme", "Femme")
+    private val sexCodeItem = listOf("M", "F")
+    private var sexSelected = ""
+
     val dialog = LoaderDialog()
 
     private lateinit var request : RegisterRequest
@@ -52,6 +56,9 @@ class SignUpFirstFragment : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.show()
 
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_items, sexItems)
+        (binding.sexTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
         observers()
 
         return binding.root
@@ -66,6 +73,10 @@ class SignUpFirstFragment : Fragment() {
 
         binding.communeAuto.setOnItemClickListener { _, _, i, _ ->
             communeSelected = itemsCode[i]
+        }
+
+        binding.sexAuto.setOnItemClickListener { _, _, position, _ ->
+            sexSelected = sexCodeItem[position]
         }
     }
 
@@ -86,7 +97,8 @@ class SignUpFirstFragment : Fragment() {
             phone2 = phone2,
             commune = communeSelected,
             number = binding.numberTet.text.toString(),
-            street = binding.streetTet.text.toString()
+            street = binding.streetTet.text.toString(),
+            sex = sexSelected
         )
 
         val valid = viewModel.validateFrom(
@@ -94,7 +106,12 @@ class SignUpFirstFragment : Fragment() {
         )
 
         if (valid) {
-            viewModel.setNavigateToHome(true)
+            if (sexSelected.isEmpty()) {
+                binding.sexTil.error = "Ce champ est obligatoire"
+            } else {
+                binding.sexTil.error = null
+                viewModel.setNavigateToHome(true)
+            }
         } else {
             return
         }

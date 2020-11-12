@@ -59,7 +59,6 @@ class SplashScreenFragment : Fragment() {
                                 findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment())
                             }
                         }
-
                     }
                 } else {
                     findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToSingInFragment())

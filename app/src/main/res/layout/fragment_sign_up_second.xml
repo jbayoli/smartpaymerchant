@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Nom de l'activité*"
                     android:fontFamily="@font/roboto"
-                    android:maxLength="20"
+                    android:maxLength="50"
                     android:inputType="text|textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
