@@ -50,7 +50,7 @@ class AccountViewModel: ViewModel() {
                 return@addOnCompleteListener
             }
             //Get new Instance ID token
-            val token = task.result
+            token = task.result ?: ""
             // Log and toast
             Timber.d("token : $token")
         }
@@ -71,6 +71,7 @@ class AccountViewModel: ViewModel() {
                 if(result.status == "0") {
                     val preferencesEditor = SmartPayApp.preferences.edit()
                     preferencesEditor.putString("default_phone", phoneNumber.replaceFirst("243", ""))
+                    preferencesEditor.putString("fcm", token)
                     preferencesEditor.apply()
                     _navigateToValidationFragment.value = true
                 }
