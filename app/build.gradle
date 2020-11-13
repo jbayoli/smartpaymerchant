@@ -16,8 +16,8 @@ android {
         applicationId "cd.infoset.smartpay.merchant"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 18
-        versionName "2.0.8 Beta"
+        versionCode 19
+        versionName "2.0.9 Beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -28,6 +28,7 @@ android {
 
         resValue "string", "host", (secureProps.getProperty("HOST") ?: "")
         resValue "string", "host_test", (secureProps.getProperty("HOST_TEST") ?: "")
+        resValue "string", "version","Vesrion "+versionName
     }
 
     buildTypes {

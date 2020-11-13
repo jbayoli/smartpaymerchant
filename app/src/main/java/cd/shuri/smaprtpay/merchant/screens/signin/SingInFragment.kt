@@ -59,6 +59,8 @@ class SingInFragment : Fragment() {
         }
         callBack.isEnabled = true
 
+        binding.version.text = getString(R.string.version)
+
         observers()
 
         return binding.root
