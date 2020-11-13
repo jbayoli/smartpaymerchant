@@ -67,7 +67,7 @@ class ValidationViewModel (phone: String): ViewModel(){
                 return@addOnCompleteListener
             }
             //Get new Instance ID token
-            val token = task.result
+            token = task.result ?: ""
             // Log and toast
             Timber.d("token : $token")
         }
