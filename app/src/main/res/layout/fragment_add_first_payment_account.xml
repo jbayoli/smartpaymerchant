@@ -148,6 +148,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
+                        android:visibility="gone"
                         android:text="Ce compte a-t-il déjà été configuré comme compte marchand chez votre opérateur?"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
@@ -257,7 +258,7 @@
                         android:fontFamily="@font/roboto"
                         android:hint="Nom sur la carte"
                         android:inputType="textPersonName|textCapWords"
-                        android:maxLength="25" />
+                        android:maxLength="50" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

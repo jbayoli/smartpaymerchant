@@ -60,7 +60,7 @@
                     android:fontFamily="@font/roboto"
                     android:layout_height="wrap_content"
                     android:hint="Entrer votre prénom*"
-                    android:maxLength="10"
+                    android:maxLength="20"
                     android:inputType="textPersonName|textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Entrer votre nom*"
                     android:fontFamily="@font/roboto"
-                    android:maxLength="10"
+                    android:maxLength="20"
                     android:inputType="textPersonName|textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -173,7 +173,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
-                    android:inputType="none" />
+                    android:inputType="textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
