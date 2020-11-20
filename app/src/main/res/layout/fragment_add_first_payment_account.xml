@@ -156,6 +156,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checkedButton="@id/radio_no"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <RadioButton

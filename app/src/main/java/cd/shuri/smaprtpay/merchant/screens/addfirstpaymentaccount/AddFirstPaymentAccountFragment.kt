@@ -28,7 +28,6 @@ import timber.log.Timber
 class AddFirstPaymentAccountFragment : Fragment() {
 
     private lateinit var binding : FragmentAddFirstPaymentAccountBinding
-    private val args: AddFirstPaymentAccountFragmentArgs by navArgs()
 
     private val viewModel by viewModels<AddPaymentAccountViewModel>()
 
@@ -44,7 +43,6 @@ class AddFirstPaymentAccountFragment : Fragment() {
     private val years = mutableListOf<Int>()
     private var selectedMonth = ""
     private var selectedYear = ""
-    private var isMerchant = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,11 +135,9 @@ class AddFirstPaymentAccountFragment : Fragment() {
             if (i == R.id.radio_yes) {
                 Timber.d("Yes")
                 binding.radioYes.isChecked = true
-                isMerchant = "1"
             } else {
                 Timber.d("No")
                 binding.radioNo.isChecked = true
-                isMerchant = "0"
             }
         }
     }
@@ -176,8 +172,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     "$selectedMonth/$selectedYear",
                     useCode!!,
                     "",
-                    binding.cardNameTet.text.toString(),
-                    isMerchant
+                    binding.cardNameTet.text.toString()
                 )
                 val valid = viewModel.validateForm(request)
                 if (valid) {
@@ -197,8 +192,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     null,
                     useCode!!,
                     shortCode,
-                    null,
-                    isMerchant
+                    null
                 )
                 val valid = viewModel.validateForm(request)
                 if (valid) {
@@ -218,8 +212,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     "$selectedMonth/$selectedYear",
                     useCode!!,
                     shortCode,
-                    binding.cardNameTet.text.toString(),
-                    isMerchant
+                    binding.cardNameTet.text.toString()
                 )
                 val valid = viewModel.validateForm(request)
                 if (valid) {
