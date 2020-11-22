@@ -13,9 +13,9 @@ class LoaderDialog: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             binding = LoaderDialogBinding.inflate(layoutInflater)
-            val builder = AlertDialog.Builder(it, R.style.ThemeOverlay_AppTheme_Dialog)
-            builder.setView(binding.root)
-            builder.create()
+            val builder = AlertDialog.Builder(it, R.style.ThemeOverlay_AppTheme_Dialog).setView(binding.root).create()
+            builder.setCanceledOnTouchOutside(false)
+            builder
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 }
