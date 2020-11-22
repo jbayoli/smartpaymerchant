@@ -167,5 +167,3 @@ A
 secure.properties,6/3/6332865c8209d854b4f425b345ddca45981f8278
 @
 local.properties,0/7/0712df971a99ac4d2fccb8e0fb19f377f3374cca
-Y
-)app/src/main/res/layout/fragment_home.xml,3/1/31c5880846ef63ff1963efbe141ddfd56680bb19
