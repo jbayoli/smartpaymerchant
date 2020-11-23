@@ -12,7 +12,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAddFirstPaymentAccountBinding
@@ -27,7 +26,7 @@ import timber.log.Timber
  */
 class AddFirstPaymentAccountFragment : Fragment() {
 
-    private lateinit var binding : FragmentAddFirstPaymentAccountBinding
+    private lateinit var binding: FragmentAddFirstPaymentAccountBinding
 
     private val viewModel by viewModels<AddPaymentAccountViewModel>()
 
@@ -85,7 +84,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
 
         observers()
 
-        return  binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -142,8 +141,10 @@ class AddFirstPaymentAccountFragment : Fragment() {
         }
     }
 
-    private fun addPaymentMethod(){
-        val phoneNumber = "${binding.countryCodeTet.text.toString().removePrefix("+")}${binding.phoneNumberTet.text.toString()}"
+    private fun addPaymentMethod() {
+        val phoneNumber = "${
+            binding.countryCodeTet.text.toString().removePrefix("+")
+        }${binding.phoneNumberTet.text.toString()}"
 
         if (binding.mobileMoneyAuto.text.isEmpty()) {
             operatorCode1 = ""
@@ -153,7 +154,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             operatorCode2 = ""
         }
 
-        val shortCode = if(binding.shortCodeTet.text.toString().isNotEmpty()) {
+        val shortCode = if (binding.shortCodeTet.text.toString().isNotEmpty()) {
             binding.shortCodeTet.text.toString()
         } else {
             ""
@@ -207,7 +208,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
                     operatorCode2,
                     1,
                     2,
-                    binding.phoneNumberTet.text.toString(),
+                    phoneNumber,
                     binding.cardNumberTet.text.toString(),
                     "$selectedMonth/$selectedYear",
                     useCode!!,
@@ -227,7 +228,11 @@ class AddFirstPaymentAccountFragment : Fragment() {
     private fun observers() {
         viewModel.showToastError.observe(viewLifecycleOwner, {
             if (it != null) {
-                Toast.makeText(requireContext(), "${viewModel.messageAddAccount.value}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "${viewModel.messageAddAccount.value}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 viewModel.showToastErrorDone()
             }
         })
@@ -258,7 +263,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
-                }  else {
+                } else {
                     dialog.dismiss()
                 }
                 viewModel.showDialogLoaderDone()
