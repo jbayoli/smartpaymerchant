@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.Keep
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 data class LoginRequest(
@@ -58,8 +58,8 @@ data class SingUpResponse(
 )
 
 @Keep
-@Parcelize
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class RegisterRequest(
     @Json(name = "nom")
     val lastName: String,
@@ -118,8 +118,8 @@ data class ProvidersData(
 )
 
 @Keep
-@Parcelize
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class AccountsResponse(
     val code: String?,
     val card: String?,

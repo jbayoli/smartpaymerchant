@@ -38,7 +38,7 @@ class EditPaymentAccountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = EditPaymentAccountFragmentBinding.inflate(layoutInflater)
 
         operatorCode = args.account.operator!!

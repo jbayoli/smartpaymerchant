@@ -28,7 +28,7 @@ class ValidationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         phoneNumberFormat = phoneNumberFormat("+${args.phoneNumber}")
 
         val viewModelFactory = ValidationViewModelFactory(args.phoneNumber)

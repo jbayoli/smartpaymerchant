@@ -36,7 +36,7 @@ class RenewPasswordFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRenewPasswordBinding.inflate(layoutInflater)
         if (args.isPINForgotten) {
             binding.confirmPasswordTil.visibility = View.GONE

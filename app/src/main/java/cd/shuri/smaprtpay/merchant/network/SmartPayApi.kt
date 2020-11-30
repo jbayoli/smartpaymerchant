@@ -10,12 +10,12 @@ import java.util.concurrent.TimeUnit
 
 object SmartPayApi {
     //Base api url
-    private val host = SmartPayApp.context.getString(R.string.host)
+    private val host = SmartPayApp.context.getString(R.string.host_test)
     private val BASE_URL = host
 
     //Set connection timeout, write timeout and read timeout
     private val okHttpClient = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(10, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .build()

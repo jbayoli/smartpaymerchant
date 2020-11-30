@@ -1,5 +1,6 @@
 package cd.shuri.smaprtpay.merchant.screens.signin
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +39,7 @@ class SingInFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentSingInBinding.inflate(layoutInflater)
 
@@ -60,6 +61,7 @@ class SingInFragment : Fragment() {
         callBack.isEnabled = true
 
         binding.version.text = getString(R.string.version)
+        binding.version.setTextColor(Color.RED)
 
         observers()
 
