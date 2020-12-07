@@ -71,7 +71,7 @@ class AccountsFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -80,9 +80,9 @@ class AccountsFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -91,16 +91,16 @@ class AccountsFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
 
-        viewModel.deleteResponse.observe(viewLifecycleOwner, {
+        viewModel.deleteResponse.observe(viewLifecycleOwner) {
             Timber.d("$it")
             if (it.status != "0") {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             } else {
                 accountsListAdapter.notifyItemRemoved(viewModel.indexOfRemovedAccount)
             }
-        })
+        }
     }
 
 }

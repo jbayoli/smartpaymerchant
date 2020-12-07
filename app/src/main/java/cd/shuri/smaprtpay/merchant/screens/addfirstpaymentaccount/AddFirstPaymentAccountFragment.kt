@@ -226,7 +226,7 @@ class AddFirstPaymentAccountFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showToastError.observe(viewLifecycleOwner, {
+        viewModel.showToastError.observe(viewLifecycleOwner) {
             if (it != null) {
                 Toast.makeText(
                     requireContext(),
@@ -235,9 +235,9 @@ class AddFirstPaymentAccountFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
 
-        viewModel.providersCard.observe(viewLifecycleOwner, {
+        viewModel.providersCard.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -246,9 +246,9 @@ class AddFirstPaymentAccountFragment : Fragment() {
                 val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items2)
                 (binding.cardOperatorTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
-        })
+        }
 
-        viewModel.providersPhone.observe(viewLifecycleOwner, {
+        viewModel.providersPhone.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -257,9 +257,9 @@ class AddFirstPaymentAccountFragment : Fragment() {
                 val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items1)
                 (binding.mobileProviderTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -268,33 +268,33 @@ class AddFirstPaymentAccountFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberTil.error = "Ce champ est obligatoir"
             } else {
                 binding.phoneNumberTil.error = null
             }
-        })
+        }
 
-        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, {
+        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardNumberTil.error = "Ce champ est obligatoir"
             } else {
                 binding.cardNumberTil.error = null
             }
-        })
+        }
 
-        viewModel.isCardNameEmpty.observe(viewLifecycleOwner, {
+        viewModel.isCardNameEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardNameTil.error = "Ce champ est obligatoir"
             } else {
                 binding.cardNameTil.error = null
             }
-        })
+        }
 
-        viewModel.isExpirationValid.observe(viewLifecycleOwner, {
+        viewModel.isExpirationValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.monthTil.error = null
                 binding.yearTil.error = null
@@ -302,40 +302,40 @@ class AddFirstPaymentAccountFragment : Fragment() {
                 binding.monthTil.error = "Invalide"
                 binding.yearTil.error = "Invalide"
             }
-        })
+        }
 
-        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberTil.error = null
             } else {
                 binding.phoneNumberTil.error = "n° de téléphone invalide"
             }
-        })
+        }
 
-        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, {
+        viewModel.isCardProviderSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardOperatorTil.error = null
             } else {
                 binding.cardOperatorTil.error = "Séléctionner d'abord un opérateur"
             }
-        })
+        }
 
-        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner, {
+        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.mobileProviderTil.error = null
             } else {
                 binding.mobileProviderTil.error = "Séléctionner d'abord un opérateur"
             }
-        })
+        }
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, {
+        viewModel.navigateToHome.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(AddFirstPaymentAccountFragmentDirections.actionAddFirstPaymentAccountFragmentToHomeFragment())
                 viewModel.navigateToHomeDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -344,6 +344,6 @@ class AddFirstPaymentAccountFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone2()
             }
-        })
+        }
     }
 }

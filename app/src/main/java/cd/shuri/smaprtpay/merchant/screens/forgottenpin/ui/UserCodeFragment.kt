@@ -28,7 +28,7 @@ class UserCodeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentUserCodeBinding.inflate(layoutInflater)
 
@@ -49,7 +49,7 @@ class UserCodeFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             it?.let {
                 if (it) {
                     SmartPayApp.dialogLoader.show(
@@ -61,16 +61,16 @@ class UserCodeFragment : Fragment() {
                 }
                 viewModel.showDialogDone()
             }
-        })
+        }
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, {
+        viewModel.navigateTo.observe(viewLifecycleOwner)  {
             it?.let {
                 findNavController().navigate(UserCodeFragmentDirections.actionUserCodeFragmentToCodeFragment())
                 viewModel.navigateToDone()
             }
-        })
+        }
 
-        viewModel.isCodeEmpty.observe(viewLifecycleOwner, {
+        viewModel.isCodeEmpty.observe(viewLifecycleOwner)  {
             it?.let {
                 if (it) {
                     binding.userCodeTil.error = "Code utilisateur incorrect"
@@ -78,9 +78,9 @@ class UserCodeFragment : Fragment() {
                     binding.userCodeTil.error = null
                 }
             }
-        })
+        }
 
-        viewModel.showToast.observe(viewLifecycleOwner, {
+        viewModel.showToast.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -89,9 +89,9 @@ class UserCodeFragment : Fragment() {
                 ).show()
                 viewModel.showToastDone()
             }
-        })
+        }
 
-        viewModel.isCodeCorrect.observe(viewLifecycleOwner, { code ->
+        viewModel.isCodeCorrect.observe(viewLifecycleOwner) { code ->
             code?.let {
                 if (it) {
                     binding.userCodeTil.error = null
@@ -100,6 +100,6 @@ class UserCodeFragment : Fragment() {
                 }
                 viewModel.reinitCode()
             }
-        })
+        }
     }
 }

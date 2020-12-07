@@ -35,8 +35,12 @@ class SplashScreenFragment : Fragment() {
         Timber.d("$isAccountDone")
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
+        observer()
+        return binding.root
+    }
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, {
+    private fun observer() {
+        viewModel.navigateTo.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (token!!.isNotEmpty()) {
                     if (isRegisterDone != null) {
@@ -46,27 +50,29 @@ class SplashScreenFragment : Fragment() {
                             )
                         )
                     } else {
-                        if (isAccountDone != null) {
-                            findNavController().navigate(
-                                SplashScreenFragmentDirections.actionSplashScreenFragmentToSingInFragment(
-                                    shshowDialogForAccount = true
-                                )
-                            )
-                        } else {
-                            if (step == 3 || step == 4) {
-                                findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToSingInFragment())
-                            } else {
-                                findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment())
-                            }
-                        }
+                        controlledNavigation()
                     }
                 } else {
                     findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToSingInFragment())
                 }
                 viewModel.navigateToDone()
             }
-        })
-        return binding.root
+        }
     }
 
+    private fun controlledNavigation() {
+        if (isAccountDone != null) {
+            findNavController().navigate(
+                SplashScreenFragmentDirections.actionSplashScreenFragmentToSingInFragment(
+                    shshowDialogForAccount = true
+                )
+            )
+        } else {
+            if (step == 3 || step == 4) {
+                findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToSingInFragment())
+            } else {
+                findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment())
+            }
+        }
+    }
 }

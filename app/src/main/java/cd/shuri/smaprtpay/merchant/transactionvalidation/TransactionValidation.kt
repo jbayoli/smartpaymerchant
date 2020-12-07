@@ -70,7 +70,7 @@ class TransactionValidation : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -79,9 +79,9 @@ class TransactionValidation : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.validation.observe(viewLifecycleOwner, {
+        viewModel.validation.observe(viewLifecycleOwner) {
             it?.let {
                 val builder = if (it.status != "0") {
                     MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
@@ -101,16 +101,16 @@ class TransactionValidation : Fragment() {
                 dialog.setCanceledOnTouchOutside(false)
                 dialog.show()
             }
-        })
+        }
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, {
+        viewModel.navigateToHome.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(TransactionValidationDirections.actionTransactionValidationToHomeFragment())
                 viewModel.navigateToHomeDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -119,11 +119,11 @@ class TransactionValidation : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
 
-        viewModel.indexRemoved.observe( viewLifecycleOwner, {
+        viewModel.indexRemoved.observe( viewLifecycleOwner) {
             adapter.notifyItemRemoved(it)
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

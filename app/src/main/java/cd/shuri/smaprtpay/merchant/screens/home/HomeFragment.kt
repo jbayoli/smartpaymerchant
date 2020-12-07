@@ -235,7 +235,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -244,18 +244,18 @@ class HomeFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.response.observe(viewLifecycleOwner, {
+        viewModel.response.observe(viewLifecycleOwner) {
             it?.let{
                 binding.numberOfTransaction.text = bindNumberOfTransaction(it.all!!)
                 binding.numberOfWait.text = bindNumberOfTransaction(it.validatings!!)
                 binding.numberOfError.text = bindNumberOfTransaction(it.errors!!)
                 binding.numberOfWaitT.text = bindNumberOfTransaction(it.waiting!!)
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -264,7 +264,7 @@ class HomeFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
     }
 
     private fun bindNumberOfTransaction(number: Int)  : String {

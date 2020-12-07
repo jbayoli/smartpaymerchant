@@ -15,8 +15,6 @@ import cd.shuri.smaprtpay.merchant.screens.forgottenpin.viewmodel.ForgottenViewM
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CodeFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class CodeFragment : Fragment() {
 
@@ -45,7 +43,7 @@ class CodeFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             it?.let {
                 if (it) {
                     SmartPayApp.dialogLoader.show(
@@ -57,9 +55,9 @@ class CodeFragment : Fragment() {
                 }
                 viewModel.showDialogDone()
             }
-        })
+        }
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, {
+        viewModel.navigateTo.observe(viewLifecycleOwner) {
             it?.let {
                 findNavController().navigate(
                     CodeFragmentDirections.actionCodeFragmentToRenewPasswordFragment(
@@ -69,9 +67,9 @@ class CodeFragment : Fragment() {
                 )
                 viewModel.navigateToDone()
             }
-        })
+        }
 
-        viewModel.isCodeEmpty.observe(viewLifecycleOwner, {
+        viewModel.isCodeEmpty.observe(viewLifecycleOwner) {
             it?.let {
                 if (it) {
                     binding.userCodeTil.error = "Code incorrect"
@@ -79,9 +77,9 @@ class CodeFragment : Fragment() {
                     binding.userCodeTil.error = null
                 }
             }
-        })
+        }
 
-        viewModel.showToast.observe(viewLifecycleOwner, {
+        viewModel.showToast.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -90,9 +88,9 @@ class CodeFragment : Fragment() {
                 ).show()
                 viewModel.showToastDone()
             }
-        })
+        }
 
-        viewModel.isCodeCorrect.observe(viewLifecycleOwner, { code ->
+        viewModel.isCodeCorrect.observe(viewLifecycleOwner) { code ->
             code?.let {
                 if (it) {
                     binding.userCodeTil.error = null
@@ -101,6 +99,6 @@ class CodeFragment : Fragment() {
                 }
                 viewModel.reinitCode()
             }
-        })
+        }
     }
 }

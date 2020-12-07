@@ -31,7 +31,7 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner,  {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialogLoader.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -39,9 +39,9 @@ class NotificationsFragment : Fragment() {
                     dialogLoader.dismiss()
                 }
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner,  {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -50,15 +50,15 @@ class NotificationsFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
 
-        viewModel.notifications.observe(viewLifecycleOwner, {
+        viewModel.notifications.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.noNotification.visibility = View.VISIBLE
             } else {
                 binding.noNotification.visibility = View.GONE
             }
-        })
+        }
     }
 
 }

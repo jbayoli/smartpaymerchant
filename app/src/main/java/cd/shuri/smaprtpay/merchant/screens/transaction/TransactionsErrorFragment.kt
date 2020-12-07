@@ -32,7 +32,7 @@ class TransactionsErrorFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -41,9 +41,9 @@ class TransactionsErrorFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -52,6 +52,6 @@ class TransactionsErrorFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
     }
 }

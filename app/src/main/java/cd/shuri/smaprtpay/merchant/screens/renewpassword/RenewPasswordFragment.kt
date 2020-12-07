@@ -112,25 +112,25 @@ class RenewPasswordFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.isOldPasswordEmpty.observe(viewLifecycleOwner, {
+        viewModel.isOldPasswordEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.oldPasswordTil.error = "PIN vide"
                 binding.oldPasswordTil.isErrorEnabled = true
             } else {
                 binding.oldPasswordTil.error = null
             }
-        })
+        }
 
-        viewModel.isNewPasswordEmpty.observe(viewLifecycleOwner, {
+        viewModel.isNewPasswordEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.newPasswordTil.error = "PIN vide"
                 binding.newPasswordTil.isErrorEnabled = true
             } else {
                 binding.newPasswordTil.error = null
             }
-        })
+        }
 
-        viewModel.isPasswordMatches.observe(viewLifecycleOwner, {
+        viewModel.isPasswordMatches.observe(viewLifecycleOwner) {
             if (it) {
                 if (args.isPINForgotten) {
                     binding.newPasswordTil.error = null
@@ -144,9 +144,9 @@ class RenewPasswordFragment : Fragment() {
                     binding.newPasswordTil.error = null
                 }
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -155,9 +155,9 @@ class RenewPasswordFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.responseStatus.observe(viewLifecycleOwner, {
+        viewModel.responseStatus.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it == "0") {
                     binding.oldPasswordTil.error = null
@@ -171,16 +171,16 @@ class RenewPasswordFragment : Fragment() {
                 }
                 viewModel.showToastDone()
             }
-        })
+        }
 
-        viewModel.navigateToSignIn.observe(viewLifecycleOwner, {
+        viewModel.navigateToSignIn.observe(viewLifecycleOwner)  {
             it?.let {
                 findNavController().navigate(RenewPasswordFragmentDirections.actionRenewPasswordFragmentToSingInFragment())
                 viewModel.navigateToSignInDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -189,14 +189,14 @@ class RenewPasswordFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone2()
             }
-        })
+        }
 
-        viewModel.showMessage.observe(viewLifecycleOwner, {
+        viewModel.showMessage.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 viewModel.showMessageDone()
             }
-        })
+        }
     }
 
 }

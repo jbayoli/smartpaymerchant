@@ -83,47 +83,47 @@ class SignUpFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.isCodeEmpty.observe(viewLifecycleOwner, {
+        viewModel.isCodeEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.merchantCodeTil.error = "Ce champ est obligatoire"
             } else {
                 binding.merchantCodeTil.error = null
             }
-        })
+        }
 
-        viewModel.isUserNameEmpty.observe(viewLifecycleOwner, {
+        viewModel.isUserNameEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.userNameTil.error = "Ce champ est obligatoire"
             } else {
                 binding.userNameTil.error = null
             }
-        })
+        }
 
-        viewModel.isPasswordEmpty.observe(viewLifecycleOwner, {
+        viewModel.isPasswordEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.passwordTil.error = "Ce champ est obligatoire"
             } else {
                 binding.passwordTil.error = null
             }
-        })
+        }
 
-        viewModel.isConfirmedPasswordEmpty.observe(viewLifecycleOwner, {
+        viewModel.isConfirmedPasswordEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.passwordConfirmTil.error = "Ce champ est obligatoire"
             } else {
                 binding.passwordConfirmTil.error = null
             }
-        })
+        }
 
-        viewModel.isPasswordsMatches.observe(viewLifecycleOwner, {
+        viewModel.isPasswordsMatches.observe(viewLifecycleOwner) {
             if (it) {
                 binding.passwordConfirmTil.error = null
             } else {
                 binding.passwordConfirmTil.error = "Les PINS sont différents"
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -132,9 +132,9 @@ class SignUpFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -143,9 +143,9 @@ class SignUpFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, {
+        viewModel.navigateTo.observe(viewLifecycleOwner) {
             it?.let {
                 findNavController().navigate(
                     SignUpFragmentDirections.actionSignUpFragmentToSignUpFirstFragment(
@@ -154,23 +154,23 @@ class SignUpFragment : Fragment() {
                 )
                 viewModel.navigationDone()
             }
-        })
+        }
 
-        viewModel.isUserNameExist.observe(viewLifecycleOwner, {
+        viewModel.isUserNameExist.observe(viewLifecycleOwner) {
             if (it) {
                 binding.userNameTil.error = "Code utilisateur existe déjà"
             } else {
                 binding.userNameTil.error = null
             }
-        })
+        }
 
-        viewModel.isMerchantCodeExist.observe(viewLifecycleOwner, {
+        viewModel.isMerchantCodeExist.observe(viewLifecycleOwner) {
             if (it) {
                 binding.merchantCodeTil.error = "Le code marchand existe déjà"
             } else {
                 binding.merchantCodeTil.error = null
             }
-        })
+        }
     }
 
 }

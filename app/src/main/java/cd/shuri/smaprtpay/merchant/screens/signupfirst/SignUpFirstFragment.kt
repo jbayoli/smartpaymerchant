@@ -118,71 +118,71 @@ class SignUpFirstFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.isLastNameEmpty.observe(viewLifecycleOwner, {
+        viewModel.isLastNameEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.lastNameTil.error = "Ce champ est obligatoire"
             } else {
                 binding.lastNameTil.error = null
             }
-        })
+        }
 
-        viewModel.isFirstNameEmpty.observe(viewLifecycleOwner, {
+        viewModel.isFirstNameEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.firstNameTil.error = "Ce champ est obligatoire"
             } else {
                 binding.firstNameTil.error = null
             }
-        })
+        }
 
-        viewModel.isEmailEmpty.observe(viewLifecycleOwner, {
+        viewModel.isEmailEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.mailTil.error = "Ce champ est obligatoire"
             } else {
                 binding.mailTil.error = null
             }
-        })
+        }
 
-        viewModel.isAddressCommuneEmpty.observe(viewLifecycleOwner, {
+        viewModel.isAddressCommuneEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.communeTil.error = "Ce champ est obligatoire"
             } else {
                 binding.communeTil.error = null
             }
-        })
+        }
 
-        viewModel.isAddressNumberEmpty.observe(viewLifecycleOwner, {
+        viewModel.isAddressNumberEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.numberTil.error = "obligatoire"
             } else {
                 binding.numberTil.error = null
             }
-        })
+        }
 
-        viewModel.isAddressStreetEmpty.observe(viewLifecycleOwner, {
+        viewModel.isAddressStreetEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.streetTil.error = "Ce champ est obligatoire"
             } else {
                 binding.numberTil.error = null
             }
-        })
+        }
 
-        viewModel.isPhoneNumber1Empty.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumber1Empty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberOneTil.error = "Ce champ est obligatoire"
             } else {
                 binding.phoneNumberOneTil.error = null
             }
-        })
+        }
 
-        viewModel.isEmailValid.observe(viewLifecycleOwner, {
+        viewModel.isEmailValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.mailTil.error = null
             } else {
                 binding.mailTil.error = "Email invalide"
             }
-        })
+        }
 
-        viewModel.navigateToSignUp2.observe(viewLifecycleOwner, {
+        viewModel.navigateToSignUp2.observe(viewLifecycleOwner) {
             if (it != null) {
 
                 findNavController().navigate(
@@ -193,25 +193,25 @@ class SignUpFirstFragment : Fragment() {
                 )
                 viewModel.navigateToSignUp2Done()
             }
-        })
+        }
 
-        viewModel.isPhoneNumber1Valid.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumber1Valid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberOneTil.error = null
             } else {
                 binding.phoneNumberOneTil.error = "n° de téléphone invalide"
             }
-        })
+        }
 
-        viewModel.isPhoneNumber2Valid.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumber2Valid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberTwoTil.error = null
             } else {
                 binding.phoneNumberTwoTil.error = "n° de téléphone invalide"
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -220,9 +220,9 @@ class SignUpFirstFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -231,9 +231,9 @@ class SignUpFirstFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone2()
             }
-        })
+        }
 
-        viewModel.communes.observe(viewLifecycleOwner, {
+        viewModel.communes.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -243,6 +243,6 @@ class SignUpFirstFragment : Fragment() {
                 val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items)
                 (binding.communeTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
-        })
+        }
     }
 }

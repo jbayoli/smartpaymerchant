@@ -179,7 +179,7 @@ class AddAccountFragment : Fragment() {
     private fun observers() {
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items)
-        viewModel.accountType.observe(viewLifecycleOwner, {
+        viewModel.accountType.observe(viewLifecycleOwner) {
             if (it == 1) {
                 binding.mobileMoney.visibility = View.VISIBLE
                 binding.validateButton.visibility = View.VISIBLE
@@ -191,49 +191,49 @@ class AddAccountFragment : Fragment() {
                 (binding.cardOperatorTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
                 accountType = it
             }
-        })
+        }
 
-        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, {
+        viewModel.isCardProviderSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardOperatorTil.error = null
             } else {
                 binding.cardOperatorTil.error = "Séléctionner d'abord un opérateur"
             }
-        })
+        }
 
-        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner, Observer {
+        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.mobileProviderTil.error = null
             } else {
                 binding.mobileProviderTil.error = "Séléctionner d'abord un opérateur"
             }
-        })
+        }
 
-        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberTil.error = "Ce champ est obligatoir"
             } else {
                 binding.phoneNumberTil.error = null
             }
-        })
+        }
 
-        viewModel.isCardNameValid.observe(viewLifecycleOwner, {
+        viewModel.isCardNameValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardNameTil.error = null
             } else {
                 binding.cardNameTil.error = "Ce champ est obligatoir"
             }
-        })
+        }
 
-        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, {
+        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardNumberTil.error = "Ce champ est obligatoir"
             } else {
                 binding.cardNumberTil.error = null
             }
-        })
+        }
 
-        viewModel.isExpirationValid.observe(viewLifecycleOwner, {
+        viewModel.isExpirationValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.monthTil.error = null
                 binding.yearTil.error = null
@@ -241,9 +241,9 @@ class AddAccountFragment : Fragment() {
                 binding.monthTil.error = "Invalide"
                 binding.yearTil.error = "Invalide"
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -252,47 +252,47 @@ class AddAccountFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.showToastSuccess.observe(viewLifecycleOwner, {
+        viewModel.showToastSuccess.observe(viewLifecycleOwner) {
             if (it != null) {
                 Toast.makeText(requireContext(), "${viewModel.messageAddAccount.value}", Toast.LENGTH_SHORT).show()
                 viewModel.showToastSuccessDone()
             }
-        })
+        }
 
-        viewModel.showToastError.observe(viewLifecycleOwner, {
+        viewModel.showToastError.observe(viewLifecycleOwner) {
             if (it != null) {
                 Toast.makeText(requireContext(), "${viewModel.messageAddAccount.value}", Toast.LENGTH_SHORT).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
 
-        viewModel.providers.observe(viewLifecycleOwner, {
+        viewModel.providers.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
                     items.add(element.name!!)
                 }
             }
-        })
+        }
 
-        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberTil.error = null
             } else {
                 binding.phoneNumberTil.error = "n° de téléphone invalide"
             }
-        })
+        }
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, {
+        viewModel.navigateToHome.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(AddAccountFragmentDirections.actionAddAccountFragmentToHomeFragment())
                 viewModel.navigateToHomeDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -301,7 +301,7 @@ class AddAccountFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone2()
             }
-        })
+        }
     }
 
 }

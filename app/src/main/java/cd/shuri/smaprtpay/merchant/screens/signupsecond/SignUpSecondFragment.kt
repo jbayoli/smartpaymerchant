@@ -82,23 +82,23 @@ class SignUpSecondFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.isActivityEmpty.observe(viewLifecycleOwner, {
+        viewModel.isActivityEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.activityTil.error = "Ce champ est obligatoire"
             } else {
                 binding.activityTil.error = null
             }
-        })
+        }
 
-        viewModel.isSectorSelected.observe(viewLifecycleOwner, {
+        viewModel.isSectorSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.sectorTil.error = null
             } else {
                 binding.sectorTil.error = "Sélectionner un secteur"
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -107,9 +107,9 @@ class SignUpSecondFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.showToastSuccess.observe(viewLifecycleOwner, {
+        viewModel.showToastSuccess.observe(viewLifecycleOwner) {
             if (it != null) {
                 Toast.makeText(
                     requireContext(),
@@ -118,9 +118,9 @@ class SignUpSecondFragment : Fragment() {
                 ).show()
                 viewModel.showToastSuccessDone()
             }
-        })
+        }
 
-        viewModel.showToastError.observe(viewLifecycleOwner, {
+        viewModel.showToastError.observe(viewLifecycleOwner) {
             if (it != null) {
                 Toast.makeText(
                     requireContext(),
@@ -129,9 +129,9 @@ class SignUpSecondFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
 
-        viewModel.sectors.observe(viewLifecycleOwner, {
+        viewModel.sectors.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -140,9 +140,9 @@ class SignUpSecondFragment : Fragment() {
                 val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items)
                 (binding.sectorTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
-        })
+        }
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, {
+        viewModel.navigateToHome.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(
                     SignUpSecondFragmentDirections.actionSignUpSecondFragmentToAddFirstPaymentAccountFragment(
@@ -151,9 +151,9 @@ class SignUpSecondFragment : Fragment() {
                 )
                 viewModel.navigateToHomeDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -162,7 +162,7 @@ class SignUpSecondFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone2()
             }
-        })
+        }
 
     }
 

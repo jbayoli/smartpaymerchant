@@ -258,7 +258,7 @@
                         android:fontFamily="@font/roboto"
                         android:hint="Nom sur la carte"
                         android:inputType="textPersonName|textCapWords"
-                        android:maxLength="50" />
+                        android:maxLength="70" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

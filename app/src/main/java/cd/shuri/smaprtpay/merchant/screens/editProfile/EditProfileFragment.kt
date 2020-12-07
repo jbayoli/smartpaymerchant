@@ -188,7 +188,7 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -197,9 +197,9 @@ class EditProfileFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone2()
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -208,9 +208,9 @@ class EditProfileFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.sectors.observe(viewLifecycleOwner, {
+        viewModel.sectors.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -222,16 +222,16 @@ class EditProfileFragment : Fragment() {
                 val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items)
                 (binding.sectorTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
-        })
+        }
 
-        viewModel.navigateTo.observe(viewLifecycleOwner, {
+        viewModel.navigateTo.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(EditProfileFragmentDirections.actionEditProfileFragmentToProfileFragment())
                 viewModel.navigateToDone()
             }
-        })
+        }
 
-        viewModel.communes.observe(viewLifecycleOwner, {
+        viewModel.communes.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     Timber.d("name : ${element.name}")
@@ -245,7 +245,7 @@ class EditProfileFragment : Fragment() {
                 val adapter = ArrayAdapter(requireContext(), R.layout.list_items, items2)
                 (binding.communeTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
-        })
+        }
     }
 
 }

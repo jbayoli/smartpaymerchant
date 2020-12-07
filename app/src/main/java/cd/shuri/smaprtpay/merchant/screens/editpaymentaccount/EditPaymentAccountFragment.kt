@@ -219,7 +219,7 @@ class EditPaymentAccountFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -228,9 +228,9 @@ class EditPaymentAccountFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone2()
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -239,65 +239,65 @@ class EditPaymentAccountFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.providers.observe(viewLifecycleOwner, {
+        viewModel.providers.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     items.add(element.name!!)
                 }
             }
-        })
+        }
 
-        viewModel.providers.observe(viewLifecycleOwner, {
+        viewModel.providers.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 for (element in it) {
                     cardItems.add(element.name!!)
                 }
             }
-        })
+        }
 
-        viewModel.isCardProviderSelected.observe(viewLifecycleOwner, {
+        viewModel.isCardProviderSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardOperatorTil.error = null
             } else {
                 binding.cardOperatorTil.error = "Séléctionner d'abord un opérateur"
             }
-        })
+        }
 
-        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner, {
+        viewModel.isMobileProviderSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.mobileProviderTil.error = null
             } else {
                 binding.mobileProviderTil.error = "Séléctionner d'abord un opérateur"
             }
-        })
+        }
 
-        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumberEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberTil.error = "Ce champ est obligatoir"
             } else {
                 binding.phoneNumberTil.error = null
             }
-        })
+        }
 
-        viewModel.isCardNameValid.observe(viewLifecycleOwner, {
+        viewModel.isCardNameValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardNameTil.error = null
             } else {
                 binding.cardNameTil.error = "Ce champ est obligatoir"
             }
-        })
+        }
 
-        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner, {
+        viewModel.isCardNumberEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardNumberTil.error = "Ce champ est obligatoir"
             } else {
                 binding.cardNumberTil.error = null
             }
-        })
+        }
 
-        viewModel.isExpirationValid.observe(viewLifecycleOwner, {
+        viewModel.isExpirationValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.monthTil.error = null
                 binding.yearTil.error = null
@@ -305,27 +305,27 @@ class EditPaymentAccountFragment : Fragment() {
                 binding.monthTil.error = "Invalide"
                 binding.yearTil.error = "Invalide"
             }
-        })
+        }
 
-        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner, {
+        viewModel.isPhoneNumberValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.phoneNumberTil.error = null
             } else {
                 binding.phoneNumberTil.error = "n° de téléphone invalide"
             }
-        })
+        }
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, {
+        viewModel.navigateToHome.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(EditPaymentAccountFragmentDirections.actionEditPaymentAccountFragmentToAccountsFragment())
                 viewModel.navigateToHomeDone()
             }
-        })
+        }
 
-        viewModel.response.observe(viewLifecycleOwner, {
+        viewModel.response.observe(viewLifecycleOwner) {
             if (it.status != "0") {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
 }

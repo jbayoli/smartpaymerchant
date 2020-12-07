@@ -61,7 +61,6 @@ class SingInFragment : Fragment() {
         callBack.isEnabled = true
 
         binding.version.text = getString(R.string.version)
-        binding.version.setTextColor(Color.RED)
 
         observers()
 
@@ -149,23 +148,23 @@ class SingInFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.isPasswordEmpty.observe(viewLifecycleOwner, {
+        viewModel.isPasswordEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.passwordTil.error = "Ce champ est obligatoire"
             } else {
                 binding.passwordTil.error = null
             }
-        })
+        }
 
-        viewModel.isUserNameEmpty.observe(viewLifecycleOwner, {
+        viewModel.isUserNameEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.userNameTil.error = "Ce champ est obligatoire"
             } else {
                 binding.userNameTil.error = null
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -174,16 +173,16 @@ class SingInFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.navigateToHome.observe(viewLifecycleOwner, {
+        viewModel.navigateToHome.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(SingInFragmentDirections.actionSingInFragmentToHomeFragment())
                 viewModel.navigateToHomeDone()
             }
-        })
+        }
 
-        viewModel.step.observe(viewLifecycleOwner, {
+        viewModel.step.observe(viewLifecycleOwner) {
             it?.let {
                 when (it) {
                     3 -> {
@@ -197,9 +196,9 @@ class SingInFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
-        viewModel.loginStatus.observe(viewLifecycleOwner, {
+        viewModel.loginStatus.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it == 1) {
                     Toast.makeText(
@@ -210,9 +209,9 @@ class SingInFragment : Fragment() {
                 }
                 viewModel.showToastDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -221,9 +220,9 @@ class SingInFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
 
-        viewModel.response.observe(viewLifecycleOwner, {
+        viewModel.response.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 if (it.status == "0") {
@@ -232,7 +231,7 @@ class SingInFragment : Fragment() {
                     preferencesEditor.apply()
                 }
             }
-        })
+        }
 
     }
 

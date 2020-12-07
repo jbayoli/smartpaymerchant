@@ -30,7 +30,7 @@ class HelpFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner)  {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -39,9 +39,9 @@ class HelpFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -50,13 +50,13 @@ class HelpFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone2()
             }
-        })
+        }
 
-        viewModel.help.observe(viewLifecycleOwner, {
+        viewModel.help.observe(viewLifecycleOwner) {
             binding.helpText.text = it.helpText
             binding.helpPhone.text = "Téléphone: ${it.helpPhoneNumber}"
             binding.helpMail.text = "Email: ${it.helpEmail}"
-        })
+        }
     }
 
 }

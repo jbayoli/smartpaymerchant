@@ -1,5 +1,7 @@
 package cd.shuri.smaprtpay.merchant.screens.account
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +45,11 @@ class AccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.termsButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.flexpay.cd/accueil/tc/"))
+            startActivity(intent)
+        }
+
         binding.validateButton.setOnClickListener {
             if (binding.checkBox.isChecked) {
                 viewModel.setCountryCode(binding.countryCodeTet.text.toString())
@@ -65,16 +72,16 @@ class AccountFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.navigateToValidationFragment.observe(viewLifecycleOwner, {
+        viewModel.navigateToValidationFragment.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(AccountFragmentDirections
                     .actionAccountFragmentToValidationFragment("${binding.countryCodeTet.text.toString()
                         .removePrefix("+")}${binding.phoneNumberTet.text.toString()}"))
                 viewModel.navigateToValidationFragmentDone()
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -83,15 +90,15 @@ class AccountFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.response.observe(viewLifecycleOwner, {
+        viewModel.response.observe(viewLifecycleOwner) {
             if (it.status == "2") {
                 binding.textInputLayout.error = "Ce numéro est utilisé par un autre compte"
             } else if (it.status == "1") {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
 
 }

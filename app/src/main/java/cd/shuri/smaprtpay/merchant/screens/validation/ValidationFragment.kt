@@ -65,15 +65,15 @@ class ValidationFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.navigateToSignUpFragment.observe(viewLifecycleOwner, {
+        viewModel.navigateToSignUpFragment.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(ValidationFragmentDirections
                     .actionValidationFragmentToSignUpFragment(viewModel.token,args.phoneNumber))
                 viewModel.navigateToSignUpFragmentDone()
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
@@ -82,9 +82,9 @@ class ValidationFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -93,7 +93,7 @@ class ValidationFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
     }
 
 }

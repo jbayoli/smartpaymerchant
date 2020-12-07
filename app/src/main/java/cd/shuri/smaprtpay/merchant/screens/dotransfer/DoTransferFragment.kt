@@ -120,7 +120,7 @@ class DoTransferFragment : Fragment() {
 
 
     private fun observers() {
-        viewModel.paymentMethods.observe(viewLifecycleOwner, {
+        viewModel.paymentMethods.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 val mobileAccountItems = mutableListOf<String>()
                 val cardAccountItems = mutableListOf<String>()
@@ -138,9 +138,9 @@ class DoTransferFragment : Fragment() {
                     ArrayAdapter(requireContext(), R.layout.list_items, cardAccountItems)
                 (binding.cardTil.editText as? AutoCompleteTextView)?.setAdapter(accountAdapter)
             }
-        })
+        }
 
-        viewModel.showDialogLoader.observe(viewLifecycleOwner, {
+        viewModel.showDialogLoader.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
@@ -149,49 +149,49 @@ class DoTransferFragment : Fragment() {
                 }
                 viewModel.showDialogLoaderDone()
             }
-        })
+        }
 
-        viewModel.isAmountValid.observe(viewLifecycleOwner, {
+        viewModel.isAmountValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.amountTil.error = null
             } else {
                 binding.amountTil.error = "Montant invalide"
             }
-        })
+        }
 
-        viewModel.isCurrencySelected.observe(viewLifecycleOwner, {
+        viewModel.isCurrencySelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.currencyTil.error = null
             } else {
                 binding.currencyTil.error = "Séléctionner une devise"
             }
-        })
+        }
 
-        viewModel.isCardSelected.observe(viewLifecycleOwner, {
+        viewModel.isCardSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cardTil.error = null
             } else {
                 binding.cardTil.error = "Séléctionner votre compte carte"
             }
-        })
+        }
 
-        viewModel.isMobileSelected.observe(viewLifecycleOwner, {
+        viewModel.isMobileSelected.observe(viewLifecycleOwner) {
             if (it) {
                 binding.mobileTil.error = null
             } else {
                 binding.mobileTil.error = "Séléctionner votre compte mobile"
             }
-        })
+        }
 
-        viewModel.isCvvValid.observe(viewLifecycleOwner, {
+        viewModel.isCvvValid.observe(viewLifecycleOwner) {
             if (it) {
                 binding.cvvTil.error = null
             } else {
                 binding.cvvTil.error = "CVV invalide"
             }
-        })
+        }
 
-        viewModel.transferCardToEMoneyStatus.observe(viewLifecycleOwner, {
+        viewModel.transferCardToEMoneyStatus.observe(viewLifecycleOwner) {
             if (it != "0") {
                 MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
                     .setMessage("Votre approvisionnement a échoué")
@@ -200,18 +200,18 @@ class DoTransferFragment : Fragment() {
                     }
                     .show()
             }
-        })
+        }
 
-        viewModel.navigateToTransfersFragment.observe(viewLifecycleOwner, {
+        viewModel.navigateToTransfersFragment.observe(viewLifecycleOwner) {
             it.let {
                 findNavController().navigate(
                     DoTransferFragmentDirections.actionDoTransferFragmentToTransfersFragment()
                 )
                 viewModel.navigateToTransfersFragmentDone()
             }
-        })
+        }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner, {
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     requireContext(),
@@ -220,6 +220,6 @@ class DoTransferFragment : Fragment() {
                 ).show()
                 viewModel.showToastErrorDone()
             }
-        })
+        }
     }
 }
