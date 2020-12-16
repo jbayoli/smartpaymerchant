@@ -35,8 +35,6 @@ class ValidationFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(ValidationViewModel::class.java)
         viewModel.sendingCodeTimer()
 
-
-
         binding = FragmentValidationBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.phoneNumber = phoneNumberFormat
