@@ -143,7 +143,7 @@ fun bindTransactionStatus(img: ImageView, status: Int) {
         5 -> {
             img.setImageResource(R.drawable.ic_round_check_circle_24)
         }
-        4 -> {
+        3, 4-> {
             img.setImageResource(R.drawable.ic_round_remove_circle_24)
         }
         else -> {

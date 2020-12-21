@@ -167,11 +167,7 @@ A
 secure.properties,6/3/6332865c8209d854b4f425b345ddca45981f8278
 @
 local.properties,0/7/0712df971a99ac4d2fccb8e0fb19f377f3374cca
-i
-9app/src/main/res/layout/edit_payment_account_fragment.xml,1/a/1acb679eca163d5385c88e375b3f3bad4b80c44e
 a
 1app/src/main/res/layout/edit_profile_fragment.xml,9/3/934b83fb305a385ddaa9dc90d05181184f781501
-n
->app/src/main/res/layout/fragment_add_first_payment_account.xml,0/4/04de0a0c096d830341977407c7600db69ce289ba
 b
 2app/src/main/res/layout/fragment_sign_up_first.xml,3/9/391e6602abcbe181b1650f4d82718a7494d8cbc5
