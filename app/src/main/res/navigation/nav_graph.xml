@@ -242,6 +242,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchTicketFragment"
+            app:destination="@id/searchTicketFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
@@ -541,5 +548,23 @@
         android:name="cd.shuri.smaprtpay.merchant.screens.help.HelpFragment"
         android:label="Aide"
         tools:layout="@layout/help_fragment" />
+    <fragment
+        android:id="@+id/searchTicketFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.ticket.SearchTicketFragment"
+        android:label="search_ticket_fragment"
+        tools:layout="@layout/search_ticket_fragment" >
+        <action
+            android:id="@+id/action_searchTicketFragment_to_ticketsFragment"
+            app:destination="@id/ticketsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/ticketsFragment"
+        android:name="cd.shuri.smaprtpay.merchant.screens.ticket.result.TicketsFragment"
+        android:label="tickets_fragment"
+        tools:layout="@layout/tickets_fragment" />
 
 </navigation>

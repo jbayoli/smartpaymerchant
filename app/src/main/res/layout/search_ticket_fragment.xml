@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".screens.ticket.SearchTicketFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp">
+
+
+        <TextView
+            android:id="@+id/search_message_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/roboto"
+            android:text="Remplir le champ suivant puis cliquez sur l'un de type de recherche que vous souhaitez"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_tl"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            app:startIconDrawable="@drawable/ic_baseline_search_24"
+            app:layout_constraintTop_toBottomOf="@+id/search_message_tv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_te"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="20"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/search_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:fontFamily="@font/roboto"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:text="Type de recherche:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_tl"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_type">
+
+            <Button
+                android:id="@+id/ticket"
+                style="@style/AppTheme.SearchButton"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:textAllCaps="false"
+                android:layout_marginEnd="8dp"
+                android:text="N° Ticket" />
+
+            <Button
+                android:id="@+id/code_flexpay"
+                style="@style/AppTheme.SearchButton"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="8dp"
+                android:textAllCaps="false"
+                android:text="Code FlexPay" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

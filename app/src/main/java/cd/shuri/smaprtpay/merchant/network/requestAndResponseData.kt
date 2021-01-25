@@ -153,7 +153,9 @@ data class TransactionResponse(
     val reference: String?,
     val code: String?,
     val paid: Boolean?,
-    val step: Int?
+    val step: Int?,
+    val frais: String?,
+    val status: String?
 )
 
 @JsonClass(generateAdapter = true)
@@ -317,4 +319,13 @@ data class HelpData(
     val helpPhoneNumber: String?,
     val helpEmail: String?,
     val helpText: String?
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class Ticket(
+    val client: String?,
+    val ticket: String?,
+    val date: String?,
+    val paid: Boolean?
 )

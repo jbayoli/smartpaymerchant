@@ -127,6 +127,54 @@
                             android:text="@{transaction.reference}"
                             tools:text="009020" />
                     </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/fees_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Frais :"
+                            android:fontFamily="@font/roboto"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+                        <TextView
+                            android:id="@+id/fees_value_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/roboto"
+                            android:layout_toEndOf="@+id/fees_tv"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="@{transaction.frais}"
+                            tools:text="1$" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/status_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Status :"
+                            android:fontFamily="@font/roboto"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+                        <TextView
+                            android:id="@+id/status_value_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/roboto"
+                            android:layout_toEndOf="@+id/status_tv"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="@{transaction.status}"
+                            tools:text="En attent" />
+                    </RelativeLayout>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/payment_status_img"

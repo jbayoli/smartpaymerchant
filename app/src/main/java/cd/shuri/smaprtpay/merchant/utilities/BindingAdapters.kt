@@ -9,6 +9,7 @@ import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.network.*
 import cd.shuri.smaprtpay.merchant.screens.accounts.AccountsListAdapter
 import cd.shuri.smaprtpay.merchant.screens.notifications.NotificationsAdapter
+import cd.shuri.smaprtpay.merchant.screens.ticket.result.TicketAdapter
 import cd.shuri.smaprtpay.merchant.screens.transaction.TransactionListAdapter
 import cd.shuri.smaprtpay.merchant.transactionvalidation.TransactionValidationListAdapter
 import cd.shuri.smaprtpay.merchant.transfer.TransferListAdapter
@@ -191,4 +192,11 @@ fun bindNotificationRecyclerView(recyclerView: RecyclerView, notifications: List
 @BindingAdapter("bindAddressData")
 fun bindAddressData(textView: TextView, profile: Profile?) {
     textView.text = "N°/${profile?.number} Av/${profile?.street} C/${profile?.commune}"
+}
+
+
+@BindingAdapter("bindTicketRecyclerView")
+fun bindTicketRecyclerView(recyclerView: RecyclerView, tickets: List<Ticket>) {
+    val adapter = recyclerView.adapter as TicketAdapter
+    adapter.submitList(tickets)
 }

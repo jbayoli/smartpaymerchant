@@ -54,6 +54,8 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+
+
     <style name="AppTheme.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/buttonBack</item>
         <item name="fontFamily">@font/roboto</item>
@@ -86,6 +88,13 @@
 
     <style name="Widget.AppTheme.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/textInputOutlineColor</item>
+    </style>
+
+    <style name="AppTheme.SearchButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">15dp</item>
     </style>
 
 </resources>
