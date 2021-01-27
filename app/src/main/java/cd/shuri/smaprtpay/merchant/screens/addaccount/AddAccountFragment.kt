@@ -101,6 +101,15 @@ class AddAccountFragment : Fragment() {
             for (element in viewModel.providers.value!!) {
                 if (element.name == adapterView.getItemAtPosition(i)) {
                     operatorCode = element.code!!
+                    if (element.code != "mastercard" && element.code != "visa") {
+                        binding.cardNameTil.visibility = View.GONE
+                        binding.expirationDateTv.visibility = View.GONE
+                        binding.expirationDateContent.visibility = View.GONE
+                    } else {
+                        binding.cardNameTil.visibility = View.VISIBLE
+                        binding.expirationDateTv.visibility = View.VISIBLE
+                        binding.expirationDateContent.visibility = View.VISIBLE
+                    }
                 }
             }
         }

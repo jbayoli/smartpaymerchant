@@ -382,7 +382,7 @@
     <fragment
         android:id="@+id/doTransferFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.dotransfer.DoTransferFragment"
-        android:label="Approvisionner"
+        android:label="Flex to Banc"
         tools:layout="@layout/fragment_do_transfer">
         <action
             android:id="@+id/action_doTransferFragment_to_transfersFragment"

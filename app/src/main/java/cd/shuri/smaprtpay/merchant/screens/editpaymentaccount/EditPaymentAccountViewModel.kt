@@ -95,32 +95,40 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
         var valid = true
         if (request.operator.isNotEmpty()) {
             _isCardProviderSelected.value = true
+            if (request.operator == "visa" && request.operator == "mastercard") {
+                if (request.card!!.isEmpty()) {
+                    _isCardNumberEmpty.value = true
+                    valid = false
+                } else {
+                    _isCardNumberEmpty.value = false
+                }
+
+                if (request.cardName.isNullOrEmpty()) {
+                    _isCardNameValid.value = false
+                    valid = false
+                } else {
+                    _isCardNameValid.value = true
+                }
+
+                if (request.expiration?.length!! < 4) {
+                    _isExpirationValid.value = false
+                    valid = false
+                } else {
+                    _isExpirationValid.value = true
+                }
+
+            } else {
+                if (request.card!!.isEmpty()) {
+                    _isCardNumberEmpty.value = true
+                    valid = false
+                } else {
+                    _isCardNumberEmpty.value = false
+                }
+            }
         } else {
             _isCardProviderSelected.value = false
             valid = false
         }
-
-        if (request.card!!.isEmpty()) {
-            _isCardNumberEmpty.value = true
-            valid = false
-        } else {
-            _isCardNumberEmpty.value = false
-        }
-
-        if (request.cardName.isNullOrEmpty()) {
-            _isCardNameValid.value = false
-            valid = false
-        } else {
-            _isCardNameValid.value = true
-        }
-
-        if (request.expiration?.length!! < 4) {
-            _isExpirationValid.value = false
-            valid = false
-        } else {
-            _isExpirationValid.value = true
-        }
-
         return valid
     }
 

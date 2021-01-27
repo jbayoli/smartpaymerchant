@@ -18,6 +18,7 @@ import cd.shuri.smaprtpay.merchant.databinding.FragmentAddFirstPaymentAccountBin
 import cd.shuri.smaprtpay.merchant.network.AddPaymentMethodFirstTimeRequest
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import timber.log.Timber
+import java.util.*
 
 
 /**
@@ -111,6 +112,16 @@ class AddFirstPaymentAccountFragment : Fragment() {
             for (element in viewModel.providersCard.value!!) {
                 if (element.name == adapterView.getItemAtPosition(i)) {
                     operatorCode2 = element.code!!
+                    if (element.name?.toLowerCase(Locale.ROOT) != "visa" &&
+                        element.name?.toLowerCase(Locale.ROOT) != "mastercard") {
+                        binding.expirationDateTv.visibility = View.GONE
+                        binding.expirationDateContent.visibility = View.GONE
+                        binding.cardNameTil.visibility = View.GONE
+                    } else {
+                        binding.cardNameTil.visibility = View.VISIBLE
+                        binding.expirationDateTv.visibility = View.VISIBLE
+                        binding.expirationDateContent.visibility = View.VISIBLE
+                    }
                 }
             }
         }

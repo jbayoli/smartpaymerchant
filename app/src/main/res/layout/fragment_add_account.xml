@@ -193,7 +193,7 @@
                     style="@style/TextAppearance.AppTheme.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Visa ou Mastercard"
+                    android:text="Visa, Mastercard ou Banque"
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="24dp"
                     app:layout_constraintStart_toStartOf="parent"

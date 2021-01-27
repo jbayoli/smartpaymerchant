@@ -80,7 +80,6 @@ class AddPaymentAccountViewModel : ViewModel() {
             valid = false
             _isCardProviderSelected.value = false
             _isMobileProviderSelected.value = false
-
             _isPhoneNumberEmpty.value = false
             _isPhoneNumberValid.value = true
             _isCardNumberEmpty.value = false
@@ -106,25 +105,34 @@ class AddPaymentAccountViewModel : ViewModel() {
             }
 
             request.operator2?.let {
-                if (request.card.isNullOrEmpty()) {
-                    _isCardNumberEmpty.value = true
-                    valid = false
-                } else {
-                    _isCardNumberEmpty.value = false
-                }
+                if (request.operator2 == "mastercard" && request.operator2 == "visa") {
+                    if (request.card.isNullOrEmpty()) {
+                        _isCardNumberEmpty.value = true
+                        valid = false
+                    } else {
+                        _isCardNumberEmpty.value = false
+                    }
 
-                if (request.expiration?.length!! < 4) {
-                    _isExpirationValid.value = false
-                    valid = false
-                } else {
-                    _isExpirationValid.value = true
-                }
+                    if (request.expiration?.length!! < 4) {
+                        _isExpirationValid.value = false
+                        valid = false
+                    } else {
+                        _isExpirationValid.value = true
+                    }
 
-                if (request.cardName.isNullOrEmpty()) {
-                    _isCardNameEmpty.value = true
-                    valid = false
+                    if (request.cardName.isNullOrEmpty()) {
+                        _isCardNameEmpty.value = true
+                        valid = false
+                    } else {
+                        _isCardNameEmpty.value = false
+                    }
                 } else {
-                    _isCardNameEmpty.value = false
+                    if (request.card.isNullOrEmpty()) {
+                        _isCardNumberEmpty.value = true
+                        valid = false
+                    } else {
+                        _isCardNumberEmpty.value = false
+                    }
                 }
             }
         }
