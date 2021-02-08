@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cd.shuri.smaprtpay.merchant.R
+import cd.shuri.smaprtpay.merchant.extentions.hideCardNumber
 import cd.shuri.smaprtpay.merchant.network.*
 import cd.shuri.smaprtpay.merchant.screens.accounts.AccountsListAdapter
 import cd.shuri.smaprtpay.merchant.screens.notifications.NotificationsAdapter
@@ -87,7 +88,7 @@ fun setPhoneOrCardNumValue(textView: TextView, account: AccountsResponse) {
             }
         }
     } else {
-        textView.text = account.card
+        textView.text = account.card?.hideCardNumber()
     }
 }
 
