@@ -551,8 +551,8 @@
     <fragment
         android:id="@+id/searchTicketFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.ticket.SearchTicketFragment"
-        android:label="search_ticket_fragment"
-        tools:layout="@layout/search_ticket_fragment" >
+        android:label="Verification ticket"
+        tools:layout="@layout/search_ticket_fragment">
         <action
             android:id="@+id/action_searchTicketFragment_to_ticketsFragment"
             app:destination="@id/ticketsFragment"

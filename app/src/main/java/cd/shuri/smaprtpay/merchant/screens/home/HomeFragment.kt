@@ -161,6 +161,10 @@ class HomeFragment : Fragment() {
         binding.ticketButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchTicketFragment())
         }
+
+        binding.validateTicket.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchTicketFragment())
+        }
     }
 
     private fun deleteSharedPreferences() {
