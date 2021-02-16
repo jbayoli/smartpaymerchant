@@ -32,14 +32,6 @@ class MainActivity : AppCompatActivity() {
         navigateToValidationTransactionIfNeeded(intent)
     }
 
-    private fun setHomeDestinationForNotification() {
-        val navGraph = navController.graph
-        if (navController.currentDestination?.id != R.id.homeFragment) {
-            navGraph.startDestination = R.id.homeFragment
-            navController.graph = navGraph
-        }
-    }
-
     private fun navigateToValidationTransactionIfNeeded(intent: Intent?) {
         if (intent?.action == "cd.infoset.smartpay.merchant.ACTION_SHOW_VALIDATE_FRAGMENT") {
             navController.navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToTransactionValidation())

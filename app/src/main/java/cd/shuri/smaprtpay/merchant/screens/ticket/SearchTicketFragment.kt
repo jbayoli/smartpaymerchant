@@ -55,6 +55,7 @@ class SearchTicketFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         ).get(SearchTicketViewModel::class.java)
         setupCamera()
+        observeOnTicketVerificationResult()
         return binding.root
     }
 
@@ -62,6 +63,10 @@ class SearchTicketFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.closeButton.setOnClickListener {
             binding.message.visibility = View.GONE
+            binding.progress.visibility = View.VISIBLE
+            binding.messageTv.text = "Ticket encoure de verification"
+            binding.closeButton.visibility = View.GONE
+            binding.imageStatus.visibility = View.GONE
             viewModel.reinitOpen()
         }
     }
@@ -122,9 +127,20 @@ class SearchTicketFragment : Fragment() {
         }
 
         viewModel.ticketScanned.observe(viewLifecycleOwner) {
-            //Send request
             it?.let {
-                Toast.makeText(requireContext(), "send $it", Toast.LENGTH_SHORT).show()
+                binding.imageAndProgress.visibility = View.VISIBLE
+               viewModel.verifyTicket(it)
+            }
+        }
+    }
+
+    fun observeOnTicketVerificationResult() {
+        viewModel.ticketVerificationResult.observe(viewLifecycleOwner) {
+            if (it.status == "0") {
+                binding.progress.visibility = View.GONE
+                binding.messageTv.text = it.message
+                binding.closeButton.visibility = View.VISIBLE
+                binding.imageStatus.visibility = View.VISIBLE
             }
         }
     }
@@ -159,7 +175,6 @@ class SearchTicketFragment : Fragment() {
     }
 
     private fun bindAnalyseUseCase() {
-
         val barcodeOption = BarcodeScannerOptions.Builder()
             .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
             .build()
@@ -206,9 +221,9 @@ class SearchTicketFragment : Fragment() {
 
         barcodeScanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
-                if(barcodes.isNotEmpty()) {
-                    barcodes[0].rawValue?.let {
-                        viewModel.setOpen(it)
+                barcodes.forEach {
+                    it.rawValue?.let { value ->
+                        viewModel.setOpen(value)
                     }
                 }
             }

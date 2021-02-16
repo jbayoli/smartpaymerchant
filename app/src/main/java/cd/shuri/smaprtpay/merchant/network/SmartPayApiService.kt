@@ -162,4 +162,10 @@ interface SmartPayApiService {
 
     @GET("api/support/help")
     fun getHelpDataAsync() : Deferred<HelpData>
+
+    @POST("api/merchant/ticket/verify")
+    fun verifyTicketAsync(
+        @Header("Authorization") authorization: String,
+        @Body request: TicketVerification
+    ): Deferred<TicketVerificationResult>
 }

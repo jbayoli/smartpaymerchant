@@ -329,3 +329,19 @@ data class Ticket(
     val date: String?,
     val paid: Boolean?
 )
+
+@JsonClass(generateAdapter = true)
+data class TicketVerification(
+    val code: String,
+    val cleared: Boolean
+)
+
+@JsonClass(generateAdapter = true)
+data class TicketVerificationResult(
+    val status: String?,
+    val message: String?,
+    val purchaseAt: String?,
+    val clearedAt: String?,
+    val libelle: String?,
+    val amount: String?
+)

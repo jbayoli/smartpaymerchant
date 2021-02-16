@@ -19,6 +19,7 @@ class SmartPayApp :  Application() {
         lateinit var preferences : SharedPreferences
         lateinit var context: Context
         val dialogLoader = LoaderDialog()
+        val userToken = preferences.getString("token", "")
+        val auth = "Bearer $userToken"
     }
-
 }
