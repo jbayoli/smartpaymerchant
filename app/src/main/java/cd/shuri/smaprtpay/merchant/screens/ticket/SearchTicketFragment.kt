@@ -8,14 +8,17 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.databinding.SearchTicketFragmentBinding
+import cd.shuri.smaprtpay.merchant.network.TicketVerification
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.mlkit.vision.barcode.Barcode
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
@@ -37,6 +40,7 @@ class SearchTicketFragment : Fragment() {
     private var previewUseCase: Preview? = null
     private var analysisUseCase: ImageAnalysis? = null
     private lateinit var viewModel: SearchTicketViewModel
+    private var isCheckingTicket: Boolean? = null
 
     private val screenAspectRatio: Int
         get() {
@@ -54,6 +58,9 @@ class SearchTicketFragment : Fragment() {
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         ).get(SearchTicketViewModel::class.java)
+
+        showDialog()
+
         setupCamera()
         observeOnTicketVerificationResult()
         return binding.root
@@ -64,10 +71,12 @@ class SearchTicketFragment : Fragment() {
         binding.closeButton.setOnClickListener {
             binding.message.visibility = View.GONE
             binding.progress.visibility = View.VISIBLE
+            binding.info.visibility = View.GONE
             binding.messageTv.text = "Ticket encoure de verification"
             binding.closeButton.visibility = View.GONE
             binding.imageStatus.visibility = View.GONE
-            viewModel.reinitOpen()
+            isCheckingTicket = null
+            showDialog()
         }
     }
 
@@ -84,6 +93,24 @@ class SearchTicketFragment : Fragment() {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private fun showDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Verification ticket")
+            .setMessage("Souhaiter vous verifier la validité de votre ticket ou accèder à l'activité")
+            .setNegativeButton("Verifier") { _, _ ->
+                isCheckingTicket = false
+                viewModel.reinitOpen()
+            }
+            .setPositiveButton("Accèder") { _, _ ->
+                isCheckingTicket = true
+                viewModel.reinitOpen()
+            }
+            .setNeutralButton("Annuler") { _, _ ->
+                findNavController().navigate(SearchTicketFragmentDirections.actionSearchTicketFragmentToHomeFragment())
+            }
+            .show()
     }
 
     private fun aspectRatio(width: Int, height: Int): Int {
@@ -121,26 +148,56 @@ class SearchTicketFragment : Fragment() {
         viewModel.isOpen.observe(viewLifecycleOwner) {
             it?.let {
                 if (it) {
-                    binding.message.visibility = View.VISIBLE
+                    isCheckingTicket?.let { _ ->
+                        binding.message.visibility = View.VISIBLE
+                    }
                 }
             }
         }
 
         viewModel.ticketScanned.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.imageAndProgress.visibility = View.VISIBLE
-               viewModel.verifyTicket(it)
+            it?.let {value ->
+                isCheckingTicket?.let {checking ->
+                    binding.imageAndProgress.visibility = View.VISIBLE
+                    viewModel.verifyTicket(TicketVerification(value, checking))
+                }
             }
         }
     }
 
-    fun observeOnTicketVerificationResult() {
+    private fun observeOnTicketVerificationResult() {
         viewModel.ticketVerificationResult.observe(viewLifecycleOwner) {
             if (it.status == "0") {
                 binding.progress.visibility = View.GONE
                 binding.messageTv.text = it.message
                 binding.closeButton.visibility = View.VISIBLE
                 binding.imageStatus.visibility = View.VISIBLE
+                binding.info.visibility = View.VISIBLE
+                if (!it.libelle.isNullOrEmpty()) {
+                    binding.libelleValue.text = it.libelle
+                    binding.dateUsedValue.text = it.clearedAt
+                    binding.dateValue.text = it.purchaseAt
+                }
+                binding.imageStatus.setImageResource(R.drawable.ic_round_check_circle_24)
+            }else {
+                binding.progress.visibility = View.GONE
+                binding.info.visibility = View.GONE
+                binding.messageTv.text = it.message
+                binding.closeButton.visibility = View.VISIBLE
+                binding.imageStatus.visibility = View.VISIBLE
+                binding.imageStatus.setImageResource(R.drawable.ic_round_remove_circle_24)
+            }
+        }
+
+        viewModel.showTToastForError.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.progress.visibility = View.GONE
+                binding.info.visibility = View.GONE
+                binding.messageTv.text = "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard"
+                binding.closeButton.visibility = View.VISIBLE
+                binding.imageStatus.visibility = View.VISIBLE
+                binding.imageStatus.setImageResource(R.drawable.ic_round_remove_circle_24)
+                viewModel.showToastErrorDone()
             }
         }
     }

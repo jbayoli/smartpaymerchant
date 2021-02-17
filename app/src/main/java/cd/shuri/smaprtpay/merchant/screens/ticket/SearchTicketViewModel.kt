@@ -24,6 +24,8 @@ class SearchTicketViewModel(application: Application) : AndroidViewModel(applica
     private val _ticketVerificationResult = MutableLiveData<TicketVerificationResult>()
     val ticketVerificationResult: LiveData<TicketVerificationResult>
         get() = _ticketVerificationResult
+    private val _showTToastForError = MutableLiveData<Boolean>()
+    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
 
     val processCameraProvider: LiveData<ProcessCameraProvider>
         get() {
@@ -58,14 +60,24 @@ class SearchTicketViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun verifyTicket(code: String) {
+    fun verifyTicket(request: TicketVerification) {
         viewModelScope.launch {
-            val verifyTicketRequest = TicketVerification(code = code, cleared = true)
-            val result = SmartPayApi.smartPayApiService.verifyTicketAsync(
-                SmartPayApp.auth,
-                verifyTicketRequest
-            ).await()
-            _ticketVerificationResult.value = result
+            try {
+                val result = SmartPayApi.smartPayApiService.verifyTicketAsync(
+                    SmartPayApp.auth,
+                    request
+                ).await()
+                _ticketVerificationResult.value = result
+                Timber.d("$result")
+            } catch (e: Exception) {
+                Timber.e(e)
+                _showTToastForError.value = true
+            }
+
         }
+    }
+
+    fun showToastErrorDone() {
+        _showTToastForError.value = null
     }
 }

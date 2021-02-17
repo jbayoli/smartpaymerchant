@@ -12,6 +12,8 @@ class SmartPayApp :  Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         preferences =  applicationContext.getSharedPreferences("cd.infoset.smartpay.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE)
+        userToken = preferences.getString("token", "")
+        auth = "Bearer $userToken"
         context = applicationContext
     }
 
@@ -19,7 +21,7 @@ class SmartPayApp :  Application() {
         lateinit var preferences : SharedPreferences
         lateinit var context: Context
         val dialogLoader = LoaderDialog()
-        val userToken = preferences.getString("token", "")
-        val auth = "Bearer $userToken"
+        var userToken : String? = null
+        lateinit var auth : String
     }
 }
