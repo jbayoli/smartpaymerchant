@@ -17,11 +17,11 @@ class HomeViewModel : ViewModel() {
     private val _response = MutableLiveData<DashboardResponse>()
     val response: LiveData<DashboardResponse> get() = _response
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     private var viewModelJob = Job()
 

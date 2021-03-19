@@ -29,8 +29,8 @@ class SignUpViewModel : ViewModel() {
     private val _isPasswordsMatches = MutableLiveData<Boolean>()
     val isPasswordsMatches : LiveData<Boolean> get() = _isPasswordsMatches
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
 
     private val _isUserNameExist = MutableLiveData<Boolean>()
     val isUserNameExist : LiveData<Boolean> get() = _isUserNameExist
@@ -38,11 +38,11 @@ class SignUpViewModel : ViewModel() {
     private val _isMerchantCodeExist = MutableLiveData<Boolean>()
     val isMerchantCodeExist : LiveData<Boolean> get() = _isMerchantCodeExist
 
-    private val _navigateTo = MutableLiveData<Boolean>()
-    val navigateTo : LiveData<Boolean> get() = _navigateTo
+    private val _navigateTo = MutableLiveData<Boolean?>()
+    val navigateTo : LiveData<Boolean?> get() = _navigateTo
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     private var viewModelJob = Job()
 

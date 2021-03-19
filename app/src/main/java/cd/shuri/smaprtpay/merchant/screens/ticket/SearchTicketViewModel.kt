@@ -17,15 +17,15 @@ import java.util.concurrent.ExecutionException
 
 class SearchTicketViewModel(application: Application) : AndroidViewModel(application) {
     private var cameraProviderLiveData: MutableLiveData<ProcessCameraProvider>? = null
-    private val _isOpen = MutableLiveData<Boolean>()
-    val isOpen: LiveData<Boolean> get() = _isOpen
-    private val _ticketScanned = MutableLiveData<String>()
-    val ticketScanned: LiveData<String> get() = _ticketScanned
+    private val _isOpen = MutableLiveData<Boolean?>()
+    val isOpen: LiveData<Boolean?> get() = _isOpen
+    private val _ticketScanned = MutableLiveData<String?>()
+    val ticketScanned: LiveData<String?> get() = _ticketScanned
     private val _ticketVerificationResult = MutableLiveData<TicketVerificationResult>()
     val ticketVerificationResult: LiveData<TicketVerificationResult>
         get() = _ticketVerificationResult
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     val processCameraProvider: LiveData<ProcessCameraProvider>
         get() {

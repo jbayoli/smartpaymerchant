@@ -14,12 +14,12 @@ import timber.log.Timber
 class EditProfileViewModel: ViewModel() {
     private val _response = MutableLiveData<CommonResponse>()
     val response : LiveData<CommonResponse> get() = _response
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
-    private val _navigateTo = MutableLiveData<Boolean>()
-    val navigateTo: LiveData<Boolean> get() = _navigateTo
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
+    private val _navigateTo = MutableLiveData<Boolean?>()
+    val navigateTo: LiveData<Boolean?> get() = _navigateTo
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
     private val _sectors = MutableLiveData<List<SectorsResponse>>()
     val sectors :LiveData<List<SectorsResponse>> get() = _sectors
     private val _communes = MutableLiveData<List<Commune>>()

@@ -44,17 +44,17 @@ class SignUpFirstViewModel: ViewModel() {
     private val _isEmailValid= MutableLiveData<Boolean>()
     val isEmailValid : LiveData<Boolean> get() = _isEmailValid
 
-    private val _navigateToSignUp2= MutableLiveData<Boolean>()
-    val navigateToSignUp2 : LiveData<Boolean> get() = _navigateToSignUp2
+    private val _navigateToSignUp2= MutableLiveData<Boolean?>()
+    val navigateToSignUp2 : LiveData<Boolean?> get() = _navigateToSignUp2
 
     private val _communes = MutableLiveData<List<Commune>>()
     val communes: LiveData<List<Commune>> get() = _communes
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
 
 
     private var viewModelJob = Job()

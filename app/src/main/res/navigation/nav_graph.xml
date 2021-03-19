@@ -563,10 +563,5 @@
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/ticketsFragment"
-        android:name="cd.shuri.smaprtpay.merchant.screens.ticket.result.TicketsFragment"
-        android:label="tickets_fragment"
-        tools:layout="@layout/tickets_fragment" />
 
 </navigation>

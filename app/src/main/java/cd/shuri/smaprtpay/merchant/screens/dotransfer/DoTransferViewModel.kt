@@ -18,11 +18,11 @@ class DoTransferViewModel: ViewModel() {
     private val _paymentMethods = MutableLiveData<List<AccountsResponse>>()
     val paymentMethods: LiveData<List<AccountsResponse>> get() = _paymentMethods
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _transferCardToEMoneyStatus = MutableLiveData<String>()
-    val transferCardToEMoneyStatus: LiveData<String> get() = _transferCardToEMoneyStatus
+    private val _transferCardToEMoneyStatus = MutableLiveData<String?>()
+    val transferCardToEMoneyStatus: LiveData<String?> get() = _transferCardToEMoneyStatus
 
     private val _isAmountValid = MutableLiveData<Boolean>()
     val isAmountValid: LiveData<Boolean> get() = _isAmountValid
@@ -42,8 +42,8 @@ class DoTransferViewModel: ViewModel() {
     private val _navigateToTransfersFragment = MutableLiveData<Boolean>()
     val navigateToTransfersFragment: LiveData<Boolean> get() = _navigateToTransfersFragment
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     val userCode = SmartPayApp.preferences.getString("user_code", "")
     private val userToken = SmartPayApp.preferences.getString("token", "")

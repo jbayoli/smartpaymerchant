@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class RenewPasswordViewModel : ViewModel() {
-    private val _responseStatus = MutableLiveData<String>()
-    val responseStatus: LiveData<String> get() = _responseStatus
+    private val _responseStatus = MutableLiveData<String?>()
+    val responseStatus: LiveData<String?> get() = _responseStatus
 
     private val _responseData = MutableLiveData<EditPasswordResponseData>()
     val responseData: LiveData<EditPasswordResponseData> get() = _responseData
@@ -27,20 +27,20 @@ class RenewPasswordViewModel : ViewModel() {
     private val _isPasswordMatches = MutableLiveData<Boolean>()
     val isPasswordMatches: LiveData<Boolean> get() = _isPasswordMatches
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     private val _response = MutableLiveData<ForgottenPINResponse>()
     val response : LiveData<ForgottenPINResponse> get() = _response
 
-    private val _navigateToSignIn = MutableLiveData<Boolean>()
-    val navigateToSignIn: LiveData<Boolean> get() = _navigateToSignIn
+    private val _navigateToSignIn = MutableLiveData<Boolean?>()
+    val navigateToSignIn: LiveData<Boolean?> get() = _navigateToSignIn
 
-    private val _showMessage = MutableLiveData<String>()
-    val showMessage : LiveData<String> get() = _showMessage
+    private val _showMessage = MutableLiveData<String?>()
+    val showMessage : LiveData<String?> get() = _showMessage
 
     private var viewModelJob = Job()
 

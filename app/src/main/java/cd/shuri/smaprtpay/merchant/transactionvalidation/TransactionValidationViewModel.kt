@@ -21,14 +21,14 @@ class TransactionValidationViewModel: ViewModel() {
     private val _validation = MutableLiveData<CommonResponse>()
     val validation : LiveData<CommonResponse> get() = _validation
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _navigateToHome = MutableLiveData<Boolean>()
-    val navigateToHome : LiveData<Boolean> get() = _navigateToHome
+    private val _navigateToHome = MutableLiveData<Boolean?>()
+    val navigateToHome : LiveData<Boolean?> get() = _navigateToHome
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     private val _indexRemoved= MutableLiveData<Int>()
     val indexRemoved: LiveData<Int> get() = _indexRemoved

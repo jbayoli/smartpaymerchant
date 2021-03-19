@@ -14,23 +14,23 @@ import timber.log.Timber
 
 class ForgottenViewModel: ViewModel() {
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _response = MutableLiveData<ForgottenPINResponse>()
-    val response: LiveData<ForgottenPINResponse> get() = _response
+    private val _response = MutableLiveData<ForgottenPINResponse?>()
+    val response: LiveData<ForgottenPINResponse?> get() = _response
 
-    private val _isCodeEmpty = MutableLiveData<Boolean>()
-    val isCodeEmpty: LiveData<Boolean> get() = _isCodeEmpty
+    private val _isCodeEmpty = MutableLiveData<Boolean?>()
+    val isCodeEmpty: LiveData<Boolean?> get() = _isCodeEmpty
 
-    private val _showToast = MutableLiveData<Boolean>()
-    val showToast: LiveData<Boolean> get() = _showToast
+    private val _showToast = MutableLiveData<Boolean?>()
+    val showToast: LiveData<Boolean?> get() = _showToast
 
-    private val _isCodeCorrect = MutableLiveData<Boolean>()
-    val isCodeCorrect: LiveData<Boolean> get() = _isCodeCorrect
+    private val _isCodeCorrect = MutableLiveData<Boolean?>()
+    val isCodeCorrect: LiveData<Boolean?> get() = _isCodeCorrect
 
-    private val _navigateTo = MutableLiveData<Boolean>()
-    val navigateTo: LiveData<Boolean> get() = _navigateTo
+    private val _navigateTo = MutableLiveData<Boolean?>()
+    val navigateTo: LiveData<Boolean?> get() = _navigateTo
 
     private var viewModelJob = Job()
 

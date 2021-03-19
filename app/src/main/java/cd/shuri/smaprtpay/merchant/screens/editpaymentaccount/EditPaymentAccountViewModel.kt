@@ -34,8 +34,8 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
     private val _isExpirationValid = MutableLiveData<Boolean>()
     val isExpirationValid: LiveData<Boolean> get() = _isExpirationValid
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
 
     private val _providers = MutableLiveData<List<ProvidersData>>()
     val providers: LiveData<List<ProvidersData>> get() = _providers
@@ -43,11 +43,11 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
     private val _cardProviders = MutableLiveData<List<ProvidersData>>()
     val cardProviders: LiveData<List<ProvidersData>> get() = _cardProviders
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
-    private val _navigateToHome = MutableLiveData<Boolean>()
-    val navigateToHome : LiveData<Boolean> get() = _navigateToHome
+    private val _navigateToHome = MutableLiveData<Boolean?>()
+    val navigateToHome : LiveData<Boolean?> get() = _navigateToHome
 
     private val _response = MutableLiveData<CommonResponse>()
     val response : LiveData<CommonResponse> get() = _response

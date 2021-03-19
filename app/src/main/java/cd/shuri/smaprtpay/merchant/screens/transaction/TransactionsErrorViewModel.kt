@@ -16,11 +16,11 @@ class TransactionsErrorViewModel : ViewModel() {
     private val _transactions =  MutableLiveData<List<TransactionResponse>>()
     val transactions : LiveData<List<TransactionResponse>> get() = _transactions
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     private var viewModelJob = Job()
 

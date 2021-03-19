@@ -16,11 +16,11 @@ class AccountsViewModel : ViewModel() {
     private val _paymentMethods = MutableLiveData<MutableList<AccountsResponse>>()
     val paymentMethods: LiveData<MutableList<AccountsResponse>> get() = _paymentMethods
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     private val _deleteResponse = MutableLiveData<CommonResponse>()
     val deleteResponse: LiveData<CommonResponse> get() = _deleteResponse

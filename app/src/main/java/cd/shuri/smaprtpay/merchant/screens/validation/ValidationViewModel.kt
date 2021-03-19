@@ -17,17 +17,17 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ValidationViewModel (phone: String): ViewModel(){
-    private val _navigateToSignUpFragment = MutableLiveData<Boolean> ()
-    val navigateToSignUpFragment : LiveData<Boolean> get() = _navigateToSignUpFragment
+    private val _navigateToSignUpFragment = MutableLiveData<Boolean?> ()
+    val navigateToSignUpFragment : LiveData<Boolean?> get() = _navigateToSignUpFragment
 
     private val _currentTime = MutableLiveData<Long>()
     private val currentTime : LiveData<Long> get() = _currentTime
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     lateinit var timer : CountDownTimer
 
@@ -159,6 +159,6 @@ class ValidationViewModel (phone: String): ViewModel(){
         //Countdown time interval
         private const val ONE_SECOND = 1000L
         //Total time for the game
-        private const val COUNTDOWN_TIME = 60000L
+        private const val COUNTDOWN_TIME = 1_800_000L
     }
 }

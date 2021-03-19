@@ -12,11 +12,11 @@ import kotlinx.coroutines.*
 import timber.log.Timber
 
 class SignInViewModel : ViewModel() {
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _navigateToHome = MutableLiveData<Boolean>()
-    val navigateToHome : LiveData<Boolean> get() = _navigateToHome
+    private val _navigateToHome = MutableLiveData<Boolean?>()
+    val navigateToHome : LiveData<Boolean?> get() = _navigateToHome
 
     private val _isPasswordEmpty = MutableLiveData<Boolean>()
     val isPasswordEmpty : LiveData<Boolean> get() = _isPasswordEmpty
@@ -24,14 +24,14 @@ class SignInViewModel : ViewModel() {
     private val _isUserNameEmpty = MutableLiveData<Boolean>()
     val isUserNameEmpty : LiveData<Boolean> get() = _isUserNameEmpty
 
-    private val _loginStatus = MutableLiveData<Int>()
-    val loginStatus : LiveData<Int> get() = _loginStatus
+    private val _loginStatus = MutableLiveData<Int?>()
+    val loginStatus : LiveData<Int?> get() = _loginStatus
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
-    private val _step = MutableLiveData<Int>()
-    val step : LiveData<Int> get() = _step
+    private val _step = MutableLiveData<Int?>()
+    val step : LiveData<Int?> get() = _step
 
     private val _response = MutableLiveData<CommonResponse>()
     val response: LiveData<CommonResponse> get() = _response

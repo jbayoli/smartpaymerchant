@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SplashScreenViewModel: ViewModel() {
-    private val _navigateTo = MutableLiveData<Boolean>()
-    val navigateTo : LiveData<Boolean> get() = _navigateTo
+    private val _navigateTo = MutableLiveData<Boolean?>()
+    val navigateTo : LiveData<Boolean?> get() = _navigateTo
 
 
     private val _currentTime = MutableLiveData<Long>()

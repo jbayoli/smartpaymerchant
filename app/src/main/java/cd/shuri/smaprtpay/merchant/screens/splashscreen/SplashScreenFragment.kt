@@ -33,10 +33,13 @@ class SplashScreenFragment : Fragment() {
 
         Timber.d("$isRegisterDone")
         Timber.d("$isAccountDone")
-
-        (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
         observer()
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
     }
 
     private fun observer() {

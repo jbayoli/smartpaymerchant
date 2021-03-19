@@ -32,11 +32,11 @@ class AddPaymentAccountViewModel : ViewModel() {
     private val _isExpirationValid = MutableLiveData<Boolean>()
     val isExpirationValid: LiveData<Boolean> get() = _isExpirationValid
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val  showDialogLoader : LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _showToastError = MutableLiveData<Boolean>()
-    val  showToastError : LiveData<Boolean> get() = _showToastError
+    private val _showToastError = MutableLiveData<Boolean?>()
+    val  showToastError : LiveData<Boolean?> get() = _showToastError
 
     private val _messageAddAccount = MutableLiveData<String>()
     val  messageAddAccount : LiveData<String> get() = _messageAddAccount
@@ -47,11 +47,11 @@ class AddPaymentAccountViewModel : ViewModel() {
     private val _providersCard = MutableLiveData<List<ProvidersData>>()
     val providersCard: LiveData<List<ProvidersData>> get() = _providersCard
 
-    private val _navigateToHome = MutableLiveData<Boolean>()
-    val navigateToHome : LiveData<Boolean> get() = _navigateToHome
+    private val _navigateToHome = MutableLiveData<Boolean?>()
+    val navigateToHome : LiveData<Boolean?> get() = _navigateToHome
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     private var viewModelJob = Job()
 

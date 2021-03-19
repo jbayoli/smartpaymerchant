@@ -53,7 +53,7 @@ class NotificationsFragment : Fragment() {
         }
 
         viewModel.notifications.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
+            if (it.isNullOrEmpty()) {
                 binding.noNotification.visibility = View.VISIBLE
             } else {
                 binding.noNotification.visibility = View.GONE

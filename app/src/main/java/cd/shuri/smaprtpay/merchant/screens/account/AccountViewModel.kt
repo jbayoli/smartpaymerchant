@@ -22,11 +22,11 @@ class AccountViewModel: ViewModel() {
     private val _isPhoneNumberCorrect = MutableLiveData<Boolean>()
     val isPhoneNumberCorrect : LiveData<Boolean> get() = _isPhoneNumberCorrect
 
-    private val _navigateToValidationFragment  = MutableLiveData<Boolean>()
-    val navigateToValidationFragment : LiveData<Boolean> get() = _navigateToValidationFragment
+    private val _navigateToValidationFragment  = MutableLiveData<Boolean?>()
+    val navigateToValidationFragment : LiveData<Boolean?> get() = _navigateToValidationFragment
 
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
 
     private val _showTToastForError = MutableLiveData<Boolean>()
     val showTToastForError: LiveData<Boolean> get() = _showTToastForError

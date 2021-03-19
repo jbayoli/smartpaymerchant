@@ -13,14 +13,14 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class NotificationsViewModel : ViewModel() {
-    private val _notifications = MutableLiveData<List<Notification>>()
-    val notifications: LiveData<List<Notification>> get() = _notifications
+    private val _notifications = MutableLiveData<List<Notification>?>()
+    val notifications: LiveData<List<Notification>?> get() = _notifications
 
     private val _showDialogLoader = MutableLiveData<Boolean>()
     val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
 
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     private var viewModelJob = Job()
 

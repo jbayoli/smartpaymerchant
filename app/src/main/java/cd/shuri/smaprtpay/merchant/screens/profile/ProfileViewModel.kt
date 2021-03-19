@@ -15,10 +15,10 @@ import timber.log.Timber
 class ProfileViewModel: ViewModel() {
     private val _response = MutableLiveData<Profile>()
     val response: LiveData<Profile> get() = _response
-    private val _showDialogLoader = MutableLiveData<Boolean>()
-    val showDialogLoader: LiveData<Boolean> get() = _showDialogLoader
-    private val _showTToastForError = MutableLiveData<Boolean>()
-    val showTToastForError: LiveData<Boolean> get() = _showTToastForError
+    private val _showDialogLoader = MutableLiveData<Boolean?>()
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
+    private val _showTToastForError = MutableLiveData<Boolean?>()
+    val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
     val userCode = SmartPayApp.preferences.getString("user_code", "")
     private val userToken = SmartPayApp.preferences.getString("token", "")
