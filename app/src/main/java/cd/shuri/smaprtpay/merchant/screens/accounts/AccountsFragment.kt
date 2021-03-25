@@ -1,15 +1,14 @@
 package cd.shuri.smaprtpay.merchant.screens.accounts
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAccountsBinding
+import cd.shuri.smaprtpay.merchant.screens.profile.ProfileFragmentDirections
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber
@@ -66,8 +65,26 @@ class AccountsFragment : Fragment() {
 
         binding.paymentMethodRecyclerView.adapter = accountsListAdapter
 
+        setHasOptionsMenu(true)
+
         observers()
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.account_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_accountsFragment_to_addAccountFragment -> {
+                findNavController().navigate(AccountsFragmentDirections.actionAccountsFragmentToAddAccountFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+
+        }
     }
 
     private fun observers() {

@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:hint="Entrer votre code utilisateur*"
-                android:maxLength="10"
+                android:maxLength="25"
                 android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
                 android:inputType="textPersonName" />
 

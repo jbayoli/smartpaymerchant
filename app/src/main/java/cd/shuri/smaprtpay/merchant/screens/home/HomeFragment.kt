@@ -138,10 +138,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAccountsFragment())
         }
 
-        binding.addMethod.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddAccountFragment())
-        }
-
         binding.reinitPin.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRenewPasswordFragment())
         }

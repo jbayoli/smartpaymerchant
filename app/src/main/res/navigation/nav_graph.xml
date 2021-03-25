@@ -150,13 +150,6 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_homeFragment_to_addAccountFragment"
-            app:destination="@id/addAccountFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-        <action
             android:id="@+id/action_homeFragment_to_accountsFragment"
             app:destination="@id/accountsFragment"
             app:enterAnim="@anim/slide_in_right"
@@ -282,6 +275,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_accountsFragment_to_addAccountFragment"
+            app:destination="@id/addAccountFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/addAccountFragment"
@@ -289,13 +289,13 @@
         android:label="Ajouter compte de paiements"
         tools:layout="@layout/fragment_add_account">
         <action
-            android:id="@+id/action_addAccountFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_addAccountFragment_to_accountsFragment"
+            app:destination="@id/accountsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/homeFragment"
+            app:popUpTo="@id/accountFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

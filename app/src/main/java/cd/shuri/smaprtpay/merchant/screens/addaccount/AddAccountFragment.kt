@@ -296,7 +296,7 @@ class AddAccountFragment : Fragment() {
 
         viewModel.navigateToHome.observe(viewLifecycleOwner) {
             if (it != null) {
-                findNavController().navigate(AddAccountFragmentDirections.actionAddAccountFragmentToHomeFragment())
+                findNavController().navigate(AddAccountFragmentDirections.actionAddAccountFragmentToAccountsFragment())
                 viewModel.navigateToHomeDone()
             }
         }

@@ -362,8 +362,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:hint="Nom de l'activité*"
-                    android:maxLength="20"
-                    android:maxLines="1"
+                    android:maxLength="50"
+                    android:maxLines="2"
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:inputType="text|textCapWords" />
 
