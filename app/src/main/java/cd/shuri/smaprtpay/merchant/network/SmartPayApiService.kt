@@ -390,4 +390,17 @@ class SmartPayApiService(
             body = request
         }
     }
+
+    /**
+     * Get all help data need
+     */
+    suspend fun getHelpDataAsync(): HelpData {
+        return httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/support/help"
+        ) {
+            contentType(ContentType.Application.Json)
+        }
+    }
 }
