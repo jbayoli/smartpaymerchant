@@ -26,23 +26,23 @@ class HelpViewModel : ViewModel() {
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
-        getHelpData()
+        //getHelpData()
     }
 
-    private fun getHelpData() {
-        viewModelScope.launch {
-            try {
-                _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getHelpDataAsync().await()
-                _help.value = result
-                _showDialogLoader.value = false
-            } catch (e: Exception) {
-                Timber.i("$e")
-                _showDialogLoader.value = false
-                _showTToastForError.value = true
-            }
-        }
-    }
+//    private fun getHelpData() {
+//        viewModelScope.launch {
+//            try {
+//                _showDialogLoader.value = true
+//                val result = SmartPayApi.smartPayApiService.getHelpDataAsync().await()
+//                _help.value = result
+//                _showDialogLoader.value = false
+//            } catch (e: Exception) {
+//                Timber.i("$e")
+//                _showDialogLoader.value = false
+//                _showTToastForError.value = true
+//            }
+//        }
+//    }
 
     fun showDialogLoaderDone() {
         _showDialogLoader.value = null

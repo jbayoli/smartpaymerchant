@@ -36,10 +36,10 @@ class TransferViewModel: ViewModel() {
     init {
         _transfers.value = ArrayList()
         _isTransferDone.value = false
-        getTransfers()
+        //getTransfers()
     }
 
-    private fun getTransfers() {
+    /*private fun getTransfers() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
@@ -61,7 +61,7 @@ class TransferViewModel: ViewModel() {
                 _showTToastForError.value = true
             }
         }
-    }
+    }*/
 
     fun showToastErrorDone() {
         _showTToastForError.value = null

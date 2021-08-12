@@ -32,7 +32,7 @@ class NotificationsFragment : Fragment() {
 
     private fun observers() {
         viewModel.showDialogLoader.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 if (it) {
                     dialogLoader.show(requireActivity().supportFragmentManager, "LoaderDialog")
                 } else {

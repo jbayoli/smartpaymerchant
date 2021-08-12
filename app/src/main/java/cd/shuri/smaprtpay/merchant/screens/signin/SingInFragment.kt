@@ -1,6 +1,5 @@
 package cd.shuri.smaprtpay.merchant.screens.signin
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -121,7 +120,7 @@ class SingInFragment : Fragment() {
                         findNavController().navigate(SingInFragmentDirections.actionSingInFragmentToSignUpFirstFragment())
                     }
                     .setNegativeButton("Annuler") { dialog, _ ->
-                        viewModel.deleteUser()
+                        //viewModel.deleteUser()
                         dialog.dismiss()
                     }
             val dialog = builder.create()

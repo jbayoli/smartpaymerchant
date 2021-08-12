@@ -3,14 +3,14 @@ package cd.shuri.smaprtpay.merchant.screens.account
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.CodeRequest
 import cd.shuri.smaprtpay.merchant.network.CommonResponse
+import cd.shuri.smaprtpay.merchant.network.RegisterStep
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import io.ktor.network.sockets.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -38,10 +38,6 @@ class AccountViewModel: ViewModel() {
 
     private var countryCode = ""
 
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     init {
         _isPhoneNumberCorrect.value = true
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
@@ -66,7 +62,10 @@ class AccountViewModel: ViewModel() {
             try {
                 _showDialogLoader.value = true
                 val request = CodeRequest(phoneNumber, token)
-                val result = SmartPayApi.smartPayApiService.sendCodeAsync(request).await()
+                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                    RegisterStep.StepOne,
+                    request
+                )
                 Timber.d("message: ${result.message} status: ${result.status}")
                 if(result.status == "0") {
                     val preferencesEditor = SmartPayApp.preferences.edit()
@@ -81,6 +80,9 @@ class AccountViewModel: ViewModel() {
                 Timber.e("$e")
                 _showDialogLoader.value = false
                 _showTToastForError.value = true
+                if (e is SocketTimeoutException) {
+                    Timber.e(e)
+                }
             }
         }
     }

@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAccountsBinding
-import cd.shuri.smaprtpay.merchant.screens.profile.ProfileFragmentDirections
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber

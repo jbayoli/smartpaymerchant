@@ -1,33 +1,25 @@
 package cd.shuri.smaprtpay.merchant.network
 
-import cd.shuri.smaprtpay.merchant.R
-import cd.shuri.smaprtpay.merchant.SmartPayApp
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
+import io.ktor.client.*
+import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
 
 object SmartPayApi {
     //Base api url
-    private val host = SmartPayApp.context.getString(R.string.host)
-    private val BASE_URL = host
+    private const val HOST = "41.243.7.46"
+    private const val PORT = 3006
 
-    //Set connection timeout, write timeout and read timeout
-    private val okHttpClient = OkHttpClient.Builder()
-        .connectTimeout(10, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
-        .build()
-
-    //instantiate retrofit with timeouts, Moshi Converter Factory, Moshi coroutine factory and base url
-    private val retrofit = Retrofit.Builder()
-        .client(okHttpClient)
-        .addConverterFactory(MoshiConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .baseUrl(BASE_URL)
-        .build()
+    private val HTTP_CLIENT = HttpClient{
+        install(JsonFeature){
+            val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+            serializer = KotlinxSerializer(json)
+        }
+    }
 
     //Instantiate the service so that we can access APIs in this object
-    val smartPayApiService: SmartPayApiService = retrofit.create(SmartPayApiService::class.java)
+    val smartPayApiService = SmartPayApiService(HOST, PORT, HTTP_CLIENT)
+
+    fun closeApi() {
+        HTTP_CLIENT.close()
+    }
 }

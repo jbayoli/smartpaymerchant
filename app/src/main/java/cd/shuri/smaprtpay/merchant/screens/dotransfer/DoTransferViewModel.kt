@@ -3,6 +3,7 @@ package cd.shuri.smaprtpay.merchant.screens.dotransfer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.AccountsResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
@@ -49,10 +50,6 @@ class DoTransferViewModel: ViewModel() {
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     init {
         getPaymentMethods()
     }
@@ -63,7 +60,7 @@ class DoTransferViewModel: ViewModel() {
             try {
                 _showDialogLoader.value = true
                 val result =
-                    SmartPayApi.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
+                    SmartPayApi.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!)
                 _showDialogLoader.value = false
                 if (result.isNotEmpty()) {
                     _paymentMethods.value = result
@@ -116,24 +113,6 @@ class DoTransferViewModel: ViewModel() {
         return valid
     }
 
-    fun sendMoneyToEMoney(request: TransferRequest) {
-        viewModelScope.launch {
-            try {
-                _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.cardToEMoneyAsync(auth, request).await()
-                _showDialogLoader.value = false
-                _transferCardToEMoneyStatus.value = result.status
-                if (result.status == "0") {
-                    _navigateToTransfersFragment.value = true
-                }
-            } catch (e: Exception) {
-                Timber.e("$e")
-                _showTToastForError.value = true
-                _showDialogLoader.value = false
-            }
-        }
-    }
-
     fun showDialogLoaderDone() {
         _showDialogLoader.value = null
     }
@@ -144,10 +123,5 @@ class DoTransferViewModel: ViewModel() {
 
     fun showToastErrorDone() {
         _showTToastForError.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

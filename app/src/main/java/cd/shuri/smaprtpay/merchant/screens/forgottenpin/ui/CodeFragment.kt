@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentCodeBinding
+import cd.shuri.smaprtpay.merchant.network.ForgottenPinStep
 import cd.shuri.smaprtpay.merchant.screens.forgottenpin.viewmodel.ForgottenViewModel
 
 
@@ -37,7 +38,7 @@ class CodeFragment : Fragment() {
         binding.nextButton.setOnClickListener {
             val isFieldValid = viewModel.validateForm(binding.userCodeTet.text.toString())
             if (isFieldValid) {
-                viewModel.sendRequest(binding.userCodeTet.text.toString(), "step2")
+                viewModel.sendRequest(binding.userCodeTet.text.toString(), ForgottenPinStep.StepTwo)
             }
         }
     }

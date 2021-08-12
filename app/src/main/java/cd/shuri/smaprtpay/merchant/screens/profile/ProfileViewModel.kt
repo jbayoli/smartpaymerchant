@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class ProfileViewModel: ViewModel() {
     private val _response = MutableLiveData<Profile>()
@@ -36,14 +37,16 @@ class ProfileViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getInfoAsync(userCode!!, auth).await()
+                val result = SmartPayApi.smartPayApiService.getInfoAsync(userCode!!, auth)
                 _response.value = result
                 _showDialogLoader.value = false
                 Timber.d("$result")
             } catch (e: Exception) {
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
-                e.printStackTrace()
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
 
         }

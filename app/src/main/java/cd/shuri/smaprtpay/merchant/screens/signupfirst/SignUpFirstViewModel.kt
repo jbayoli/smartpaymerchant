@@ -4,14 +4,13 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.network.Commune
 import cd.shuri.smaprtpay.merchant.network.RegisterRequest
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class SignUpFirstViewModel: ViewModel() {
     private val _isLastNameEmpty= MutableLiveData<Boolean>()
@@ -47,7 +46,7 @@ class SignUpFirstViewModel: ViewModel() {
     private val _navigateToSignUp2= MutableLiveData<Boolean?>()
     val navigateToSignUp2 : LiveData<Boolean?> get() = _navigateToSignUp2
 
-    private val _communes = MutableLiveData<List<Commune>>()
+    private val _communes = MutableLiveData(listOf<Commune>())
     val communes: LiveData<List<Commune>> get() = _communes
 
     private val _showTToastForError = MutableLiveData<Boolean?>()
@@ -55,11 +54,6 @@ class SignUpFirstViewModel: ViewModel() {
 
     private val _showDialogLoader = MutableLiveData<Boolean?>()
     val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
-
-
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
         getAllCommunes()
@@ -69,17 +63,17 @@ class SignUpFirstViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getCommuneAsync().await()
+                val result = SmartPayApi.smartPayApiService.getCommuneAsync()
                 _showDialogLoader.value = false
                 if (result.isNotEmpty()) {
                     _communes.value = result
-                } else {
-                    _communes.value = listOf()
                 }
             } catch (e: Exception) {
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
-                Timber.e("$e")
+                Timber.e(e)
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }

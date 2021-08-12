@@ -38,7 +38,7 @@ class ValidationReceiver:  BroadcastReceiver(){
                 true,
                 fcm!!
             )
-            ).await()
+            )
         }
     }
 

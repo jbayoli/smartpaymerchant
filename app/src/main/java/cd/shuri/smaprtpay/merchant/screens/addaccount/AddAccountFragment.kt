@@ -9,12 +9,12 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentAddAccountBinding
 import cd.shuri.smaprtpay.merchant.network.AddPaymentMethodRequest
+import cd.shuri.smaprtpay.merchant.network.ProviderType
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import timber.log.Timber
 
@@ -193,12 +193,12 @@ class AddAccountFragment : Fragment() {
                 binding.mobileMoney.visibility = View.VISIBLE
                 binding.validateButton.visibility = View.VISIBLE
                 (binding.mobileProviderTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-                accountType = it
+                accountType = ProviderType.Mobile
             } else if (it == 2) {
                 binding.card.visibility = View.VISIBLE
                 binding.validateButton.visibility = View.VISIBLE
                 (binding.cardOperatorTil.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-                accountType = it
+                accountType = ProviderType.Card
             }
         }
 

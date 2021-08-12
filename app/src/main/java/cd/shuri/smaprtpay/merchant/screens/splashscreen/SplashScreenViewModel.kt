@@ -12,21 +12,20 @@ class SplashScreenViewModel: ViewModel() {
 
     private val _currentTime = MutableLiveData<Long>()
 
-    private var timer : CountDownTimer
+    private var timer : CountDownTimer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
+        override fun onFinish() {
+            _currentTime.value = DONE
+            _navigateTo.value = true
+        }
+
+        override fun onTick(millisUntilFinished: Long) {
+            _currentTime.value = millisUntilFinished/ONE_SECOND
+        }
+    }
 
 
     init {
 
-        timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
-            override fun onFinish() {
-                _currentTime.value = DONE
-                _navigateTo.value = true
-            }
-
-            override fun onTick(millisUntilFinished: Long) {
-                _currentTime.value = millisUntilFinished/ONE_SECOND
-            }
-        }
         timer.start()
     }
 

@@ -112,8 +112,8 @@ class AddFirstPaymentAccountFragment : Fragment() {
             for (element in viewModel.providersCard.value!!) {
                 if (element.name == adapterView.getItemAtPosition(i)) {
                     operatorCode2 = element.code!!
-                    if (element.name?.toLowerCase(Locale.ROOT) != "visa" &&
-                        element.name?.toLowerCase(Locale.ROOT) != "mastercard") {
+                    if (element.name?.lowercase(Locale.ROOT) != "visa" &&
+                        element.name?.lowercase(Locale.ROOT) != "mastercard") {
                         binding.expirationDateTv.visibility = View.GONE
                         binding.expirationDateContent.visibility = View.GONE
                         binding.cardNameTil.visibility = View.GONE

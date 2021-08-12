@@ -2,11 +2,12 @@ package cd.shuri.smaprtpay.merchant.network
 
 import android.os.Parcelable
 import androidx.annotation.Keep
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class LoginRequest(
     val username: String,
     val password: String,
@@ -14,32 +15,30 @@ data class LoginRequest(
     val fcm: String
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class CommonResponse(
     val message: String,
     val status: String
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class CodeRequest(
     val phone: String,
     val fcm: String
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class ValidateCodeRequest(
     val phone: String,
     val fcm: String,
     val code: String
 )
 
-@JsonClass(generateAdapter = true)
-data class ValidateCodeResponse(
-    val message: String?,
-    val status: String?
-)
-
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class SingUpRequest(
     val code: String,
     val username: String,
@@ -49,7 +48,8 @@ data class SingUpRequest(
     val fcm: String
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class SingUpResponse(
     val message: String?,
     val customer: String?,
@@ -58,12 +58,12 @@ data class SingUpResponse(
 )
 
 @Keep
-@JsonClass(generateAdapter = true)
+@Serializable
 @Parcelize
 data class RegisterRequest(
-    @Json(name = "nom")
+    @SerialName("nom")
     val lastName: String,
-    @Json(name = "prenom")
+    @SerialName( "prenom")
     val firstName: String,
     val email: String,
     val phone1: String,
@@ -72,7 +72,7 @@ data class RegisterRequest(
     var sector: String = "",  //Domaine d'activité
     var rccm: String? = null,
     var nif: String? = null,
-    @Json(name = "proprietaire")
+    @SerialName("proprietaire")
     var owner: String? =null,
     var customer: String = "",
     val number: String,
@@ -81,7 +81,8 @@ data class RegisterRequest(
     val sex: String
 ):Parcelable
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class AddPaymentMethodRequest(
     val operator: String,
     val type: Int,
@@ -95,7 +96,8 @@ data class AddPaymentMethodRequest(
     val isMerchant: String
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class AddPaymentMethodFirstTimeRequest(
     val operator1: String? = null,
     val operator2: String? = null,
@@ -109,7 +111,8 @@ data class AddPaymentMethodFirstTimeRequest(
     val cardName: String? = null,
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class ProvidersData(
     val id: String?,
     val code: String?,
@@ -118,7 +121,7 @@ data class ProvidersData(
 )
 
 @Keep
-@JsonClass(generateAdapter = true)
+@Serializable
 @Parcelize
 data class AccountsResponse(
     val code: String?,
@@ -133,7 +136,8 @@ data class AccountsResponse(
     val default: Boolean?
 ): Parcelable
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class DashboardResponse(
     val all: Int? = 0,
     val waiting: Int? = 0,
@@ -145,7 +149,8 @@ data class DashboardResponse(
     val message: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class TransactionResponse(
     val date: String?,
     val amount: String?,
@@ -158,7 +163,8 @@ data class TransactionResponse(
     val status: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class TransactionValidationRequest(
     val transaction: String,
     val customer: String,
@@ -166,14 +172,16 @@ data class TransactionValidationRequest(
     val fcm: String
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class SectorsResponse(
     val id: Int?,
     val code: String?,
     val name: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class TransferRequest(
     val customer: String?,
     val mobile: String?,
@@ -184,20 +192,16 @@ data class TransferRequest(
     val fcm: String?
 )
 
-@JsonClass(generateAdapter = true)
-data class TransferResponse(
-    val status: String?,
-    val message: String?
-)
-
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class TransferListResponse(
     val status: String?,
     val message: String?,
     val transactions: List<Transfers>
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class Transfers(
     val code : String?,
     val date: String?,
@@ -209,40 +213,38 @@ data class Transfers(
     val message: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class EditPasswordRequestData(
     val oldPassword: String,
     val newPassword: String,
     val customer: String
 )
 
-@JsonClass(generateAdapter = true)
-data class EditPasswordResponseData(
-    val message: String?,
-    val status: String?
-)
-
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class ForgottenPINRequestThree(
     val user: String?,
     val password: String?,
     val passwordConfirm: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class ForgottenPINResponse(
     val message: String?,
     val status: String?,
     val user: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class ForgottenPINRequestOneTwo(
     val code: String?
 )
 
 @Keep
-@JsonClass(generateAdapter = true)
+@Serializable
 @Parcelize
 data class Profile(
     val status: String?,
@@ -252,7 +254,7 @@ data class Profile(
     val firstname: String?,
     val lastname: String?,
     val email: String?,
-    @Json(name = "phone1")
+    @SerialName("phone1")
     val phone: String?,
     val phone2: String?,
     val commune: String?,
@@ -266,7 +268,8 @@ data class Profile(
     val created: String?
 ): Parcelable
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class UpdateProfile(
     val customer: String,
     val tokenPhone: String,
@@ -285,20 +288,23 @@ data class UpdateProfile(
     val sector: String
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class DeletePaymentAccount(
     val code: String?,
     val customer: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class NotificationResponse(
     val message: String?,
     val status: String?,
     val notifications: List<Notification>?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class Notification(
     val reference: String?,
     val amount: String?,
@@ -308,13 +314,15 @@ data class Notification(
     val merchantName: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class Commune(
     val code: String?,
     val name: String?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class HelpData(
     val helpPhoneNumber: String?,
     val helpEmail: String?,
@@ -322,7 +330,7 @@ data class HelpData(
 )
 
 @Keep
-@JsonClass(generateAdapter = true)
+@Serializable
 data class Ticket(
     val client: String?,
     val ticket: String?,
@@ -330,13 +338,15 @@ data class Ticket(
     val paid: Boolean?
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class TicketVerification(
     val code: String,
     val cleared: Boolean
 )
 
-@JsonClass(generateAdapter = true)
+@Keep
+@Serializable
 data class TicketVerificationResult(
     val status: String?,
     val message: String?,

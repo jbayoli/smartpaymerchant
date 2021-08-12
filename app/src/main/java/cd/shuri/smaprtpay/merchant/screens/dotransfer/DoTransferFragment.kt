@@ -103,17 +103,17 @@ class DoTransferFragment : Fragment() {
             )
 
             if (valid) {
-                viewModel.sendMoneyToEMoney(
-                    TransferRequest(
-                        viewModel.userCode,
-                        selectedPaymentMethodMobile,
-                        selectedPaymentMethodCard,
-                        selectedCurrency,
-                        binding.cvvTet.text.toString(),
-                        binding.amountTet.text.toString(),
-                        fcm
-                    )
-                )
+//                viewModel.sendMoneyToEMoney(
+//                    TransferRequest(
+//                        viewModel.userCode,
+//                        selectedPaymentMethodMobile,
+//                        selectedPaymentMethodCard,
+//                        selectedCurrency,
+//                        binding.cvvTet.text.toString(),
+//                        binding.amountTet.text.toString(),
+//                        fcm
+//                    )
+//                )
             }
         }
     }

@@ -1,171 +1,393 @@
 package cd.shuri.smaprtpay.merchant.network
 
-import kotlinx.coroutines.Deferred
-import retrofit2.Response
-import retrofit2.http.*
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 
-interface SmartPayApiService {
-    @POST("register/merchant/api/step1")
-    fun sendCodeAsync(@Body request: CodeRequest): Deferred<CommonResponse>
+object RegisterStep {
+    const val StepOne = "step1"
+    const val StepTwo = "step2"
+    const val StepFour = "step4"
+    const val StepFive = "step5"
+}
 
-    @POST("register/merchant/api/step2")
-    fun validateCodeAsync(@Body request: ValidateCodeRequest) : Deferred<ValidateCodeResponse>
+object TransactionType {
+    const val All = "all"
+    const val Unsuccessful = "unsuccessfull"
+    const val Pending = "waiting"
+    const val ToValidate = "validating"
+}
 
-    @POST("register/merchant/api/step3")
-    fun signUpAsync(@Body request: SingUpRequest) : Deferred<SingUpResponse>
+object ProviderType {
+    const val Mobile = 1
+    const val Card = 2
+}
 
-    @POST("login")
-    suspend fun login(@Body request: LoginRequest) : Response<Unit>
+object PaymentMethodAction {
+    const val Add = "add"
+    const val Edit = "edit"
+    const val Delete = "delete"
+}
 
-    @POST("register/merchant/api/step4")
-    fun registerAsync(
-        @Body request: RegisterRequest) : Deferred<CommonResponse>
+object ForgottenPinStep {
+    const val StepOne = "step1"
+    const val StepTwo = "step2"
+    const val StepTree = "step3"
+}
 
-    @POST("register/merchant/api/step5")
-    fun addPaymentAccountAsync(
-        @Body request: AddPaymentMethodFirstTimeRequest
-    ): Deferred<CommonResponse>
+class SmartPayApiService(
+    private val host: String,
+    private val port: Int,
+    private val httpClient: HttpClient
+) {
 
-    @POST("api/merchant/compte/add")
-    fun addPaymentMethodAsync(
-        @Header("Authorization") authorization: String,
-        @Body request: AddPaymentMethodRequest
-    ): Deferred<CommonResponse>
+    /**
+     * Combined the request of step1, step2, step4, step5 in registration process
+     * @param [step] is one of the value in [RegisterStep]
+     * @param [request] is on of the registration request except [SingUpRequest]
+     * @return [CommonResponse]
+     */
+    suspend fun combinedRegisterRequest(
+        step: String,
+        request: Any
+    ): CommonResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/register/merchant/api/$step"
+        ) {
+            contentType(ContentType.Application.Json)
+            body = request
+        }
+    }
 
-    @POST("api/merchant/compte/edit")
-    fun editPaymentMethodAsync(
-        @Header("Authorization") authorization: String,
-        @Body request: AddPaymentMethodRequest
-    ): Deferred<CommonResponse>
+    /**
+     * Sign up the user to FlexPay System.
+     * @param [request] the request to send.
+     * @return [SingUpResponse] the response of the server
+     */
+    suspend fun signUpAsync(request : SingUpRequest): SingUpResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/register/merchant/api/step3"
+        ) {
+            contentType(ContentType.Application.Json)
+            body = request
+        }
+    }
 
-    @GET("api/default/providers/{type}")
-    fun getMobileProvidersAsync(
-        @Header("Authorization") authorization: String,
-        @Path("type") type : String
-    ): Deferred<List<ProvidersData>>
+    /**
+     * Connects the user in FlexPay.
+     * @param [request] the login request
+     * @return [HttpResponse]
+     */
+    suspend fun login(request: LoginRequest): HttpResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/login"
+        ) {
+            contentType(ContentType.Application.Json)
+            body = request
+        }
+    }
 
-    @GET("api/merchant/compte/all/{customer}")
-    fun getPaymentMethodsAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer : String
-    ) : Deferred<List<AccountsResponse>>
+    /**
+     * Perform a payment method request from the given action
+     * @param [authorization] Authorisation need for authenticate the request
+     * @param [action] the action to make in the request, which is one of the [PaymentMethodAction]
+     * @param [request] the request to be sent
+     * @return [CommonResponse]
+     */
+    suspend fun addEditOrDeletePaymentMethodAsync(
+        authorization: String,
+        action: String,
+        request: Any
+    ): CommonResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/api/merchant/compte/$action"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+            body = request
+        }
+    }
 
-    @GET("api/merchant/transaction/dashboard/{customer}")
-    fun getDashBoardDataAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer : String
-    ) : Deferred<DashboardResponse>
+    /**
+     * Fetch all providers that match the given type
+     * @param [authorization] Authorisation need for authenticate the request
+     * @param [type] One of the type in [ProviderType]
+     * @return [ProvidersData]s
+     */
+    suspend fun getProvidersAsync(
+        authorization: String,
+        type: Int
+    ) : List<ProvidersData> {
+        return httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/default/providers/$type"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+        }
+    }
 
+    /**
+     * Fetch all payment method that match the given customer
+     * @param [authorization] the token to authenticate the request
+     * @param [customer] from which one we fetch all the payment method
+     * @return [AccountsResponse]s
+     */
+    suspend fun getPaymentMethodsAsync(
+        authorization: String,
+        customer: String
+    ): List<AccountsResponse> {
+        return httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/merchant/compte/all/$customer"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+        }
+    }
 
-    @GET("api/merchant/transaction/all/{customer}")
-    fun getAllTransactionAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer : String
-    ) : Deferred<List<TransactionResponse>>
+    /**
+     * Fetch all the dashboard data from the given customer.
+     * @param [authorization] token to authenticate the request
+     * @param [customer] from which one we fetch the data
+     * @return [DashboardResponse]
+     */
+    suspend fun getDashBoardDataAsync(
+        authorization: String,
+        customer: String
+    ): DashboardResponse {
+        return httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/merchant/transaction/dashboard/$customer"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+        }
+    }
 
-    @GET("api/merchant/transaction/clos/{customer}")
-    fun getAllTransactionDoneAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer : String
-    ) : Deferred<List<TransactionResponse>>
+    /**
+     * Fetch transactions from the given type and customer.
+     * @param authorization token to authenticate the request
+     * @param type of transaction to fetch
+     * @param customer from which we fetch transactions
+     * @return [TransactionResponse]s
+     */
+    suspend fun getTransactionByTypeAsync(
+        authorization: String,
+        type: String,
+        customer: String
+    ): List<TransactionResponse> {
+        return httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/merchant/transaction/$type/$customer"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+        }
+    }
 
-    @GET("api/merchant/transaction/unsuccessfull/{customer}")
-    fun getAllTransactionErrorAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer : String
-    ) : Deferred<List<TransactionResponse>>
+    /**
+     * Validate or cancel a transaction
+     * @param authorization token to authenticate the request
+     * @param request to validate or cancel a transaction
+     * @return [CommonResponse]
+     */
+    suspend fun validateTransactionAsync(
+        authorization: String,
+        request: TransactionValidationRequest
+    ): CommonResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/api/merchant/transaction/validate"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+            body = request
+        }
+    }
 
-    @GET("api/merchant/transaction/waiting/{customer}")
-    fun getAllTransactionInWaitAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer : String
-    ) : Deferred<List<TransactionResponse>>
+    /**
+     * Fetch sectors
+     * @param authorization token to authenticate request
+     * @return [SectorsResponse]s
+     */
+    suspend fun getSectorsAsync(authorization: String): List<SectorsResponse> {
+        return httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/default/sectors"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+        }
+    }
 
-    @GET("api/merchant/transaction/validating/{customer}")
-    fun getWaitingTransactionAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer : String
-    ) : Deferred<List<TransactionResponse>>
+    /**
+     * Edit the password of the user
+     * @param authorization token to authenticate the request
+     * @param request to edit the password
+     * @return [CommonResponse]
+     */
+    suspend fun editPasswordAsync(
+        authorization: String,
+        request: EditPasswordRequestData
+    ): CommonResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/api/merchant/password/reinit"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+            body = request
+        }
+    }
 
-    @POST("api/merchant/transaction/validate")
-    fun validateTransactionAsync(
-        @Header("Authorization") authorization: String,
-        @Body request: TransactionValidationRequest
-    ) : Deferred<CommonResponse>
+    /**
+     * Perform a password(PIN) reset request.
+     * @param step one of the [ForgottenPinStep]
+     * @param request to be sent
+     * @return [ForgottenPINResponse]
+     */
+    suspend fun forgottenPINAsync(
+        step: String,
+        request: Any
+    ): ForgottenPINResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/register/merchant/api/reinitPassword/$step"
+        ) {
+            contentType(ContentType.Application.Json)
+            body = request
+        }
+    }
 
-    @GET("api/default/sectors")
-    fun getSectorsAsync(
-        @Header("Authorization") authorization: String
-    ) : Deferred<List<SectorsResponse>>
+    /**
+     * Fetch the user information from the given customer
+     * @param customer from whom we fetch the data
+     * @param authorization token to authenticate the request sender
+     * @return [Profile]
+     */
+    suspend fun getInfoAsync(
+        customer: String,
+        authorization: String
+    ): Profile {
+        return httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/merchant/account/infos/$customer"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+        }
+    }
 
-    @POST("api/merchant/transfert/new")
-    fun cardToEMoneyAsync(
-        @Header("Authorization") authorization: String,
-        @Body request: TransferRequest
-    ): Deferred<TransferResponse>
+    /**
+     * Update the user information
+     * @param authorization token to authenticate the request sender
+     * @param request to update the user information
+     * @return [CommonResponse]
+     */
+    suspend fun updateProfileAsync(
+        authorization: String,
+        request: UpdateProfile
+    ) : CommonResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/api/merchant/account/infos/update"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+            body = request
+        }
+    }
 
-    @GET("api/merchant/transfert/list/{customer}")
-    fun getTransfersAsync(
-        @Path("customer") customer: String,
-        @Header("Authorization") authorization: String
-    ): Deferred<TransferListResponse>
+    /**
+     * Delete the user
+     * @param authorization token to authenticate the request sender
+     * @param customer who will be deleted
+     * @return [CommonResponse]
+     */
+    suspend fun deleteUserAsync(
+        authorization: String,
+        customer: String
+    ): CommonResponse {
+        return httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/merchant/account/register/delete/$customer"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+        }
+    }
 
-    @POST("api/merchant/password/reinit")
-    fun editPasswordAsync(
-        @Header("Authorization") authorization: String,
-        @Body request: EditPasswordRequestData
-    ): Deferred<EditPasswordResponseData>
+    /**
+     * Fetch notification
+     * @param authorization token to authenticate request sender
+     * @param customer from whom we fetch notifications
+     * @return [NotificationResponse]
+     */
+    suspend fun getNotificationsAsync(
+        authorization: String,
+        customer: String
+    ): NotificationResponse {
+        return  httpClient.get(
+            host = host,
+            port = port,
+            path = "/api/merchant/notification/list/$customer"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+        }
+    }
 
-    @POST("register/merchant/api/reinitPassword/step3")
-    fun forgottenPINAsync(
-        @Body request: ForgottenPINRequestThree
-    ) : Deferred<ForgottenPINResponse>
+    /**
+     * Fetch communes
+     * @return [Commune]s
+     */
+    suspend fun getCommuneAsync(): List<Commune> = httpClient.get(
+        host = host,
+        port = port,
+        path = "/api/support/communes"
+    ) {
+        contentType(ContentType.Application.Json)
+    }
 
-    @POST("register/merchant/api/reinitPassword/{step}")
-    fun forgottenPINAsync(
-        @Path("step") step: String,
-        @Body request: ForgottenPINRequestOneTwo
-    ) : Deferred<ForgottenPINResponse>
-
-    @GET("api/merchant/account/infos/{customer}")
-    fun getInfoAsync(
-        @Path("customer") customer: String,
-        @Header("Authorization") authorization: String
-    ): Deferred<Profile>
-
-    @POST("api/merchant/account/infos/update")
-    fun updateProfileAsync(
-        @Header("Authorization") authorization: String,
-        @Body request: UpdateProfile
-    ) : Deferred<CommonResponse>
-
-    @GET("api/merchant/account/register/delete/{customer}")
-    fun deleteUserAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer: String
-    ) : Deferred<CommonResponse>
-
-    @POST("api/merchant/compte/delete")
-    fun deletePaymentAccountAsync(
-        @Header("Authorization") authorization: String,
-        @Body request: DeletePaymentAccount
-    ) : Deferred<CommonResponse>
-
-    @GET("api/merchant/notification/list/{customer}")
-    fun getNotificationsAsync(
-        @Header("Authorization") authorization: String,
-        @Path("customer") customer : String
-    ) : Deferred<NotificationResponse>
-
-    @GET("api/support/communes")
-    fun getCommuneAsync() : Deferred<List<Commune>>
-
-    @GET("api/support/help")
-    fun getHelpDataAsync() : Deferred<HelpData>
-
-    @POST("api/merchant/ticket/verify")
-    fun verifyTicketAsync(
-        @Header("Authorization") authorization: String,
-        @Body request: TicketVerification
-    ): Deferred<TicketVerificationResult>
+    /**
+     * Check the validity of a ticket
+     * @param authorization token to authenticate the request sender
+     * @param request to validate the ticket
+     * @return [TicketVerificationResult]
+     */
+    suspend fun verifyTicketAsync(
+        authorization: String,
+        request: TicketVerification
+    ): TicketVerificationResult {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "api/merchant/ticket/verify"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+            body = request
+        }
+    }
 }

@@ -3,15 +3,12 @@ package cd.shuri.smaprtpay.merchant.screens.addaccount
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
-import cd.shuri.smaprtpay.merchant.network.AddPaymentMethodRequest
-import cd.shuri.smaprtpay.merchant.network.ProvidersData
-import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import cd.shuri.smaprtpay.merchant.network.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class AddAccountViewModel: ViewModel() {
 
@@ -51,7 +48,7 @@ class AddAccountViewModel: ViewModel() {
     private val _messageAddAccount = MutableLiveData<String>()
     val  messageAddAccount : LiveData<String> get() = _messageAddAccount
 
-    private val _providers = MutableLiveData<List<ProvidersData>>()
+    private val _providers = MutableLiveData(listOf<ProvidersData>())
     val providers: LiveData<List<ProvidersData>> get() = _providers
 
     private val _navigateToHome = MutableLiveData<Boolean?>()
@@ -59,10 +56,6 @@ class AddAccountViewModel: ViewModel() {
 
     private val _showTToastForError = MutableLiveData<Boolean?>()
     val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
-
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
@@ -145,22 +138,25 @@ class AddAccountViewModel: ViewModel() {
         return valid
     }
 
-    private fun getProviders(authorization: String) {
+    private fun getProviders() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getMobileProvidersAsync(authorization, accountType.value.toString()).await()
+                val result = SmartPayApi.smartPayApiService.getProvidersAsync(
+                    authorization = auth,
+                    type = accountType.value!!
+                )
                 _showDialogLoader.value = false
+                Timber.d("$result")
                 if (result.isNotEmpty()) {
-                    for (element in result) {
-                        Timber.d("code: ${element.code}\nid: ${element.id}\nname: ${element.name}")
-                    }
                     _providers.value = result
                 }
             } catch (e : Exception) {
-                Timber.e("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -169,7 +165,11 @@ class AddAccountViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.addPaymentMethodAsync(auth, request).await()
+                val result = SmartPayApi.smartPayApiService.addEditOrDeletePaymentMethodAsync(
+                    authorization = auth,
+                    action = PaymentMethodAction.Add,
+                    request = request
+                )
                 _showDialogLoader.value = false
                 Timber.d("Message: ${result.message} status: ${result.status}")
                 if (result.status == "0") {
@@ -183,7 +183,9 @@ class AddAccountViewModel: ViewModel() {
             } catch (e: Exception) {
                 Timber.e("$e")
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -198,12 +200,6 @@ class AddAccountViewModel: ViewModel() {
 
     fun setAccountType(accountTypeSelected: Int) {
         _accountType.value = accountTypeSelected
-        Timber.d(auth)
-        getProviders(auth)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
+        getProviders()
     }
 }

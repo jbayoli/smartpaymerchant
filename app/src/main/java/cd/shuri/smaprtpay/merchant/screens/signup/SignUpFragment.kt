@@ -50,7 +50,7 @@ class SignUpFragment : Fragment() {
         }
 
         binding.merchantCodeTet.addTextChangedListener {
-            binding.userNameTet.setText(it.toString().toLowerCase(Locale.ROOT))
+            binding.userNameTet.setText(it.toString().lowercase(Locale.ROOT))
         }
     }
 

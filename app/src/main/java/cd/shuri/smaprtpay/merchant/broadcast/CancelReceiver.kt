@@ -37,7 +37,7 @@ class CancelReceiver: BroadcastReceiver() {
                 userCode!!,
                 false,
                 fcm!!
-            )).await()
+            ))
         }
     }
 

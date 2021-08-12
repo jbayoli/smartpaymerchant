@@ -3,17 +3,19 @@ package cd.shuri.smaprtpay.merchant.screens.accounts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
-import cd.shuri.smaprtpay.merchant.network.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import cd.shuri.smaprtpay.merchant.network.AccountsResponse
+import cd.shuri.smaprtpay.merchant.network.CommonResponse
+import cd.shuri.smaprtpay.merchant.network.PaymentMethodAction
+import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class AccountsViewModel : ViewModel() {
 
-    private val _paymentMethods = MutableLiveData<MutableList<AccountsResponse>>()
+    private val _paymentMethods = MutableLiveData(mutableListOf<AccountsResponse>())
     val paymentMethods: LiveData<MutableList<AccountsResponse>> get() = _paymentMethods
 
     private val _showDialogLoader = MutableLiveData<Boolean?>()
@@ -25,10 +27,6 @@ class AccountsViewModel : ViewModel() {
     private val _deleteResponse = MutableLiveData<CommonResponse>()
     val deleteResponse: LiveData<CommonResponse> get() = _deleteResponse
 
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     private val userCode = SmartPayApp.preferences.getString("user_code", "")
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
@@ -36,7 +34,6 @@ class AccountsViewModel : ViewModel() {
     var indexOfRemovedAccount = 0
 
     init {
-        _paymentMethods.value = ArrayList()
         getPaymentMethods()
     }
 
@@ -48,23 +45,21 @@ class AccountsViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result =
-                    SmartPayApi.smartPayApiService.getPaymentMethodsAsync(auth, userCode!!).await()
+                val result = SmartPayApi.smartPayApiService.getPaymentMethodsAsync(
+                    auth,
+                    userCode!!
+                )
                 Timber.d("$result")
                 _showDialogLoader.value = false
                 if (result.isNotEmpty()) {
                     _paymentMethods.value = result.toMutableList()
-                    for (element in result) {
-                        Timber.d("code: ${element.code}")
-                    }
-                } else {
-                    _paymentMethods.value = ArrayList()
                 }
             } catch (e: Exception) {
-                Timber.e("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _paymentMethods.value = ArrayList()
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -73,10 +68,11 @@ class AccountsViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.deletePaymentAccountAsync(
-                    auth,
-                    DeletePaymentAccount(account.code, userCode)
-                ).await()
+                val result = SmartPayApi.smartPayApiService.addEditOrDeletePaymentMethodAsync(
+                    authorization = auth,
+                    action = PaymentMethodAction.Delete,
+                    request = account
+                )
                 _showDialogLoader.value = false
                 if (result.status == "0") {
                     indexOfRemovedAccount = _paymentMethods.value?.indexOf(account)!!
@@ -84,20 +80,16 @@ class AccountsViewModel : ViewModel() {
                 }
                 _deleteResponse.value = result
             } catch (e: Exception) {
-                Timber.d("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
 
     fun showToastErrorDone() {
         _showTToastForError.value = null
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

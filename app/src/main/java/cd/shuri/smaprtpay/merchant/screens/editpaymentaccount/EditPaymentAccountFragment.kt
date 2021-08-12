@@ -15,6 +15,7 @@ import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.EditPaymentAccountFragmentBinding
 import cd.shuri.smaprtpay.merchant.network.AddPaymentMethodRequest
+import cd.shuri.smaprtpay.merchant.network.ProviderType
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
 import timber.log.Timber
 
@@ -121,7 +122,7 @@ class EditPaymentAccountFragment : Fragment() {
     }
 
     private fun editPaymentMethod() {
-        if (accountType == 1) {
+        if (accountType == ProviderType.Mobile) {
             val valid = viewModel.validateFormMobile(
                 AddPaymentMethodRequest(
                     operator = operatorCode,
@@ -240,14 +241,14 @@ class EditPaymentAccountFragment : Fragment() {
         }
 
         viewModel.showDialogLoader.observe(viewLifecycleOwner) {
-            if (it != null) {
-                if (it) {
-                    dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
-                } else {
-                    dialog.dismiss()
-                }
-                viewModel.showDialogLoaderDone()
-            }
+           it?.let {
+               if (it) {
+                   dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
+               } else {
+                   dialog.dismiss()
+               }
+               viewModel.showDialogLoaderDone()
+           }
         }
 
         viewModel.providers.observe(viewLifecycleOwner) {
@@ -325,7 +326,7 @@ class EditPaymentAccountFragment : Fragment() {
         }
 
         viewModel.navigateToHome.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 findNavController().navigate(EditPaymentAccountFragmentDirections.actionEditPaymentAccountFragmentToAccountsFragment())
                 viewModel.navigateToHomeDone()
             }

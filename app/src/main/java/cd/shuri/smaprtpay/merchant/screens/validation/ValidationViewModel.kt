@@ -2,17 +2,12 @@ package cd.shuri.smaprtpay.merchant.screens.validation
 
 import android.os.CountDownTimer
 import android.text.format.DateUtils
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import cd.shuri.smaprtpay.merchant.network.CodeRequest
+import cd.shuri.smaprtpay.merchant.network.RegisterStep
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import cd.shuri.smaprtpay.merchant.network.ValidateCodeRequest
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -44,10 +39,6 @@ class ValidationViewModel (phone: String): ViewModel(){
 
     private val _isResendEnable = MutableLiveData<Boolean>()
     val isResendEnable : LiveData<Boolean> get() = _isResendEnable
-
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     var token = ""
     private var phoneNumber = ""
@@ -91,7 +82,10 @@ class ValidationViewModel (phone: String): ViewModel(){
     private fun sendCode(request: CodeRequest) {
         viewModelScope.launch {
             try {
-                val result = SmartPayApi.smartPayApiService.sendCodeAsync(request).await()
+                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                    RegisterStep.StepOne,
+                    request
+                )
                 Timber.d("message: ${result.message} status: ${result.status}")
             } catch (e: Exception) {
                 Timber.e("$e")
@@ -110,9 +104,10 @@ class ValidationViewModel (phone: String): ViewModel(){
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.validateCodeAsync(
+                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                    RegisterStep.StepTwo,
                     ValidateCodeRequest(phoneNumber, token, code)
-                ).await()
+                )
                 Timber.d("message: ${result.message} status: ${result.status}")
 
                 if (result.status == "0") {
@@ -146,11 +141,6 @@ class ValidationViewModel (phone: String): ViewModel(){
 
     fun showToastErrorDone() {
         _showTToastForError.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 
     companion object {

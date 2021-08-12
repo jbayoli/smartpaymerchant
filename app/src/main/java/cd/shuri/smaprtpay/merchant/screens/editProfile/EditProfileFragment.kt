@@ -200,7 +200,7 @@ class EditProfileFragment : Fragment() {
         }
 
         viewModel.showDialogLoader.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "ConfirmDialog")
                 } else {
@@ -225,7 +225,7 @@ class EditProfileFragment : Fragment() {
         }
 
         viewModel.navigateTo.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 findNavController().navigate(EditProfileFragmentDirections.actionEditProfileFragmentToProfileFragment())
                 viewModel.navigateToDone()
             }

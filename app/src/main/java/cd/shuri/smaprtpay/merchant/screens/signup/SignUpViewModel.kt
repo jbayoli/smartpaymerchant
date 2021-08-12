@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class SignUpViewModel : ViewModel() {
 
@@ -97,7 +98,7 @@ class SignUpViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.signUpAsync(request).await()
+                val result = SmartPayApi.smartPayApiService.signUpAsync(request)
                 Timber.d("message : ${result.message} status: ${result.status}")
                 _showDialogLoader.value = false
                 when (result.status) {
@@ -123,8 +124,10 @@ class SignUpViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _showDialogLoader.value = false
-                Timber.e("$e")
-                _showTToastForError.value = true
+                Timber.e(e)
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }

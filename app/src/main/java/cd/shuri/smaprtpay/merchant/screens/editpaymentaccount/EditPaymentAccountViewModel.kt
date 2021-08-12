@@ -3,13 +3,12 @@ package cd.shuri.smaprtpay.merchant.screens.editpaymentaccount
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class EditPaymentAccountViewModel(account: Int) : ViewModel() {
 
@@ -37,11 +36,8 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
     private val _showDialogLoader = MutableLiveData<Boolean?>()
     val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
 
-    private val _providers = MutableLiveData<List<ProvidersData>>()
+    private val _providers = MutableLiveData(listOf<ProvidersData>())
     val providers: LiveData<List<ProvidersData>> get() = _providers
-
-    private val _cardProviders = MutableLiveData<List<ProvidersData>>()
-    val cardProviders: LiveData<List<ProvidersData>> get() = _cardProviders
 
     private val _showTToastForError = MutableLiveData<Boolean?>()
     val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
@@ -52,18 +48,13 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
     private val _response = MutableLiveData<CommonResponse>()
     val response : LiveData<CommonResponse> get() = _response
 
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
-    private var accountType = ""
+    private var accountType = account
 
     init {
-        accountType = account.toString()
-        getProviders(auth)
+        getProviders()
     }
 
     fun validateFormMobile(request: AddPaymentMethodRequest) : Boolean {
@@ -132,19 +123,25 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
         return valid
     }
 
-    private fun getProviders(authorization: String) {
+    private fun getProviders() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getMobileProvidersAsync(authorization, accountType).await()
+                val result = SmartPayApi.smartPayApiService.getProvidersAsync(
+                    auth,
+                    accountType
+                )
                 _showDialogLoader.value = false
+                Timber.d("$result")
                 if (result.isNotEmpty()) {
                     _providers.value = result
                 }
             } catch (e : Exception) {
-                Timber.e("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -153,7 +150,11 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.editPaymentMethodAsync(auth, request).await()
+                val result = SmartPayApi.smartPayApiService.addEditOrDeletePaymentMethodAsync(
+                    authorization = auth,
+                    action = PaymentMethodAction.Edit,
+                    request = request
+                )
                 _showDialogLoader.value = false
                 Timber.d("Message: ${result.message} status: ${result.status}")
                 _response.value = result
@@ -161,9 +162,11 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
                     _navigateToHome.value = true
                 }
             } catch (e: Exception) {
-                Timber.e("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -178,10 +181,5 @@ class EditPaymentAccountViewModel(account: Int) : ViewModel() {
 
     fun navigateToHomeDone(){
         _navigateToHome.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

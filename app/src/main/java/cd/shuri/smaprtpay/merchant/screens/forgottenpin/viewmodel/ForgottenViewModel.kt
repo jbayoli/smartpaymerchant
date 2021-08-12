@@ -3,12 +3,10 @@ package cd.shuri.smaprtpay.merchant.screens.forgottenpin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.network.ForgottenPINRequestOneTwo
 import cd.shuri.smaprtpay.merchant.network.ForgottenPINResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -32,10 +30,6 @@ class ForgottenViewModel: ViewModel() {
     private val _navigateTo = MutableLiveData<Boolean?>()
     val navigateTo: LiveData<Boolean?> get() = _navigateTo
 
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
 
     fun validateForm(code: String) : Boolean{
         var isValid = true
@@ -53,7 +47,7 @@ class ForgottenViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.forgottenPINAsync(step, ForgottenPINRequestOneTwo(code)).await()
+                val result = SmartPayApi.smartPayApiService.forgottenPINAsync(step, ForgottenPINRequestOneTwo(code))
                 Timber.d("$result")
                 _response.value = result
                 _showDialogLoader.value = false
@@ -88,10 +82,5 @@ class ForgottenViewModel: ViewModel() {
     fun navigateToDone() {
         _navigateTo.value = null
         _response.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

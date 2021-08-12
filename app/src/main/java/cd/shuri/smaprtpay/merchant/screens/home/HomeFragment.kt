@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
                 true
             }
             R.id.refresh -> {
-                viewModel.getDashBoardData()
+                //viewModel.getDashBoardData()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -240,7 +240,7 @@ class HomeFragment : Fragment() {
 
     private fun observers() {
         viewModel.showDialogLoader.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
                 }  else {

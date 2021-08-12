@@ -3,6 +3,7 @@ package cd.shuri.smaprtpay.merchant.screens.notifications
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.Notification
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class NotificationsViewModel : ViewModel() {
     private val _notifications = MutableLiveData<List<Notification>?>()
@@ -21,10 +23,6 @@ class NotificationsViewModel : ViewModel() {
 
     private val _showTToastForError = MutableLiveData<Boolean?>()
     val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
-
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val userCode = SmartPayApp.preferences.getString("user_code", "")
     private val userToken = SmartPayApp.preferences.getString("token", "")
@@ -40,26 +38,23 @@ class NotificationsViewModel : ViewModel() {
             try {
                 _showDialogLoader.value = true
                 val result =
-                    SmartPayApi.smartPayApiService.getNotificationsAsync(auth,userCode!!).await()
+                    SmartPayApi.smartPayApiService.getNotificationsAsync(auth,userCode!!)
                 _showDialogLoader.value = false
                 Timber.d(" => ${result.notifications?.size}")
                 if (!result.notifications.isNullOrEmpty()) {
                     _notifications.value = result.notifications
                 }
             } catch (e: Exception) {
-                Timber.e("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
 
     fun showToastErrorDone() {
         _showTToastForError.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

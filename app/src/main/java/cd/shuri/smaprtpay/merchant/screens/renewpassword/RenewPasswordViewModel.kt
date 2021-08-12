@@ -15,8 +15,8 @@ class RenewPasswordViewModel : ViewModel() {
     private val _responseStatus = MutableLiveData<String?>()
     val responseStatus: LiveData<String?> get() = _responseStatus
 
-    private val _responseData = MutableLiveData<EditPasswordResponseData>()
-    val responseData: LiveData<EditPasswordResponseData> get() = _responseData
+    private val _responseData = MutableLiveData<CommonResponse>()
+    val responseData: LiveData<CommonResponse> get() = _responseData
 
     private val _isOldPasswordEmpty = MutableLiveData<Boolean>()
     val isOldPasswordEmpty: LiveData<Boolean> get() = _isOldPasswordEmpty
@@ -53,7 +53,7 @@ class RenewPasswordViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.editPasswordAsync(auth, request).await()
+                val result = SmartPayApi.smartPayApiService.editPasswordAsync(auth, request)
                 _showDialogLoader.value = false
                 _responseData.value = result
                 Timber.d("message: ${result.message} status: ${result.status}")
@@ -76,7 +76,10 @@ class RenewPasswordViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.forgottenPINAsync(request).await()
+                val result = SmartPayApi.smartPayApiService.forgottenPINAsync(
+                    ForgottenPinStep.StepTree,
+                    request
+                )
                 _response.value = result
                 Timber.d("Message: ${result.message}, Status: ${result.status}")
                 _showDialogLoader.value = false

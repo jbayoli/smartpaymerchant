@@ -3,19 +3,15 @@ package cd.shuri.smaprtpay.merchant.transactionvalidation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
-import cd.shuri.smaprtpay.merchant.network.CommonResponse
-import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import cd.shuri.smaprtpay.merchant.network.TransactionResponse
-import cd.shuri.smaprtpay.merchant.network.TransactionValidationRequest
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import cd.shuri.smaprtpay.merchant.network.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class TransactionValidationViewModel: ViewModel() {
-    private val _transactions =  MutableLiveData<List<TransactionResponse>>()
+    private val _transactions =  MutableLiveData(listOf<TransactionResponse>())
     val transactions : LiveData<List<TransactionResponse>> get() = _transactions
 
     private val _validation = MutableLiveData<CommonResponse>()
@@ -33,19 +29,14 @@ class TransactionValidationViewModel: ViewModel() {
     private val _indexRemoved= MutableLiveData<Int>()
     val indexRemoved: LiveData<Int> get() = _indexRemoved
 
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     private val userCode = SmartPayApp.preferences.getString("user_code", "")
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
     init {
-        _transactions.value = ArrayList()
         Timber.d(auth)
         Timber.d(userCode)
-        getTransactions()
+        getTransactionsToValidate()
     }
 
     fun showDialogLoaderDone() {
@@ -60,25 +51,26 @@ class TransactionValidationViewModel: ViewModel() {
         _navigateToHome.value = true
     }
 
-    fun getTransactions() {
+    fun getTransactionsToValidate() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getWaitingTransactionAsync(auth, userCode!!).await()
+                val result = SmartPayApi.smartPayApiService.getTransactionByTypeAsync(
+                    authorization = auth,
+                    type = TransactionType.ToValidate,
+                    customer = userCode!!
+                )
                 _showDialogLoader.value = false
+                Timber.d("$result")
                 if (result.isNotEmpty()) {
                     _transactions.value = result
-                    for (element in result) {
-                        Timber.d("code: ${element.code}")
-                    }
-                } else {
-                    Timber.d("No transactions")
-                    _transactions.value = ArrayList()
                 }
             } catch (e: Exception) {
-                Timber.e("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _transactions.value = ArrayList()
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -87,7 +79,7 @@ class TransactionValidationViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.validateTransactionAsync(auth, request).await()
+                val result = SmartPayApi.smartPayApiService.validateTransactionAsync(auth, request)
                 _validation.value = result
                 _showDialogLoader.value = false
                 if (result.status == "0" || result.status == "1") {
@@ -97,19 +89,16 @@ class TransactionValidationViewModel: ViewModel() {
                     _transactions.value = transacs.toList()
                 }
             } catch (e: Exception) {
-                Timber.e("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
 
     fun showToastErrorDone() {
         _showTToastForError.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

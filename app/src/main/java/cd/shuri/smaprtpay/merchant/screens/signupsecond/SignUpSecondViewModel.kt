@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.RegisterRequest
+import cd.shuri.smaprtpay.merchant.network.RegisterStep
 import cd.shuri.smaprtpay.merchant.network.SectorsResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import kotlinx.coroutines.*
@@ -85,7 +86,7 @@ class SignUpSecondViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getSectorsAsync(auth).await()
+                val result = SmartPayApi.smartPayApiService.getSectorsAsync(auth)
                 _showDialogLoader.value = false
                 Timber.d("Sectors are ${result.size}")
                 if (result.isNotEmpty()) {
@@ -107,7 +108,10 @@ class SignUpSecondViewModel: ViewModel() {
             try {
                 _showDialogLoader.value = true
                 Timber.d("$request")
-                val result = SmartPayApi.smartPayApiService.registerAsync(request).await()
+                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                    RegisterStep.StepFour,
+                    request
+                )
                 _showDialogLoader.value = false
                 Timber.d("message: ${result.message} status: ${result.status}")
                 if (result.status == "0") {

@@ -269,7 +269,7 @@ class SearchTicketFragment : Fragment() {
         }
     }
 
-    @SuppressLint("UnsafeExperimentalUsageError")
+    @SuppressLint("UnsafeOptInUsageError")
     private fun processImageProxy(barcodeScanner: BarcodeScanner, imageProxy: ImageProxy) {
         val inputImage = InputImage.fromMediaImage(
             imageProxy.image!!,

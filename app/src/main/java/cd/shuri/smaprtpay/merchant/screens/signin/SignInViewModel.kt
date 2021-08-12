@@ -3,13 +3,17 @@ package cd.shuri.smaprtpay.merchant.screens.signin
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.CommonResponse
 import cd.shuri.smaprtpay.merchant.network.LoginRequest
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import com.google.firebase.messaging.FirebaseMessaging
+import io.ktor.client.features.*
+import io.ktor.http.*
 import kotlinx.coroutines.*
 import timber.log.Timber
+import java.net.ConnectException
 
 class SignInViewModel : ViewModel() {
     private val _showDialogLoader = MutableLiveData<Boolean?>()
@@ -43,10 +47,6 @@ class SignInViewModel : ViewModel() {
     private var customer: String? = null
     private var roles: String? = null
     private var name: String? = null
-
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
 
@@ -89,13 +89,13 @@ class SignInViewModel : ViewModel() {
             try {
                 _showDialogLoader.value = true
                 val response = SmartPayApi.smartPayApiService.login(request)
-                if (response.isSuccessful) {
-                    auth = response.headers().get("Authorization")
-                    customer = response.headers().get("customer")
-                    roles = response.headers().get("roles")
-                    name = response.headers().get("name")
-                    val phone = response.headers().get("phone")
-                    val savedStep = response.headers().get("step")?.toInt()
+                if (response.status == HttpStatusCode.OK) {
+                    auth = response.headers[HttpHeaders.Authorization]
+                    customer = response.headers["customer"]
+                    roles = response.headers["roles"]
+                    name = response.headers["name"]
+                    val phone = response.headers["phone"]
+                    val savedStep = response.headers["step"]?.toInt()
                     Timber.d("user code = $customer")
                     Timber.d("auth = $auth")
                     Timber.d("roles = $roles")
@@ -109,17 +109,17 @@ class SignInViewModel : ViewModel() {
                     } else {
                         _loginStatus.value = 1
                     }
-                } else {
-                    _showDialogLoader.value = false
-                    Timber.d("response code = ${response.code()}")
-                    if (response.code() == 403 || response.code() == 404) {
-                        _loginStatus.value = 1
-                    }
                 }
             } catch (e: Exception) {
-                _showDialogLoader.value = false
-                _showTToastForError.value = true
                 Timber.e("$e")
+                if (e is ClientRequestException) {
+                    _showDialogLoader.value = false
+                    _loginStatus.value = 1
+                }
+                if (e is ConnectException) {
+                    _showDialogLoader.value = false
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -131,7 +131,7 @@ class SignInViewModel : ViewModel() {
                 val userToken = SmartPayApp.preferences.getString("token", "")
                 val auth = "Bearer $userToken"
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.deleteUserAsync(auth, userCode!!).await()
+                val result = SmartPayApi.smartPayApiService.deleteUserAsync(auth, userCode!!)
                 Timber.d("$result")
                 _response.value = result
                 _showDialogLoader.value = false
@@ -176,10 +176,5 @@ class SignInViewModel : ViewModel() {
 
     fun showToastDone() {
         _loginStatus.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

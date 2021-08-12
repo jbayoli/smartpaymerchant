@@ -3,13 +3,12 @@ package cd.shuri.smaprtpay.merchant.screens.editProfile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class EditProfileViewModel: ViewModel() {
     private val _response = MutableLiveData<CommonResponse>()
@@ -20,12 +19,10 @@ class EditProfileViewModel: ViewModel() {
     val navigateTo: LiveData<Boolean?> get() = _navigateTo
     private val _showTToastForError = MutableLiveData<Boolean?>()
     val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
-    private val _sectors = MutableLiveData<List<SectorsResponse>>()
+    private val _sectors = MutableLiveData(listOf<SectorsResponse>())
     val sectors :LiveData<List<SectorsResponse>> get() = _sectors
-    private val _communes = MutableLiveData<List<Commune>>()
+    private val _communes = MutableLiveData(listOf<Commune>())
     val communes: LiveData<List<Commune>> get() = _communes
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
@@ -38,15 +35,18 @@ class EditProfileViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.updateProfileAsync(auth, request).await()
+                val result = SmartPayApi.smartPayApiService.updateProfileAsync(auth, request)
                 _showDialogLoader.value = false
+                Timber.d("$result")
                 if (result.status == "0") {
                     _navigateTo.value = true
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -55,18 +55,17 @@ class EditProfileViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getSectorsAsync(auth).await()
+                val result = SmartPayApi.smartPayApiService.getSectorsAsync(auth)
                 Timber.d("Sectors are ${result.size}")
                 if (result.isNotEmpty()) {
                     _sectors.value = result
-                } else {
-                    _sectors.value = ArrayList()
                 }
             } catch (e: Exception) {
                 _showDialogLoader.value = false
-                _sectors.value = ArrayList()
-                _showTToastForError.value = true
-                Timber.d("$e")
+                Timber.d(e)
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -74,17 +73,18 @@ class EditProfileViewModel: ViewModel() {
     private fun getAllCommunes() {
         viewModelScope.launch {
             try {
-                val result = SmartPayApi.smartPayApiService.getCommuneAsync().await()
+                val result = SmartPayApi.smartPayApiService.getCommuneAsync()
                 _showDialogLoader.value = false
+                Timber.d("$result")
                 if (result.isNotEmpty()) {
                     _communes.value = result
-                } else {
-                    _communes.value = listOf()
                 }
             } catch (e: Exception) {
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
-                Timber.e("$e")
+                Timber.e(e)
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -99,10 +99,5 @@ class EditProfileViewModel: ViewModel() {
 
     fun navigateToDone() {
         _navigateTo.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

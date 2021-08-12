@@ -58,7 +58,8 @@ class TransactionValidation : Fragment() {
                     false,
                     fcm!!
                 ), it)
-            })
+            }
+        )
 
         binding.transactionsToValidateRecyclerView.adapter = adapter
 
@@ -134,7 +135,7 @@ class TransactionValidation : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.refresh -> {
-                viewModel.getTransactions()
+                viewModel.getTransactionsToValidate()
                 true
             }
             else -> super.onOptionsItemSelected(item)

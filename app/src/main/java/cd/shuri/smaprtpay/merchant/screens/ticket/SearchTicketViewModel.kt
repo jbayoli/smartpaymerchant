@@ -13,6 +13,7 @@ import cd.shuri.smaprtpay.merchant.network.TicketVerification
 import cd.shuri.smaprtpay.merchant.network.TicketVerificationResult
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 import java.util.concurrent.ExecutionException
 
 class SearchTicketViewModel(application: Application) : AndroidViewModel(application) {
@@ -66,12 +67,14 @@ class SearchTicketViewModel(application: Application) : AndroidViewModel(applica
                 val result = SmartPayApi.smartPayApiService.verifyTicketAsync(
                     SmartPayApp.auth,
                     request
-                ).await()
+                )
                 _ticketVerificationResult.value = result
                 Timber.d("$result")
             } catch (e: Exception) {
                 Timber.e(e)
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
 
         }
