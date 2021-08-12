@@ -403,4 +403,25 @@ class SmartPayApiService(
             contentType(ContentType.Application.Json)
         }
     }
+
+    /**
+     *Initiate payment from the merchant
+     * @param authorization token to authenticate the request sender
+     * @param request to be sent to initiate a payment
+     * @return [CommonResponse]
+     */
+    suspend fun paymentAsync(
+        authorization: String,
+        request: Payment
+    ): CommonResponse {
+        return httpClient.post(
+            host = host,
+            port = port,
+            path = "/api/merchant/receive/payment"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+            body = request
+        }
+    }
 }

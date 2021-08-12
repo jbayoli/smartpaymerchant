@@ -114,10 +114,10 @@ data class AddPaymentMethodFirstTimeRequest(
 @Keep
 @Serializable
 data class ProvidersData(
-    val id: String?,
+    val id: Int?,
     val code: String?,
     val name: String?,
-    val type: String?
+    val type: Int?
 )
 
 @Keep
@@ -175,7 +175,6 @@ data class TransactionValidationRequest(
 @Keep
 @Serializable
 data class SectorsResponse(
-    val id: Int?,
     val code: String?,
     val name: String?
 )
@@ -354,4 +353,20 @@ data class TicketVerificationResult(
     val clearedAt: String?,
     val libelle: String?,
     val amount: String?
+)
+
+@Keep
+@Serializable
+data class Payment(
+    val merchant: String,
+    val phone: String,
+    val currency: String,
+    val reference: String,
+    val amount: String,
+    val fcm: String,
+    val type: Int,
+    val cvv: String?,
+    val card: String?,
+    val cardName: String?,
+    val expiration: String?
 )

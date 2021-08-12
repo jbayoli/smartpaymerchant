@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
-import cd.shuri.smaprtpay.merchant.network.AccountsResponse
-import cd.shuri.smaprtpay.merchant.network.CommonResponse
-import cd.shuri.smaprtpay.merchant.network.PaymentMethodAction
-import cd.shuri.smaprtpay.merchant.network.SmartPayApi
+import cd.shuri.smaprtpay.merchant.network.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.ConnectException
@@ -71,7 +68,10 @@ class AccountsViewModel : ViewModel() {
                 val result = SmartPayApi.smartPayApiService.addEditOrDeletePaymentMethodAsync(
                     authorization = auth,
                     action = PaymentMethodAction.Delete,
-                    request = account
+                    request = DeletePaymentAccount(
+                        account.code,
+                        userCode!!
+                    )
                 )
                 _showDialogLoader.value = false
                 if (result.status == "0") {

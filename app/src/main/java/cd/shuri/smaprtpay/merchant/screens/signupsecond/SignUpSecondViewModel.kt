@@ -3,6 +3,7 @@ package cd.shuri.smaprtpay.merchant.screens.signupsecond
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.RegisterRequest
 import cd.shuri.smaprtpay.merchant.network.RegisterStep
@@ -10,6 +11,7 @@ import cd.shuri.smaprtpay.merchant.network.SectorsResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import kotlinx.coroutines.*
 import timber.log.Timber
+import java.net.ConnectException
 
 class SignUpSecondViewModel: ViewModel() {
     private val _isActivityEmpty= MutableLiveData<Boolean>()
@@ -33,21 +35,16 @@ class SignUpSecondViewModel: ViewModel() {
     private val _navigateToHome = MutableLiveData<Boolean?>()
     val navigateToHome : LiveData<Boolean?> get() = _navigateToHome
 
-    private val _sectors = MutableLiveData<List<SectorsResponse>>()
+    private val _sectors = MutableLiveData(listOf<SectorsResponse>())
     val sectors :LiveData<List<SectorsResponse>> get() = _sectors
 
     private val _showTToastForError = MutableLiveData<Boolean?>()
     val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
     init {
-        _sectors.value = ArrayList()
         getSectors()
     }
 
@@ -88,17 +85,16 @@ class SignUpSecondViewModel: ViewModel() {
                 _showDialogLoader.value = true
                 val result = SmartPayApi.smartPayApiService.getSectorsAsync(auth)
                 _showDialogLoader.value = false
-                Timber.d("Sectors are ${result.size}")
+                Timber.d("$result")
                 if (result.isNotEmpty()) {
                     _sectors.value = result
-                } else {
-                    _sectors.value = ArrayList()
                 }
             } catch (e: Exception) {
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _sectors.value = ArrayList()
-                _showTToastForError.value = true
-                Timber.d("$e")
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -124,9 +120,11 @@ class SignUpSecondViewModel: ViewModel() {
                     _showToastError.value = true
                 }
             } catch (e: Exception) {
-                Timber.e("$e")
+                Timber.e(e)
                 _showDialogLoader.value = false
-                _showTToastForError.value = true
+                if (e is ConnectException) {
+                    _showTToastForError.value = true
+                }
             }
         }
     }
@@ -142,18 +140,12 @@ class SignUpSecondViewModel: ViewModel() {
                 preferencesEditor.remove("isRegistrationDone")
                 preferencesEditor.apply()
             } catch (e: Exception) {
-                e.printStackTrace()
+                Timber.e(e)
             }
         }
     }
 
     fun showToastErrorDone2() {
         _showTToastForError.value = null
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

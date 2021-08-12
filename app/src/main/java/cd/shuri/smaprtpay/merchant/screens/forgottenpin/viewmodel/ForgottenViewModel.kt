@@ -9,6 +9,7 @@ import cd.shuri.smaprtpay.merchant.network.ForgottenPINResponse
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.ConnectException
 
 class ForgottenViewModel: ViewModel() {
 
@@ -59,9 +60,10 @@ class ForgottenViewModel: ViewModel() {
                 }
             } catch (e: Exception) {
                 _showDialogLoader.value = false
-                _showToast.value = true
-                Timber.e("$e")
-                e.printStackTrace()
+                Timber.e(e)
+                if (e is ConnectException) {
+                    _showToast.value = true
+                }
             }
         }
     }
