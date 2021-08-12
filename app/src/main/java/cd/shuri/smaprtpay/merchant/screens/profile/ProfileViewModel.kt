@@ -3,12 +3,10 @@ package cd.shuri.smaprtpay.merchant.screens.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.Profile
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.ConnectException
@@ -25,9 +23,6 @@ class ProfileViewModel: ViewModel() {
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
-    private var viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
         getProfileInfo()
@@ -58,10 +53,5 @@ class ProfileViewModel: ViewModel() {
 
     fun showDialogLoaderDone() {
         _showDialogLoader.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }
