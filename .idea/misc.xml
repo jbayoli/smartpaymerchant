@@ -8,7 +8,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.31927083333333334" />
+        <entry key="app/src/main/res/layout-sw600dp/fragment_home.xml" value="0.235546875" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3140625" />
         <entry key="app/src/main/res/layout/fragment_transactions.xml" value="0.3140625" />
+        <entry key="app/src/main/res/layout/payment_fragment.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/transaction_in_wait_fragment.xml" value="0.3140625" />
       </map>
     </option>
@@ -42,7 +46,7 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

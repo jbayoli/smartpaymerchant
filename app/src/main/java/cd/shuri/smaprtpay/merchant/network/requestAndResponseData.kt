@@ -364,9 +364,5 @@ data class Payment(
     val reference: String,
     val amount: String,
     val fcm: String,
-    val type: Int,
-    val cvv: String?,
-    val card: String?,
-    val cardName: String?,
-    val expiration: String?
+    val type: Int
 )
