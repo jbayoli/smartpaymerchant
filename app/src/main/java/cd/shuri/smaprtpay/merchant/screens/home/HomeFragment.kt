@@ -2,16 +2,12 @@ package cd.shuri.smaprtpay.merchant.screens.home
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidmads.library.qrgenearator.QRGContents
-import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,7 +16,7 @@ import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.databinding.FragmentHomeBinding
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
-import timber.log.Timber
+import cd.shuri.smaprtpay.merchant.utilities.generateQRCode
 
 /**
  * A simple [Fragment] subclass.
@@ -30,8 +26,6 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel by viewModels<HomeViewModel>()
-
-    private lateinit var bitmap: Bitmap
 
     private val dialog = LoaderDialog()
 
@@ -48,11 +42,10 @@ class HomeFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        viewModel.getDashBoardData()
-
         createChannel(getString(R.string.notification_chanel_id), "Paiement")
         name?.let {
-            generateQRCode(it)
+            val bitmap = generateQRCode(it, requireContext())
+            binding.qrCodeImage.setImageBitmap(bitmap)
         }
 
         observers()
@@ -66,14 +59,14 @@ class HomeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.singInFragment -> {
                 deleteSharedPreferences()
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSingInFragment())
                 true
             }
             R.id.refresh -> {
-                //viewModel.getDashBoardData()
+                viewModel.getDashBoardData()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -86,10 +79,14 @@ class HomeFragment : Fragment() {
 
         binding.transactionsButton.setOnClickListener {
             viewModel.response.value?.let {
-                if(it.all!! > 0) {
+                if (it.all!! > 0) {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionsFragment())
-                }else {
-                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Aucune transaction disponible",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -99,7 +96,11 @@ class HomeFragment : Fragment() {
                 if (it.validatings!! > 0) {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionValidation())
                 } else {
-                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Aucune transaction disponible",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -109,7 +110,11 @@ class HomeFragment : Fragment() {
                 if (it.waiting!! > 0) {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionInWaitFragment())
                 } else {
-                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Aucune transaction disponible",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -119,7 +124,11 @@ class HomeFragment : Fragment() {
                 if (it.errors!! > 0) {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTransactionsErrorFragment())
                 } else {
-                    Toast.makeText(requireContext(), "Aucune transaction disponible", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Aucune transaction disponible",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -130,7 +139,11 @@ class HomeFragment : Fragment() {
 
         binding.qrCode.setOnClickListener {
             name?.let {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToQRCodeFragment(it))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToQRCodeFragment(
+                        it
+                    )
+                )
             }
         }
 
@@ -161,51 +174,22 @@ class HomeFragment : Fragment() {
         binding.validateTicket.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchTicketFragment())
         }
+
+        onPaymentClicked()
+    }
+
+    private fun onPaymentClicked() {
+        binding.pay.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections
+                .actionHomeFragmentToPaymentFragment()
+            )
+        }
     }
 
     private fun deleteSharedPreferences() {
         val preferencesEditor = SmartPayApp.preferences.edit()
         preferencesEditor.remove("token")
         preferencesEditor.apply()
-    }
-
-    @Suppress("DEPRECATION")
-    private fun generateQRCode(inputValue: String) {
-        val windowManager = requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-        val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            requireContext().display
-        } else {
-            windowManager.defaultDisplay
-        }
-        val point  = Point()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val windowMetrics = windowManager.currentWindowMetrics
-            windowMetrics.bounds
-        } else {
-            display?.getSize(point)
-        }
-
-        val width = point.x
-        val height = point.y
-        var smallerDimension = if (width < height) {
-            width
-        } else {
-            height
-        }
-
-        smallerDimension = smallerDimension * 3 / 4
-
-        val qrgEncoder = QRGEncoder(inputValue, null, QRGContents.Type.TEXT, smallerDimension)
-        qrgEncoder.colorBlack = Color.parseColor("#003c8f")
-        qrgEncoder.colorWhite = Color.parseColor("#edeff1")
-
-        try {
-            bitmap = qrgEncoder.bitmap
-            binding.qrCodeImage.setImageBitmap(bitmap)
-        } catch (e: Exception) {
-            Timber.e("$e")
-        }
     }
 
     private fun createChannel(channelId: String, channelName: String) {
@@ -243,7 +227,7 @@ class HomeFragment : Fragment() {
             it?.let {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
-                }  else {
+                } else {
                     dialog.dismiss()
                 }
                 viewModel.showDialogLoaderDone()
@@ -251,7 +235,7 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.response.observe(viewLifecycleOwner) {
-            it?.let{
+            it?.let {
                 binding.numberOfTransaction.text = bindNumberOfTransaction(it.all!!)
                 binding.numberOfWait.text = bindNumberOfTransaction(it.validatings!!)
                 binding.numberOfError.text = bindNumberOfTransaction(it.errors!!)
@@ -271,17 +255,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun bindNumberOfTransaction(number: Int)  : String {
+    private fun bindNumberOfTransaction(number: Int): String {
         return if (number in 1000..999_999) {
             val numberString = number.toString()
-            if (numberString[1] != '0' ) {
+            if (numberString[1] != '0') {
                 "${numberString.first()}.${numberString[1]}K"
             } else {
                 "${numberString.first()}K"
             }
         } else if (number in 1_000_000..999_999_999) {
             val numberString = number.toString()
-            if (numberString[1] != '0' ) {
+            if (numberString[1] != '0') {
                 "${numberString.first()}.${numberString[1]}M"
             } else {
                 "${numberString.first()}M"

@@ -29,6 +29,7 @@ class HomeViewModel : ViewModel() {
 
     init {
         savePreference()
+        getDashBoardData()
     }
 
     fun showDialogLoaderDone() {

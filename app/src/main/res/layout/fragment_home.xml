@@ -445,7 +445,7 @@
 
                             <ImageView
                                 android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_height="54dp"
                                 android:layout_gravity="center"
                                 android:src="@mipmap/mes_comptes" />
 
@@ -453,7 +453,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:text="Paiement"
+                                android:layout_gravity="center"
+                                android:text="Paie"
+                                android:textSize="12sp"
                                 android:textAlignment="center"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
@@ -485,7 +487,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/roboto"
-                                android:text="Mon QR Code"
+                                android:text="QR Code"
+                                android:textSize="12sp"
                                 android:textAlignment="center"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
@@ -548,7 +551,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:text="Mes Comptes"
+                                android:text="Comptes"
+                                android:textSize="12sp"
                                 android:textAlignment="center"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
@@ -580,7 +584,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/roboto"
-                                android:text="Alerte\n"
+                                android:text="Alerte"
+                                android:textSize="12sp"
                                 android:textAlignment="center"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
@@ -623,8 +628,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/roboto"
-                                android:text="Valider ticket"
-                                android:textAlignment="center"
+                                android:text="Ticket"
+                                android:textSize="12sp"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -654,8 +659,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:text="Changer PIN"
-                                android:textAlignment="center"
+                                android:layout_gravity="center"
+                                android:text="PIN"
+                                android:textSize="12sp"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -717,8 +723,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:text="Mon profil"
-                                android:textAlignment="center"
+                                android:layout_gravity="center"
+                                android:text="Profil"
+                                android:textSize="12sp"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
