@@ -42,6 +42,8 @@ class SmartPayApiService(
     private val httpClient: HttpClient
 ) {
 
+    private val baseUrl = "https://backend.flexpay.cd"
+
     /**
      * Combined the request of step1, step2, step4, step5 in registration process
      * @param [step] is one of the value in [RegisterStep]
