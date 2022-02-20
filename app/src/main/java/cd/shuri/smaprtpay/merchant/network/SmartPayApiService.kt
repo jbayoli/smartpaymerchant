@@ -55,9 +55,7 @@ class SmartPayApiService(
         request: Any
     ): CommonResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/register/merchant/api/$step"
+            "$baseUrl/register/merchant/api/$step"
         ) {
             contentType(ContentType.Application.Json)
             body = request
@@ -71,9 +69,7 @@ class SmartPayApiService(
      */
     suspend fun signUpAsync(request : SingUpRequest): SingUpResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/register/merchant/api/step3"
+            "$baseUrl/register/merchant/api/step3"
         ) {
             contentType(ContentType.Application.Json)
             body = request
@@ -87,9 +83,7 @@ class SmartPayApiService(
      */
     suspend fun login(request: LoginRequest): HttpResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/login"
+            "$baseUrl/login"
         ) {
             contentType(ContentType.Application.Json)
             body = request
@@ -109,9 +103,7 @@ class SmartPayApiService(
         request: Any
     ): CommonResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/api/merchant/compte/$action"
+            "$baseUrl/api/merchant/compte/$action"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -130,9 +122,7 @@ class SmartPayApiService(
         type: Int
     ) : List<ProvidersData> {
         return httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/default/providers/$type"
+            "$baseUrl/api/default/providers/$type"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -150,9 +140,7 @@ class SmartPayApiService(
         customer: String
     ): List<AccountsResponse> {
         return httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/merchant/compte/all/$customer"
+            "$baseUrl/api/merchant/compte/all/$customer"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -170,9 +158,7 @@ class SmartPayApiService(
         customer: String
     ): DashboardResponse {
         return httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/merchant/transaction/dashboard/$customer"
+            "$baseUrl/api/merchant/transaction/dashboard/$customer"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -192,9 +178,7 @@ class SmartPayApiService(
         customer: String
     ): List<TransactionResponse> {
         return httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/merchant/transaction/$type/$customer"
+            "$baseUrl/api/merchant/transaction/$type/$customer"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -212,9 +196,7 @@ class SmartPayApiService(
         request: TransactionValidationRequest
     ): CommonResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/api/merchant/transaction/validate"
+            "$baseUrl/api/merchant/transaction/validate"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -229,9 +211,7 @@ class SmartPayApiService(
      */
     suspend fun getSectorsAsync(authorization: String): List<SectorsResponse> {
         return httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/default/sectors"
+            "$baseUrl/api/default/sectors"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -249,9 +229,7 @@ class SmartPayApiService(
         request: EditPasswordRequestData
     ): CommonResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/api/merchant/password/reinit"
+            "$baseUrl/api/merchant/password/reinit"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -270,9 +248,7 @@ class SmartPayApiService(
         request: Any
     ): ForgottenPINResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/register/merchant/api/reinitPassword/$step"
+            "$baseUrl/register/merchant/api/reinitPassword/$step"
         ) {
             contentType(ContentType.Application.Json)
             body = request
@@ -290,9 +266,7 @@ class SmartPayApiService(
         authorization: String
     ): Profile {
         return httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/merchant/account/infos/$customer"
+            "$baseUrl/api/merchant/account/infos/$customer"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -310,9 +284,7 @@ class SmartPayApiService(
         request: UpdateProfile
     ) : CommonResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/api/merchant/account/infos/update"
+            "$baseUrl/api/merchant/account/infos/update"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -331,9 +303,7 @@ class SmartPayApiService(
         customer: String
     ): CommonResponse {
         return httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/merchant/account/register/delete/$customer"
+            "$baseUrl/api/merchant/account/register/delete/$customer"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -351,9 +321,7 @@ class SmartPayApiService(
         customer: String
     ): NotificationResponse {
         return  httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/merchant/notification/list/$customer"
+            "$baseUrl/api/merchant/notification/list/$customer"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -365,9 +333,7 @@ class SmartPayApiService(
      * @return [Commune]s
      */
     suspend fun getCommuneAsync(): List<Commune> = httpClient.get(
-        host = host,
-        port = port,
-        path = "/api/support/communes"
+        "$baseUrl/api/support/communes"
     ) {
         contentType(ContentType.Application.Json)
     }
@@ -383,9 +349,7 @@ class SmartPayApiService(
         request: TicketVerification
     ): TicketVerificationResult {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "api/merchant/ticket/verify"
+            "$baseUrl/api/merchant/ticket/verify"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
@@ -398,9 +362,7 @@ class SmartPayApiService(
      */
     suspend fun getHelpDataAsync(): HelpData {
         return httpClient.get(
-            host = host,
-            port = port,
-            path = "/api/support/help"
+            "$baseUrl/api/support/help"
         ) {
             contentType(ContentType.Application.Json)
         }
@@ -417,9 +379,7 @@ class SmartPayApiService(
         request: Payment
     ): CommonResponse {
         return httpClient.post(
-            host = host,
-            port = port,
-            path = "/api/merchant/receive/payment"
+            "$baseUrl/api/merchant/receive/payment"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)

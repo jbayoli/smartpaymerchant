@@ -10,23 +10,23 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.ConnectException
 
-class TransactionValidationViewModel: ViewModel() {
-    private val _transactions =  MutableLiveData(listOf<TransactionResponse>())
-    val transactions : LiveData<List<TransactionResponse>> get() = _transactions
+class TransactionValidationViewModel : ViewModel() {
+    private val _transactions = MutableLiveData(listOf<TransactionResponse>())
+    val transactions: LiveData<List<TransactionResponse>> get() = _transactions
 
     private val _validation = MutableLiveData<CommonResponse>()
-    val validation : LiveData<CommonResponse> get() = _validation
+    val validation: LiveData<CommonResponse> get() = _validation
 
     private val _showDialogLoader = MutableLiveData<Boolean?>()
-    val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
+    val showDialogLoader: LiveData<Boolean?> get() = _showDialogLoader
 
     private val _navigateToHome = MutableLiveData<Boolean?>()
-    val navigateToHome : LiveData<Boolean?> get() = _navigateToHome
+    val navigateToHome: LiveData<Boolean?> get() = _navigateToHome
 
     private val _showTToastForError = MutableLiveData<Boolean?>()
     val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
-    private val _indexRemoved= MutableLiveData<Int>()
+    private val _indexRemoved = MutableLiveData<Int>()
     val indexRemoved: LiveData<Int> get() = _indexRemoved
 
     private val userCode = SmartPayApp.preferences.getString("user_code", "")
@@ -75,7 +75,10 @@ class TransactionValidationViewModel: ViewModel() {
         }
     }
 
-    fun validateTransaction(request: TransactionValidationRequest, transaction: TransactionResponse) {
+    fun validateTransaction(
+        request: TransactionValidationRequest,
+        transaction: TransactionResponse
+    ) {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
@@ -85,7 +88,7 @@ class TransactionValidationViewModel: ViewModel() {
                 if (result.status == "0" || result.status == "1") {
                     val transacs = _transactions.value!!.toMutableList()
                     transacs.remove(transaction)
-                    _indexRemoved.value =  transacs.indexOf(transaction)
+                    _indexRemoved.value = transacs.indexOf(transaction)
                     _transactions.value = transacs.toList()
                 }
             } catch (e: Exception) {
