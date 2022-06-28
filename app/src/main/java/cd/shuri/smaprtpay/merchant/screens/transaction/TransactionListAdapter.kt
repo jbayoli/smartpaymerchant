@@ -2,14 +2,14 @@ package cd.shuri.smaprtpay.merchant.screens.transaction
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cd.shuri.smaprtpay.merchant.databinding.TransactionItemsBinding
 import cd.shuri.smaprtpay.merchant.network.TransactionResponse
 
 class TransactionListAdapter :
-    ListAdapter<TransactionResponse, TransactionListAdapter.TransactionsViewHolder>(TransactionListDiffCallBack())
+    PagingDataAdapter<TransactionResponse, TransactionListAdapter.TransactionsViewHolder>(TransactionListDiffCallBack())
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionsViewHolder {
@@ -17,7 +17,7 @@ class TransactionListAdapter :
     }
 
     override fun onBindViewHolder(holder: TransactionsViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { holder.bind(it) }
     }
 
     class TransactionsViewHolder private constructor(private val binding: TransactionItemsBinding):

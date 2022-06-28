@@ -103,11 +103,11 @@ fun bindAccountsRecyclerView(recyclerView: RecyclerView, accounts: List<Accounts
     adapter.submitList(accounts)
 }
 
-@BindingAdapter("bindTransactionsRecyclerView")
-fun bindTransactionsRecyclerView(recyclerView: RecyclerView, transactions: List<TransactionResponse>) {
-    val adapter = recyclerView.adapter as TransactionListAdapter
-    adapter.submitList(transactions)
-}
+//@BindingAdapter("bindTransactionsRecyclerView")
+//fun bindTransactionsRecyclerView(recyclerView: RecyclerView, transactions: List<TransactionResponse>) {
+//    val adapter = recyclerView.adapter as TransactionListAdapter
+//    adapter.submitList(transactions)
+//}
 
 @BindingAdapter("bindTransactionsToValidateRecyclerView")
 fun bindTransactionsToValidateRecyclerView(recyclerView: RecyclerView, transactions: List<TransactionResponse>) {

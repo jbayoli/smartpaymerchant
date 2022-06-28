@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/layout-sw600dp/fragment_home.xml" value="0.235546875" />
         <entry key="app/src/main/res/layout/account_items.xml" value="0.3138888888888889" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.16197916666666667" />
         <entry key="app/src/main/res/layout/fragment_add_account.xml" value="0.31333333333333335" />
         <entry key="app/src/main/res/layout/fragment_add_first_payment_account.xml" value="0.31333333333333335" />
         <entry key="app/src/main/res/layout/fragment_code.xml" value="0.31333333333333335" />
@@ -20,15 +21,19 @@
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.3" />
         <entry key="app/src/main/res/layout/fragment_sign_up_first.xml" value="0.31333333333333335" />
         <entry key="app/src/main/res/layout/fragment_sign_up_second.xml" value="0.31333333333333335" />
-        <entry key="app/src/main/res/layout/fragment_transactions.xml" value="0.3140625" />
+        <entry key="app/src/main/res/layout/fragment_sing_in.xml" value="0.3" />
+        <entry key="app/src/main/res/layout/fragment_transactions.xml" value="0.263782866836302" />
+        <entry key="app/src/main/res/layout/fragment_transactions_validated.xml" value="0.16197916666666667" />
         <entry key="app/src/main/res/layout/fragment_transfers.xml" value="0.3138888888888889" />
         <entry key="app/src/main/res/layout/fragment_user_code.xml" value="0.3138888888888889" />
         <entry key="app/src/main/res/layout/fragment_validation.xml" value="0.3138888888888889" />
         <entry key="app/src/main/res/layout/help_fragment.xml" value="0.3138888888888889" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.3138888888888889" />
+        <entry key="app/src/main/res/layout/loader_dialog.xml" value="0.3" />
         <entry key="app/src/main/res/layout/payment_fragment.xml" value="0.31354166666666666" />
-        <entry key="app/src/main/res/layout/transaction_in_wait_fragment.xml" value="0.3140625" />
+        <entry key="app/src/main/res/layout/transaction_in_wait_fragment.xml" value="0.2752212389380531" />
         <entry key="app/src/main/res/layout/transaction_items.xml" value="0.3138888888888889" />
+        <entry key="app/src/main/res/layout/transactions_error_fragment.xml" value="0.16197916666666667" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2962962962962963" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2962962962962963" />
       </map>

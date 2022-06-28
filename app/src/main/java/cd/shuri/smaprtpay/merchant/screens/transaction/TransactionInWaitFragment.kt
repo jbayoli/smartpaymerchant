@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import cd.shuri.smaprtpay.merchant.databinding.TransactionInWaitFragmentBinding
 import cd.shuri.smaprtpay.merchant.utilities.LoaderDialog
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class TransactionInWaitFragment : Fragment() {
 
@@ -22,18 +26,16 @@ class TransactionInWaitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = TransactionInWaitFragmentBinding.inflate(layoutInflater)
-
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        binding.transactionsValidatedRecyclerView.adapter = TransactionListAdapter()
-
-        observers()
+        val adapter = TransactionListAdapter()
+        binding.transactionsValidatedRecyclerView.adapter = adapter
+        observers(adapter)
         return binding.root
     }
 
-    private fun observers() {
+    private fun observers(adapter: TransactionListAdapter) {
+
         viewModel.showDialogLoader.observe(viewLifecycleOwner) {
-            if (it != null) {
+            it?.let {
                 if (it) {
                     dialog.show(requireActivity().supportFragmentManager, "LoaderDialog")
                 }  else {
@@ -43,14 +45,41 @@ class TransactionInWaitFragment : Fragment() {
             }
         }
 
-        viewModel.showTToastForError.observe(viewLifecycleOwner) {
-            it?.let {
-                Toast.makeText(
-                    requireContext(),
-                    "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard",
-                    Toast.LENGTH_SHORT
-                ).show()
-                viewModel.showToastErrorDone()
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.loadStateFlow.collect { state ->
+                when(state.refresh) {
+                    is LoadState.Loading -> viewModel.showDialogLoaderDone(true)
+                    is LoadState.Error -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> { viewModel.showDialogLoaderDone(false)}
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.loadStateFlow.collect { state ->
+                when(state.append) {
+                    is LoadState.Loading -> binding.progressBar.visibility = View.VISIBLE
+                    is LoadState.Error -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Impossible de contacter le serveur, verifier votre connection ou essayer plus tard",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> binding.progressBar.visibility = View.GONE
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.transactions.collectLatest { pagingData ->
+                adapter.submitData(pagingData)
             }
         }
     }

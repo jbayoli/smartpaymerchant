@@ -1,8 +1,9 @@
 package cd.shuri.smaprtpay.merchant.network
 
 import io.ktor.client.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 
 object SmartPayApi {
     //Base api url
@@ -10,9 +11,13 @@ object SmartPayApi {
     private const val PORT = 3006
 
     private val HTTP_CLIENT = HttpClient{
-        install(JsonFeature){
-            val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
-            serializer = KotlinxSerializer(json)
+        install(ContentNegotiation) {
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                    prettyPrint = true
+                }
+            )
         }
     }
 

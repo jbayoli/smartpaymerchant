@@ -1,6 +1,7 @@
 package cd.shuri.smaprtpay.merchant.network
 
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -42,7 +43,8 @@ class SmartPayApiService(
     private val httpClient: HttpClient
 ) {
 
-    private val baseUrl = "https://backend.flexpay.cd"
+    //private val baseUrl = "https://backend.flexpay.cd"
+    private val baseUrl = "http://41.243.7.46:3006"
 
     /**
      * Combined the request of step1, step2, step4, step5 in registration process
@@ -58,8 +60,8 @@ class SmartPayApiService(
             "$baseUrl/register/merchant/api/$step"
         ) {
             contentType(ContentType.Application.Json)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 
     /**
@@ -72,8 +74,8 @@ class SmartPayApiService(
             "$baseUrl/register/merchant/api/step3"
         ) {
             contentType(ContentType.Application.Json)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 
     /**
@@ -86,7 +88,7 @@ class SmartPayApiService(
             "$baseUrl/login"
         ) {
             contentType(ContentType.Application.Json)
-            body = request
+            setBody(request)
         }
     }
 
@@ -107,8 +109,8 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 
     /**
@@ -126,7 +128,7 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-        }
+        }.body()
     }
 
     /**
@@ -144,7 +146,7 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-        }
+        }.body()
     }
 
     /**
@@ -162,7 +164,7 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-        }
+        }.body()
     }
 
     /**
@@ -175,14 +177,15 @@ class SmartPayApiService(
     suspend fun getTransactionByTypeAsync(
         authorization: String,
         type: String,
-        customer: String
+        customer: String,
+        nextPage: Int = 1
     ): List<TransactionResponse> {
         return httpClient.get(
-            "$baseUrl/api/merchant/transaction/$type/$customer"
+            "$baseUrl/api/merchant/transaction/$type/$customer?page=$nextPage"
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-        }
+        }.body()
     }
 
     /**
@@ -200,8 +203,8 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 
     /**
@@ -215,7 +218,7 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-        }
+        }.body()
     }
 
     /**
@@ -233,8 +236,8 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 
     /**
@@ -251,8 +254,8 @@ class SmartPayApiService(
             "$baseUrl/register/merchant/api/reinitPassword/$step"
         ) {
             contentType(ContentType.Application.Json)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 
     /**
@@ -270,7 +273,7 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-        }
+        }.body()
     }
 
     /**
@@ -288,8 +291,8 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 
     /**
@@ -307,7 +310,7 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-        }
+        }.body()
     }
 
     /**
@@ -325,7 +328,7 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-        }
+        }.body()
     }
 
     /**
@@ -336,7 +339,7 @@ class SmartPayApiService(
         "$baseUrl/api/support/communes"
     ) {
         contentType(ContentType.Application.Json)
-    }
+    }.body()
 
     /**
      * Check the validity of a ticket
@@ -353,8 +356,8 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 
     /**
@@ -365,7 +368,7 @@ class SmartPayApiService(
             "$baseUrl/api/support/help"
         ) {
             contentType(ContentType.Application.Json)
-        }
+        }.body()
     }
 
     /**
@@ -383,7 +386,7 @@ class SmartPayApiService(
         ) {
             contentType(ContentType.Application.Json)
             header(HttpHeaders.Authorization, authorization)
-            body = request
-        }
+            setBody(request)
+        }.body()
     }
 }

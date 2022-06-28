@@ -95,7 +95,7 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:textAllCaps="false"
                 android:textSize="12sp"
-                android:text="En savoire plus sur les termes"
+                android:text="En savoir plus sur les termes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/warn_tv"

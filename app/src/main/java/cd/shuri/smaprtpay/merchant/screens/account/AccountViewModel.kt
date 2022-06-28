@@ -10,7 +10,7 @@ import cd.shuri.smaprtpay.merchant.network.CommonResponse
 import cd.shuri.smaprtpay.merchant.network.RegisterStep
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import com.google.firebase.messaging.FirebaseMessaging
-import io.ktor.network.sockets.*
+import io.ktor.client.network.sockets.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

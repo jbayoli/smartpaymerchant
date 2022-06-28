@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import cd.shuri.smaprtpay.merchant.SmartPayApp
 import cd.shuri.smaprtpay.merchant.network.SmartPayApi
 import cd.shuri.smaprtpay.merchant.network.TransactionResponse
@@ -13,8 +16,6 @@ import timber.log.Timber
 import java.net.ConnectException
 
 class TransactionInWaitViewModel : ViewModel() {
-    private val _transactions =  MutableLiveData(listOf<TransactionResponse>())
-    val transactions : LiveData<List<TransactionResponse>> get() = _transactions
 
     private val _showDialogLoader = MutableLiveData<Boolean?>()
     val  showDialogLoader : LiveData<Boolean?> get() = _showDialogLoader
@@ -26,36 +27,12 @@ class TransactionInWaitViewModel : ViewModel() {
     private val userToken = SmartPayApp.preferences.getString("token", "")
     private val auth = "Bearer $userToken"
 
-    init {
-        getTransactions()
-    }
+    val transactions = Pager(PagingConfig(pageSize = 10)) {
+        TransactionsPagingSource(TransactionType.Pending, auth, userCode!!)
+    }.flow.cachedIn(viewModelScope)
 
-    fun showDialogLoaderDone() {
-        _showDialogLoader.value = null
-    }
-
-    private fun getTransactions() {
-        viewModelScope.launch {
-            try {
-                _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.getTransactionByTypeAsync(
-                    authorization = auth,
-                    type = TransactionType.Pending,
-                    customer = userCode!!
-                )
-                _showDialogLoader.value = false
-                Timber.d("$result")
-                if (result.isNotEmpty()) {
-                    _transactions.value = result
-                }
-            } catch (e: Exception) {
-                Timber.e(e)
-                _showDialogLoader.value = false
-                if (e is ConnectException) {
-                    _showTToastForError.value = true
-                }
-            }
-        }
+    fun showDialogLoaderDone(isLoading: Boolean? = null) {
+        _showDialogLoader.value = isLoading
     }
 
     fun showToastErrorDone() {
