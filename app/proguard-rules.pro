@@ -20,22 +20,29 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepattributes *Annotation*, InnerClasses
--dontnote kotlinx.serialization.AnnotationsKt # core serialization annotations
-
-# kotlinx-serialization-json specific. Add this if you have java.lang.NoClassDefFoundError kotlinx.serialization.json.JsonObjectSerializer
--keepclassmembers class kotlinx.serialization.json.** {
-    *** Companion;
+# Keep `Companion` object fields of serializable classes.
+# This avoids serializer lookup through `getDeclaredClasses` as done for named companion objects.
+-if @kotlinx.serialization.Serializable class **
+-keepclassmembers class <1> {
+    static <1>$Companion Companion;
 }
--keepclasseswithmembers class kotlinx.serialization.json.** {
+
+# Keep `serializer()` on companion objects (both default and named) of serializable classes.
+-if @kotlinx.serialization.Serializable class ** {
+    static **$* *;
+}
+-keepclassmembers class <2>$<3> {
     kotlinx.serialization.KSerializer serializer(...);
 }
 
-# Change here com.yourcompany.yourpackage
--keep,includedescriptorclasses class cd.shuri.smaprtpay.merchant.**$$serializer { *; } # <-- change package name to your app's
--keepclassmembers class cd.shuri.smaprtpay.merchant.** { # <-- change package name to your app's
-    *** Companion;
+# Keep `INSTANCE.serializer()` of serializable objects.
+-if @kotlinx.serialization.Serializable class ** {
+    public static ** INSTANCE;
 }
--keepclasseswithmembers class cd.shuri.smaprtpay.merchant.** { # <-- change package name to your app's
+-keepclassmembers class <1> {
+    public static <1> INSTANCE;
     kotlinx.serialization.KSerializer serializer(...);
 }
+
+# @Serializable and @Polymorphic are used at runtime for polymorphic serialization.
+-keepattributes RuntimeVisibleAnnotations,AnnotationDefault

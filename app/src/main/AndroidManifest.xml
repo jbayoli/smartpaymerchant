@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="cd.shuri.smaprtpay.merchant">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="androidx.camera.camera2, androidx.camera.core,
       androidx.camera.view, androidx.camera.lifecycle"/>
@@ -31,7 +30,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/logo"/>
+            android:resource="@drawable/ic_flexpay"/>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"

@@ -8,9 +8,10 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -41,6 +42,7 @@ class SearchTicketFragment : Fragment() {
     private var analysisUseCase: ImageAnalysis? = null
     private lateinit var viewModel: SearchTicketViewModel
     private var isCheckingTicket: Boolean? = null
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     private val screenAspectRatio: Int
         get() {
@@ -57,7 +59,17 @@ class SearchTicketFragment : Fragment() {
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(SearchTicketViewModel::class.java)
+        )[SearchTicketViewModel::class.java]
+
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                bindCameraUseCases()
+            } else {
+                requestAccessCameraPermission()
+            }
+        }
 
         showDialog()
 
@@ -80,20 +92,7 @@ class SearchTicketFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == REQUEST_CAMERA_CODE) {
-            if (isCameraPermissionGranted()) {
-                bindCameraUseCases()
-            } else {
-                Timber.d("no camera permission")
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
+
 
     private fun showDialog() {
         MaterialAlertDialogBuilder(requireContext())
@@ -137,11 +136,7 @@ class SearchTicketFragment : Fragment() {
                 if (isCameraPermissionGranted()) {
                     bindCameraUseCases()
                 } else {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(Manifest.permission.CAMERA),
-                        REQUEST_CAMERA_CODE
-                    )
+                    requestAccessCameraPermission()
                 }
             }
 
@@ -250,11 +245,10 @@ class SearchTicketFragment : Fragment() {
         val cameraExecutor = Executors.newSingleThreadExecutor()
 
         analysisUseCase?.setAnalyzer(
-            cameraExecutor,
-            { imageProxy ->
-                processImageProxy(barcodeScanner, imageProxy)
-            }
-        )
+            cameraExecutor
+        ) { imageProxy ->
+            processImageProxy(barcodeScanner, imageProxy)
+        }
 
         try {
             cameraProvider!!.bindToLifecycle(
@@ -292,8 +286,11 @@ class SearchTicketFragment : Fragment() {
             }
     }
 
+    private fun requestAccessCameraPermission() {
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+    }
+
     companion object {
-        private const val REQUEST_CAMERA_CODE = 1
         private const val RATIO_4_3_VALUE = 4.0 / 3.0
         private const val RATIO_16_9_VALUE = 16.0 / 9.0
     }

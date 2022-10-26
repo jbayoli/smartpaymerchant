@@ -43,8 +43,8 @@ class SmartPayApiService(
     private val httpClient: HttpClient
 ) {
 
-    //private val baseUrl = "https://backend.flexpay.cd"
-    private val baseUrl = "http://41.243.7.46:3006"
+    private val baseUrl = "https://backend.flexpay.cd"
+    //private val baseUrl = "http://41.243.7.46:3006"
 
     /**
      * Combined the request of step1, step2, step4, step5 in registration process

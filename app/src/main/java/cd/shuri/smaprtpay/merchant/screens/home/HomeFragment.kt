@@ -2,15 +2,17 @@ package cd.shuri.smaprtpay.merchant.screens.home
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.SmartPayApp
@@ -40,8 +42,6 @@ class HomeFragment : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.show()
 
-        setHasOptionsMenu(true)
-
         createChannel(getString(R.string.notification_chanel_id), "Paiement")
         name?.let {
             val bitmap = generateQRCode(it, requireContext())
@@ -50,28 +50,9 @@ class HomeFragment : Fragment() {
 
         observers()
 
+        createMenu()
+
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.singInFragment -> {
-                deleteSharedPreferences()
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSingInFragment())
-                true
-            }
-            R.id.refresh -> {
-                viewModel.getDashBoardData()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -176,6 +157,35 @@ class HomeFragment : Fragment() {
         }
 
         onPaymentClicked()
+    }
+
+    private fun createMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.home_menu, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.singInFragment -> {
+                            deleteSharedPreferences()
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSingInFragment())
+                            true
+                        }
+
+                        R.id.refresh -> {
+                            viewModel.getDashBoardData()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private fun onPaymentClicked() {

@@ -60,21 +60,21 @@ fun NotificationManager.sendNotification(remoteMessage: RemoteMessage, applicati
             applicationContext,
             applicationContext.getString(R.string.notification_chanel_id)
         )
-            .setSmallIcon(R.drawable.logo)
+            .setSmallIcon(R.drawable.ic_flexpay)
             .setContentTitle(remoteMessage.data["title"])
             .setContentText(remoteMessage.data["content"])
             .setContentIntent(contentPendingIntent)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setColor(Color.parseColor("#003c8f"))
-            .addAction(R.drawable.logo, "VALIDER", actionValidation)
-            .addAction(R.drawable.logo, "ANNULER", actionCancel)
+            .addAction(R.drawable.ic_flexpay, "VALIDER", actionValidation)
+            .addAction(R.drawable.ic_flexpay, "ANNULER", actionCancel)
     } else {
         NotificationCompat.Builder(
             applicationContext,
             applicationContext.getString(R.string.notification_chanel_id)
         )
-            .setSmallIcon(R.drawable.logo)
+            .setSmallIcon(R.drawable.ic_flexpay)
             .setContentTitle(remoteMessage.data["title"])
             .setContentText(remoteMessage.data["content"])
             .setContentIntent(contentPendingIntent)

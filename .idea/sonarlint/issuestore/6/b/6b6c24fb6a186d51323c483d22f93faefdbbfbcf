@@ -1,3 +1,5 @@
 
-xkotlin:S1192–"XDefine a constant instead of duplicating this literal "Ce champ est obligatoir" 3 times.(æºœ¥8¢˜‹Èó.
-rkotlin:S3776İ"RRefactor this method to reduce its Cognitive Complexity from 41 to the 15 allowed.(î³ñ¤8¢˜‹Èó.
+xkotlin:S1192 "XDefine a constant instead of duplicating this literal "Ce champ est obligatoir" 3 times.(æºœ¥8¢˜‹Èó.
+qkotlin:S3776S"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ëü«8åâ¼é¢0
+rkotlin:S3776ç"RRefactor this method to reduce its Cognitive Complexity from 37 to the 15 allowed.(î³ñ¤8¢˜‹Èó.
+€kotlin:S3923ª"[Remove this conditional structure or edit its code blocks so that they're not all the same.(Óƒş€úÿÿÿÿ8éâ¼é¢0

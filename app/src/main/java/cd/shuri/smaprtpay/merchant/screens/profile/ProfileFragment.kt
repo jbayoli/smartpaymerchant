@@ -3,8 +3,11 @@ package cd.shuri.smaprtpay.merchant.screens.profile
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import cd.shuri.smaprtpay.merchant.R
 import cd.shuri.smaprtpay.merchant.databinding.FragmentProfileBinding
@@ -31,27 +34,35 @@ class ProfileFragment : Fragment() {
         binding.viewModel = viewModel
         observer()
 
-        setHasOptionsMenu(true)
+        createMenu()
 
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.profile_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.action_profileFragment_to_editProfileFragment -> {
-                viewModel.response.value?.let {
-                    findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment(it))
+    private fun createMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.profile_menu, menu)
                 }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
 
-        }
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.action_profileFragment_to_editProfileFragment -> {
+                            viewModel.response.value?.let {
+                                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment(it))
+                            }
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
 

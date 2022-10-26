@@ -126,8 +126,8 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="cd.shuri.smaprtpay.merchant.screens.home.HomeFragment"
-        android:label="FlexPay Marchand"
-        tools:layout="@layout/fragment_home" >
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_transactionsFragment"
             app:destination="@id/transactionsFragment"

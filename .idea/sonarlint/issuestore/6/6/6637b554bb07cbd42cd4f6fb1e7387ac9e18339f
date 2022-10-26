@@ -1,4 +1,3 @@
 
-7kotlin:S1128"Remove this unused import.(ΤΌ³ϊÿÿÿÿÿ
-vkotlin:S1192W"^Define a constant instead of duplicating this literal "Aucune transaction disponible" 4 times.(€φ―ς
-jkotlin:S3776M"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(λό«
+vkotlin:S1192D"^Define a constant instead of duplicating this literal "Aucune transaction disponible" 4 times.(€φ―ς
+jkotlin:S3776:"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(λό«
