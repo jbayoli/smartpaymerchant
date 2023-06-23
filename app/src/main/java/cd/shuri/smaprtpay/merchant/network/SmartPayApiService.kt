@@ -43,8 +43,8 @@ class SmartPayApiService(
     private val httpClient: HttpClient
 ) {
 
-    //private val baseUrl = "https://backend.flexpay.cd"
-    private val baseUrl = "http://41.243.7.46:3006/flexpay"
+    private val baseUrl = "https://backend.flexpay.cd"
+    //private val baseUrl = "http://41.243.7.46:3006"
 
     /**
      * Combined the request of step1, step2, step4, step5 in registration process
@@ -52,9 +52,45 @@ class SmartPayApiService(
      * @param [request] is on of the registration request except [SingUpRequest]
      * @return [CommonResponse]
      */
-    suspend fun combinedRegisterRequest(
+
+    suspend fun registerRequestOne(
         step: String,
-        request: Any
+        request: CodeRequest
+    ): CommonResponse {
+        return httpClient.post(
+            "$baseUrl/register/merchant/api/$step"
+        ) {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }.body()
+    }
+
+    suspend fun registerRequestTwo(
+        step: String,
+        request: ValidateCodeRequest
+    ): CommonResponse {
+        return httpClient.post(
+            "$baseUrl/register/merchant/api/$step"
+        ) {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }.body()
+    }
+
+    suspend fun registerRequestFour(
+        step: String,
+        request: RegisterRequest
+    ): CommonResponse {
+        return httpClient.post(
+            "$baseUrl/register/merchant/api/$step"
+        ) {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }.body()
+    }
+    suspend fun registerRequestFive(
+        step: String,
+        request: AddPaymentMethodFirstTimeRequest
     ): CommonResponse {
         return httpClient.post(
             "$baseUrl/register/merchant/api/$step"

@@ -62,7 +62,7 @@ class AccountViewModel: ViewModel() {
             try {
                 _showDialogLoader.value = true
                 val request = CodeRequest(phoneNumber, token)
-                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                val result = SmartPayApi.smartPayApiService.registerRequestOne(
                     RegisterStep.StepOne,
                     request
                 )

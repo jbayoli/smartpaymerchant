@@ -184,7 +184,7 @@ class AddPaymentAccountViewModel : ViewModel() {
             try {
                 _showDialogLoader.value = true
                 Timber.d("$request")
-                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                val result = SmartPayApi.smartPayApiService.registerRequestFive(
                     RegisterStep.StepFive,
                     request
                 )

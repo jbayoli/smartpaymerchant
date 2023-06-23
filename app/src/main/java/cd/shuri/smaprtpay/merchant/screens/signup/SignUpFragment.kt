@@ -82,6 +82,9 @@ class SignUpFragment : Fragment() {
     }
 
     private fun observers() {
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
 
         viewModel.isCodeEmpty.observe(viewLifecycleOwner) {
             if (it) {

@@ -6,7 +6,6 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Keep
 @Serializable
 data class LoginRequest(
     val username: String,
@@ -15,21 +14,21 @@ data class LoginRequest(
     val fcm: String
 )
 
-@Keep
+
 @Serializable
 data class CommonResponse(
     val message: String,
     val status: String
 )
 
-@Keep
+
 @Serializable
 data class CodeRequest(
     val phone: String,
     val fcm: String
 )
 
-@Keep
+
 @Serializable
 data class ValidateCodeRequest(
     val phone: String,
@@ -37,7 +36,6 @@ data class ValidateCodeRequest(
     val code: String
 )
 
-@Keep
 @Serializable
 data class SingUpRequest(
     val code: String,
@@ -48,7 +46,7 @@ data class SingUpRequest(
     val fcm: String
 )
 
-@Keep
+
 @Serializable
 data class SingUpResponse(
     val message: String?,
@@ -81,7 +79,6 @@ data class RegisterRequest(
     val sex: String
 ):Parcelable
 
-@Keep
 @Serializable
 data class AddPaymentMethodRequest(
     val operator: String,
@@ -96,7 +93,7 @@ data class AddPaymentMethodRequest(
     val isMerchant: String
 )
 
-@Keep
+
 @Serializable
 data class AddPaymentMethodFirstTimeRequest(
     val operator1: String? = null,
@@ -111,7 +108,7 @@ data class AddPaymentMethodFirstTimeRequest(
     val cardName: String? = null,
 )
 
-@Keep
+
 @Serializable
 data class ProvidersData(
     val id: Int?,
@@ -136,7 +133,7 @@ data class AccountsResponse(
     val default: Boolean?
 ): Parcelable
 
-@Keep
+
 @Serializable
 data class DashboardResponse(
     val all: Int? = 0,
@@ -149,7 +146,7 @@ data class DashboardResponse(
     val message: String?
 )
 
-@Keep
+
 @Serializable
 data class TransactionResponse(
     val date: String?,
@@ -163,7 +160,7 @@ data class TransactionResponse(
     val status: String?
 )
 
-@Keep
+
 @Serializable
 data class TransactionValidationRequest(
     val transaction: String,
@@ -172,14 +169,14 @@ data class TransactionValidationRequest(
     val fcm: String
 )
 
-@Keep
+
 @Serializable
 data class SectorsResponse(
     val code: String?,
     val name: String?
 )
 
-@Keep
+
 @Serializable
 data class TransferRequest(
     val customer: String?,
@@ -191,7 +188,7 @@ data class TransferRequest(
     val fcm: String?
 )
 
-@Keep
+
 @Serializable
 data class TransferListResponse(
     val status: String?,
@@ -199,7 +196,7 @@ data class TransferListResponse(
     val transactions: List<Transfers>
 )
 
-@Keep
+
 @Serializable
 data class Transfers(
     val code : String?,
@@ -212,7 +209,7 @@ data class Transfers(
     val message: String?
 )
 
-@Keep
+
 @Serializable
 data class EditPasswordRequestData(
     val oldPassword: String,
@@ -220,7 +217,7 @@ data class EditPasswordRequestData(
     val customer: String
 )
 
-@Keep
+
 @Serializable
 data class ForgottenPINRequestThree(
     val user: String?,
@@ -228,7 +225,7 @@ data class ForgottenPINRequestThree(
     val passwordConfirm: String?
 )
 
-@Keep
+
 @Serializable
 data class ForgottenPINResponse(
     val message: String?,
@@ -236,7 +233,7 @@ data class ForgottenPINResponse(
     val user: String?
 )
 
-@Keep
+
 @Serializable
 data class ForgottenPINRequestOneTwo(
     val code: String?
@@ -267,7 +264,7 @@ data class Profile(
     val created: String?
 ): Parcelable
 
-@Keep
+
 @Serializable
 data class UpdateProfile(
     val customer: String,
@@ -287,14 +284,14 @@ data class UpdateProfile(
     val sector: String
 )
 
-@Keep
+
 @Serializable
 data class DeletePaymentAccount(
     val code: String?,
     val customer: String?
 )
 
-@Keep
+
 @Serializable
 data class NotificationResponse(
     val message: String?,
@@ -302,7 +299,7 @@ data class NotificationResponse(
     val notifications: List<Notification>?
 )
 
-@Keep
+
 @Serializable
 data class Notification(
     val reference: String?,
@@ -313,14 +310,14 @@ data class Notification(
     val merchantName: String?
 )
 
-@Keep
+
 @Serializable
 data class Commune(
     val code: String?,
     val name: String?
 )
 
-@Keep
+
 @Serializable
 data class HelpData(
     val helpPhoneNumber: String?,
@@ -328,7 +325,7 @@ data class HelpData(
     val helpText: String?
 )
 
-@Keep
+
 @Serializable
 data class Ticket(
     val client: String?,
@@ -337,14 +334,14 @@ data class Ticket(
     val paid: Boolean?
 )
 
-@Keep
+
 @Serializable
 data class TicketVerification(
     val code: String,
     val cleared: Boolean
 )
 
-@Keep
+
 @Serializable
 data class TicketVerificationResult(
     val status: String?,
@@ -355,7 +352,7 @@ data class TicketVerificationResult(
     val amount: String?
 )
 
-@Keep
+
 @Serializable
 data class Payment(
     val merchant: String,

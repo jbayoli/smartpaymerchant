@@ -104,7 +104,7 @@ class SignUpSecondViewModel: ViewModel() {
             try {
                 _showDialogLoader.value = true
                 Timber.d("$request")
-                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                val result = SmartPayApi.smartPayApiService.registerRequestFour(
                     RegisterStep.StepFour,
                     request
                 )

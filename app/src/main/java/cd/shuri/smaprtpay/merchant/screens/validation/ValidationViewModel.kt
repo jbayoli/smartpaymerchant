@@ -27,9 +27,10 @@ class ValidationViewModel (phone: String): ViewModel(){
     lateinit var timer : CountDownTimer
 
     //The String version of the current time
-    val currentTimeString = Transformations.map(currentTime) { time ->
+    val currentTimeString = currentTime.map { time ->
         DateUtils.formatElapsedTime(time)
     }
+
 
     private val _isTimerEnable = MutableLiveData<Boolean> ()
     val isTimerEnabled : LiveData<Boolean> get() = _isTimerEnable
@@ -82,7 +83,7 @@ class ValidationViewModel (phone: String): ViewModel(){
     private fun sendCode(request: CodeRequest) {
         viewModelScope.launch {
             try {
-                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                val result = SmartPayApi.smartPayApiService.registerRequestOne(
                     RegisterStep.StepOne,
                     request
                 )
@@ -104,7 +105,7 @@ class ValidationViewModel (phone: String): ViewModel(){
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.combinedRegisterRequest(
+                val result = SmartPayApi.smartPayApiService.registerRequestTwo(
                     RegisterStep.StepTwo,
                     ValidateCodeRequest(phoneNumber, token, code)
                 )

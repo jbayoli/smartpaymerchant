@@ -45,6 +45,9 @@ class SignUpViewModel : ViewModel() {
     private val _showTToastForError = MutableLiveData<Boolean?>()
     val showTToastForError: LiveData<Boolean?> get() = _showTToastForError
 
+    private val _error = MutableLiveData("")
+    val error: LiveData<String> get() = _error
+
     private var viewModelJob = Job()
 
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -120,6 +123,9 @@ class SignUpViewModel : ViewModel() {
                     }
                     "3" -> {
                         _isMerchantCodeExist.value = true
+                    }
+                    "1" -> {
+                        _error.value = result.message
                     }
                 }
             } catch (e: Exception) {
