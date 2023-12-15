@@ -165,7 +165,7 @@ class AddAccountViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _showDialogLoader.value = true
-                val result = SmartPayApi.smartPayApiService.addEditOrDeletePaymentMethodAsync(
+                val result = SmartPayApi.smartPayApiService.addPaymentMethodAsync(
                     authorization = auth,
                     action = PaymentMethodAction.Add,
                     request = request

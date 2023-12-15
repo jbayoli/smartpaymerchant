@@ -149,6 +149,20 @@ class SmartPayApiService(
         }.body()
     }
 
+    suspend fun addPaymentMethodAsync(
+        authorization: String,
+        action: String,
+        request: AddPaymentMethodRequest
+    ): CommonResponse {
+        return httpClient.post(
+            "$baseUrl/api/merchant/compte/$action"
+        ) {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, authorization)
+            setBody(request)
+        }.body()
+    }
+
     /**
      * Fetch all providers that match the given type
      * @param [authorization] Authorisation need for authenticate the request
