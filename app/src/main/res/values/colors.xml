@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#1565c0</color>
     <color name="appBarColor"> #ffffff</color>
+    <color name="white"> #ffffff</color>
     <color name="textColorPrimary">#000000</color>
     <color name="textInputOutlineColor">#003c8f</color>
     <color name="homeBackgroundColor">#eeeeee</color>

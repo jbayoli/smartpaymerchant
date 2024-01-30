@@ -6,27 +6,29 @@
       androidx.camera.view, androidx.camera.lifecycle"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera"/>
 
     <application
-        android:name=".SmartPayApp"
-        android:allowBackup="true"
+        android:name=".FlexPayApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme"
-        tools:targetApi="m">
+        android:theme="@style/Theme.FlexPay.Starting"
+        android:largeHeap="true">
 
-        <service
-            android:name=".firebase.SmartPayFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+<!--        <service-->
+<!--            android:name=".firebase.SmartPayFirebaseMessagingService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -50,7 +52,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,8 +60,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".broadcast.ValidationReceiver"/>
-        <receiver android:name=".broadcast.CancelReceiver"/>
+<!--        <receiver android:name=".broadcast.ValidationReceiver"/>-->
+<!--        <receiver android:name=".broadcast.CancelReceiver"/>-->
     </application>
 
 </manifest>

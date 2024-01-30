@@ -24,3 +24,8 @@
 
 -dontwarn org.slf4j.**
 
+-keep class io.mpos.** { *; }
+-dontwarn io.mpos.**
+-keep class org.bouncycastle.pqc.math.linearalgebra.ByteUtils {*;}
+-keep class com.visa.vac.tc.** {*;}
+
