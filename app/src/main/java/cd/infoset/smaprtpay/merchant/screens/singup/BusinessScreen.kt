@@ -30,10 +30,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import cd.infoset.smaprtpay.merchant.R
 import cd.infoset.smaprtpay.merchant.ui.theme.FlexPayTheme
 import cd.infoset.smaprtpay.merchant.ui.theme.SingUpTextField
 import cd.infoset.smaprtpay.merchant.ui.theme.darkOrange
@@ -77,7 +79,7 @@ internal fun BusinessScreen(
                 title = { Text(text = "Sign up") },
                 navigationIcon = {
                     IconButton(onClick = onPopBackStack) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
+                        Icon(painter = painterResource(id = R.drawable.arrow_back), contentDescription = null)
                     }
                 },
                 scrollBehavior = scrollBehavior

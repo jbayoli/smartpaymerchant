@@ -94,6 +94,7 @@ internal fun AmountAndTransactionTypeCard(
                             labelColor = MaterialTheme.colorScheme.onPrimary
                         ),
                         border = AssistChipDefaults.assistChipBorder(
+                            enabled = true,
                             borderColor = MaterialTheme.colorScheme.onPrimary
                         )
                     )

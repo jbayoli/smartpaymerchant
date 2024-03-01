@@ -9,14 +9,9 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        flatDir {
-            dir("libs")
-        }
-
+        mavenCentral()
         google()
         maven(url = "https://repo.visa.com/mpos-releases/")
-        mavenCentral()
-
     }
 }
 

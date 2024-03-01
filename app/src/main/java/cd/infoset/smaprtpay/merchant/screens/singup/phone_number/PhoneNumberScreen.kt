@@ -81,7 +81,7 @@ internal fun PhoneNumberScreen(
                 navigationIcon = {
                     IconButton(onClick = onPopBackStack) {
                         Icon(
-                            imageVector = Icons.Rounded.ArrowBack,
+                            painter = painterResource(id = R.drawable.arrow_back),
                             contentDescription = null
                         )
                     }

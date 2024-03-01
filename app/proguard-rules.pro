@@ -24,8 +24,26 @@
 
 -dontwarn org.slf4j.**
 
+# OkHttp
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.* { *; }
+-dontwarn okio.**
+
+# Acceptance Devices
 -keep class io.mpos.** { *; }
 -dontwarn io.mpos.**
--keep class org.bouncycastle.pqc.math.linearalgebra.ByteUtils {*;}
 -keep class com.visa.vac.tc.** {*;}
+-keep class com.nimbusds.jose.** {*;}
+-keep class org.bouncycastle.** {*;}
 
+-keep class com.mastercard.sonic.BuildConfig {*;}
+
+-if interface * { @retrofit2.http.* public *** *(...); }
+-keep,allowoptimization,allowshrinking,allowobfuscation class <3>
+
+-keep class kotlin.coroutines.Continuation
+
+-dontwarn java.sql.JDBCType
+-dontwarn javax.xml.bind.DatatypeConverter

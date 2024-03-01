@@ -31,9 +31,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import cd.infoset.smaprtpay.merchant.R
 import cd.infoset.smaprtpay.merchant.screens.payment.components.PaymentModeUIPicker
 import cd.infoset.smaprtpay.merchant.ui.theme.FlexPayTheme
 import cd.infoset.smaprtpay.merchant.ui.theme.SingUpTextField
@@ -46,7 +48,10 @@ enum class PaymentMode {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun PaymentScreen() {
+internal fun PaymentScreen(
+    onNavBac: () -> Unit = {},
+    onNavigateToTapToPhone: () -> Unit = {}
+) {
     var reasonForPayment by remember {
         mutableStateOf("")
     }
@@ -68,8 +73,8 @@ internal fun PaymentScreen() {
             TopAppBar(
                 title = { Text(text = "Payment request") },
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
+                    IconButton(onClick = onNavBac ) {
+                        Icon(painter = painterResource(id = R.drawable.arrow_back), contentDescription = null)
                     }
                 }
             )
@@ -140,10 +145,15 @@ internal fun PaymentScreen() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Select a payment mode"
+                        text = "Select a payment mode",
+                        color = MaterialTheme.colorScheme.primary
                     )
 
-                    Icon(imageVector = Icons.Rounded.ArrowDropDown, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Rounded.ArrowDropDown,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
                 }
 
                 AnimatedVisibility(visible = showPaymentMode) {
@@ -154,7 +164,7 @@ internal fun PaymentScreen() {
             }
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = onNavigateToTapToPhone,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Next")
@@ -162,7 +172,6 @@ internal fun PaymentScreen() {
         }
     }
 }
-
 
 
 @Preview

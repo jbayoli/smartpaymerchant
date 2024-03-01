@@ -9,16 +9,20 @@ import androidx.navigation.compose.rememberNavController
 import cd.infoset.smaprtpay.merchant.screens.Screen
 import cd.infoset.smaprtpay.merchant.screens.home.homeScreen
 import cd.infoset.smaprtpay.merchant.screens.login.loginScreen
+import cd.infoset.smaprtpay.merchant.screens.payment.requestPaymentNav
+import cd.infoset.smaprtpay.merchant.screens.payment.contactlessPaymentScreen
 import cd.infoset.smaprtpay.merchant.screens.singup.phone_number.phoneNumberScreen
 import cd.infoset.smartpay.client.screens.singup.singUpScreen
 import cd.infoset.smaprtpay.merchant.screens.singup.validate_otp.validateOptScreen
 
 @Composable
-fun FlexPayApp() {
+fun FlexPayApp(
+    onLaunch: () -> Unit
+) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.TapToPay.route,
         enterTransition = {
             fadeIn() + slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Start
@@ -42,7 +46,7 @@ fun FlexPayApp() {
     ) {
         homeScreen(
             onNavigateToLogIn = {
-                navController.navigate(Screen.Login.route)
+                navController.navigate(Screen.RequestPayment.route)
             }
         )
         loginScreen(
@@ -73,5 +77,13 @@ fun FlexPayApp() {
         singUpScreen(
             onPopBackStack = { navController.popBackStack() }
         )
+
+        requestPaymentNav(
+            onNavBac = { navController.popBackStack() },
+            onNavigateToTapToPhone = {
+                navController.navigate(Screen.TapToPay.route)
+            }
+        )
+        contactlessPaymentScreen(onLaunch = onLaunch) { navController.popBackStack() }
     }
 }

@@ -1,7 +1,6 @@
 package cd.infoset.smaprtpay.merchant.ui
 
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
@@ -9,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlexPayChip(
     selected: Boolean,
@@ -30,6 +28,8 @@ fun FlexPayChip(
             labelColor = MaterialTheme.colorScheme.onPrimary
         ),
         border = FilterChipDefaults.filterChipBorder(
+            enabled = true,
+            selected = selected,
             borderColor = MaterialTheme.colorScheme.onPrimary,
             selectedBorderColor = MaterialTheme.colorScheme.onPrimary
         )

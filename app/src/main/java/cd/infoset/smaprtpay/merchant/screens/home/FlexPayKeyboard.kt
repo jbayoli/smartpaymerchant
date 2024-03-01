@@ -11,15 +11,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import cd.infoset.smaprtpay.merchant.R
 import cd.infoset.smaprtpay.merchant.ui.theme.FlexPayTheme
 
 @Composable
@@ -59,7 +60,6 @@ internal fun FlexPayKeyBoard(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun KeyboardLine(
     numbers: List<String>,
@@ -95,7 +95,7 @@ private fun KeyboardLine(
                 ) {
                     if (number == "<=") {
                         Icon(
-                            imageVector = Icons.Outlined.Backspace,
+                            painter = painterResource(id = R.drawable.backspace),
                             contentDescription = null,
                             modifier = Modifier.size(size = 16.dp)
                         )
