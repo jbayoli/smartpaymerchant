@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     kotlin("kapt")
     id("com.android.application")
@@ -8,11 +11,15 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
+val keystorePropertiesFile = rootProject.file("./keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
 android {
     namespace = "cd.infoset.smaprtpay.merchant"
     compileSdk = 34
 
-    ndkVersion = "26.2.11394342"
+    ndkVersion = "25.1.8937393"
 
     defaultConfig {
         applicationId = "cd.infoset.smartpay.merchant"
@@ -26,12 +33,26 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        kapt {
+            includeCompileClasspath = false
+        }
+    }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties.getProperty("key_alias")
+            keyPassword = keystoreProperties.getProperty("key_password")
+            storeFile = file(keystoreProperties.getProperty("store_file"))
+            storePassword = keystoreProperties.getProperty("store_password")
+        }
     }
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
-            //isShrinkResources = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -73,6 +94,7 @@ android {
             excludes.add("asm-license.txt")
         }
     }
+    buildToolsVersion = "34.0.0"
 
     bundle {
         storeArchive {
